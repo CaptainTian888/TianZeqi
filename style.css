@@ -79,7 +79,7 @@ html {
 }
 
 /* Button styles */
-.btn-primary {
+.primary-button { /* Renamed from .btn-primary for clarity with the toggle button */
     background-color: var(--primary-blue);
     color: white;
     padding: 0.75rem 2rem;
@@ -90,7 +90,7 @@ html {
     cursor: pointer;
 }
 
-.btn-primary:hover {
+.primary-button:hover {
     background-color: var(--primary-blue-hover);
 }
 
@@ -411,8 +411,8 @@ html {
     color: #9ca3af;
 }
 
-/* Language toggle */
-.language-toggle {
+/* Language toggle (old, removed from index.html) */
+/* .language-toggle {
     position: fixed;
     top: 1rem;
     right: 1rem;
@@ -430,7 +430,7 @@ html {
 
 .language-toggle:hover {
     background: white;
-}
+} */
 
 /* Responsive design */
 @media (max-width: 992px) { /* Adjusted for consistency */
