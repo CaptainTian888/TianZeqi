@@ -433,6 +433,50 @@ html {
 }
 
 /* Responsive design */
+@media (max-width: 992px) { /* Adjusted for consistency */
+    .hero {
+        padding: 3rem 0 2rem;
+    }
+    
+    .hero-title {
+        font-size: 3rem;
+    }
+    
+    .hero-subtitle {
+        font-size: 1.8rem; /* Adjusted */
+    }
+    
+    .hero-description {
+        font-size: 1.125rem;
+    }
+    
+    .section {
+        padding: 3rem 0;
+    }
+    
+    .section-title {
+        font-size: 2.25rem;
+    }
+    
+    .about-stats {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .services-grid {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adjusted */
+    }
+    
+    .philosophy-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .contact-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+
 @media (max-width: 768px) {
     .hero {
         padding: 3rem 0 2rem;
@@ -458,6 +502,24 @@ html {
         font-size: 1.875rem;
     }
     
+    /* Mobile menu specific styles */
+    .header-nav {
+        display: none; /* Hide desktop nav */
+    }
+    .header-container {
+        flex-wrap: wrap;
+    }
+    #mobile-menu-button {
+        display: block; /* Show mobile menu button */
+    }
+    #mobile-menu.hidden {
+        display: none;
+    }
+    #mobile-menu:not(.hidden) {
+        display: block;
+    }
+
+
     .about-stats {
         grid-template-columns: 1fr;
         gap: 1rem;
@@ -497,7 +559,7 @@ html {
     }
 }
 
-/* Animation keyframes */
+/* Animation keyframes (kept from previous version) */
 @keyframes fadeInUp {
     from {
         opacity: 0;
@@ -544,7 +606,7 @@ html {
     animation: fadeInRight 0.6s ease-out;
 }
 
-/* Utility classes (redundant with Tailwind but kept for specific custom classes if they exist) */
+/* Utility classes (from previous version, some might be redundant with Tailwind but kept for specific custom classes if they exist) */
 .container {
     max-width: 80rem;
     margin: 0 auto;
