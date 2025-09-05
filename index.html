@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -408,7 +407,14 @@
                 </div>
 
                 <div>
-                    <form action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" target="_blank" class="space-y-6">
+                    <!-- === FORM MODIFICATION START === -->
+                    <form action="https://formsubmit.co/shinevista@163.com" method="POST" class="space-y-6">
+                    <!-- 
+                        ACTION REQUIRED: 
+                        1. Replace "YOUR_EMAIL_HERE@example.com" with your actual email address.
+                        2. After deploying, submit the form once from your website to receive an activation email. Click the link in that email to activate.
+                    -->
+                        
                         <div>
                             <label for="contact-name" class="block text-sm font-medium text-gray-700 mb-2" 
                                    data-lang-zh="姓名" data-lang-en="Name">
@@ -422,7 +428,7 @@
                                    data-lang-zh="邮箱" data-lang-en="Email">
                                 邮箱
                             </label>
-                            <input type="email" id="contact-email" name="_replyto" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
+                            <input type="email" id="contact-email" name="email" class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" 
                                    data-lang-zh-placeholder="您的邮箱" data-lang-en-placeholder="Your Email" placeholder="您的邮箱" required>
                         </div>
                         <div>
@@ -437,12 +443,8 @@
                                 data-lang-zh="发送消息" data-lang-en="Send Message">
                             发送消息
                         </button>
-                        <p class="text-sm text-gray-500 mt-4 form-note-text"
-                           data-lang-zh="注：此表单功能需要配置 Formspree (Formspree.io) 才能正常发送邮件。请将表单的 action URL 中的 &quot;YOUR_FORMSPREE_ID&quot; 替换为您的实际 Formspree ID。"
-                           data-lang-en="Note: This form requires configuration with Formspree (Formspree.io) to send emails properly. Please replace &quot;YOUR_FORMSPREE_ID&quot; in the form's action URL with your actual Formspree ID.">
-                            注：此表单功能需要配置 Formspree (Formspree.io) 才能正常发送邮件。请将表单的 action URL 中的 "YOUR_FORMSPREE_ID" 替换为您的实际 Formspree ID。
-                        </p>
                     </form>
+                    <!-- === FORM MODIFICATION END === -->
                 </div>
             </div>
         </div>
@@ -465,4 +467,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
