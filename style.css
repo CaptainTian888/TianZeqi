@@ -1,7 +1,6 @@
-/* Tailwind CSS Base Styles */
-@import url('https://cdn.tailwindcss.com');
-
 /* Custom Styles for Tian Zeqi Portfolio */
+/* Tailwind CSS is loaded via script in index.html, so no @import needed here. */
+
 :root {
     --primary-blue: #2563eb;
     --primary-blue-hover: #1d4ed8;
@@ -545,7 +544,7 @@ html {
     animation: fadeInRight 0.6s ease-out;
 }
 
-/* Utility classes */
+/* Utility classes (redundant with Tailwind but kept for specific custom classes if they exist) */
 .container {
     max-width: 80rem;
     margin: 0 auto;
