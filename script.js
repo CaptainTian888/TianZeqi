@@ -1,5 +1,5 @@
 // Tian Zeqi Portfolio Website JavaScript
-// Updated version with WeChat removed from phone section and social media icons added
+// Handles rendering, translations, navigation, and interactions.
 
 // Translations object
 const translations = {
@@ -181,7 +181,7 @@ const translations = {
             title: 'Introduction',
             greeting: 'Hello there!',
             description1: 'Five years of experience in cross-border e-commerce. He won the third prize of the China International Internet + Competition and the first prize of the Blue Bridge Cup Competition while starting a business in college. Platforms: Amazon, ETSY, TikTok, Ozon, Wildberries, Temu, SHEIN, and overseas independent stations.',
-            description2: 'The group is currently engaged in cross-border sales, enterprise overseas construction, cargo docking, personalized customized product supply chain, international logistics and overseas warehouse docking, international brand management, enterprise global store opening, startup investment and financing, overseas global enterprise construction and management services, etc.',
+            description2: 'The group is currently engaged in cross-border sales, enterprise overseas construction, cargo docking, personalized customized product supply chain, international logistics and overseas warehouse integration, international brand management, enterprise global store opening, startup investment and financing, overseas global enterprise construction and management services, etc.',
             experience: 'Years Cross-border E-commerce Experience',
             positions: 'Corporate Director Positions'
         },
@@ -347,6 +347,7 @@ function scrollToSection(sectionId) {
 
 function toggleLanguage() {
     currentLanguage = currentLanguage === 'zh' ? 'en' : 'zh';
+    localStorage.setItem('lang', currentLanguage); // Store preference
     renderApp();
 }
 
@@ -357,6 +358,7 @@ function toggleMenu() {
 
 function handleScroll() {
     const sections = ['home', 'about', 'experience', 'services', 'philosophy', 'contact'];
+    // Offset for fixed header and smoother active state
     const scrollPosition = window.scrollY + 100;
 
     for (const section of sections) {
@@ -371,9 +373,10 @@ function handleScroll() {
             }
         }
     }
+    renderApp(); // Re-render to update active navigation item
 }
 
-// SVG Icons (keeping simplified for in-JS rendering, original svgs from previous response are lost but simple icons remain)
+// SVG Icons (keeping simplified for in-JS rendering)
 const icons = {
     menu: '☰',
     close: '✕',
@@ -715,23 +718,19 @@ function renderApp() {
     `;
 }
 
-// Form submission handler - removed explicit alert as Formspree handles redirection/success
-// If you want custom success message WITHOUT redirection, you'd use fetch API instead of direct form submission.
-// For simplicity and static hosting, Formspree's default redirect is usually sufficient.
-// function handleFormSubmit(event) {
-//     event.preventDefault(); // Formspree submission handles its own default behavior
-// }
-
 // Initialize the application
 function initApp() {
+    // Check for language preference in localStorage
+    const savedLang = localStorage.getItem('lang');
+    if (savedLang) {
+        currentLanguage = savedLang;
+    }
+    
     // Add scroll event listener
     window.addEventListener('scroll', handleScroll);
     
-    // Initial render
-    renderApp();
-    
-    // Set initial active section
-    handleScroll();
+    // Initial render and set active section based on current scroll position
+    handleScroll(); 
 }
 
 // Start the application when DOM is loaded
@@ -739,4 +738,87 @@ if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initApp);
 } else {
     initApp();
-}
+}```
+
+---
+
+### GitHub Pages 部署教学 (完整版，包含 Formspree 配置)
+
+以下是详细的步骤，即使您不熟悉代码和 GitHub 也能轻松完成。您需要将上面提供的三个文件上传到您的 GitHub 仓库：`index.html`、`style.css` 和 `script.js`。
+
+#### 步骤 1: 创建 GitHub 账号 (如果还没有)
+
+1.  打开浏览器，访问 [GitHub 官网](https://github.com/)。
+2.  点击 "Sign up" (注册) 按钮。
+3.  按照提示输入您的邮箱、密码，并创建用户名。
+4.  完成邮箱验证。
+
+#### 步骤 2: 创建一个新的 GitHub 仓库 (Repository)
+
+1.  登录您的 GitHub 账号。
+2.  在页面右上角，点击您的头像，然后选择 "Your repositories" (您的仓库)。
+3.  点击绿色的 "New" (新建) 按钮，创建一个新仓库。
+4.  **Repository name (仓库名称):**
+    *   如果您想将网站部署在 `您的用户名.github.io` (例如：`yourusername.github.io`)，那么仓库名称必须是 `您的用户名.github.io` (例如：`tianzeqi.github.io`)。这是一个特殊的仓库，用于托管您的个人网站。
+    *   如果您想将网站部署在 `您的用户名.github.io/仓库名称` (例如：`yourusername.github.io/my-portfolio`)，那么仓库名称可以取任何您喜欢的名字，例如 `my-portfolio` 或 `captain-zeqi-website`。
+    *   **建议：** 为了简单起见，我建议您创建一个名为 `captain-zeqi-portfolio` 的仓库，这样您的网站地址会是 `https://您的用户名.github.io/captain-zeqi-portfolio/`。
+5.  **Description (可选):** 填写一些关于您网站的描述，例如 "田泽琦的个人作品集"。
+6.  **Public (公开):** 确保选择 "Public"，因为 GitHub Pages 只能用于公开仓库。
+7.  **Add a README file (添加 README 文件):** 勾选此选项，这样会为您创建一个初始文件。
+8.  点击绿色的 "Create repository" (创建仓库) 按钮。
+
+#### 步骤 3: 上传网站文件到 GitHub
+
+1.  在您的电脑上，创建一个新的文件夹，例如 `tianzeqi-website`。
+2.  将上面提供的 **优化后** 的 `index.html`、`style.css` 和 `script.js` 文件保存到这个 `tianzeqi-website` 文件夹中。
+    *   **重要提示：** 这三个文件必须直接放在这个文件夹的根目录，不能再放到子文件夹里。
+3.  回到您在 GitHub 上创建的仓库页面。
+4.  点击 "Add file" (添加文件) 按钮，然后选择 "Upload files" (上传文件)。
+5.  将您本地 `tianzeqi-website` 文件夹中的 `index.html`、`style.css` 和 `script.js` 文件全部拖拽到 GitHub 页面的虚线框中。
+    *   **如果您之前已经上传过文件：** GitHub 会自动识别到您正在上传同名文件，并更新它们。
+6.  在页面底部，填写一个简短的提交消息 (Commit message)，例如 "Optimized code for GitHub Pages deployment and integrated Formspree"。
+7.  点击绿色的 "Commit changes" (提交更改) 按钮。
+
+#### 步骤 4: 启用 GitHub Pages
+
+1.  在您的 GitHub 仓库页面，点击顶部的 "Settings" (设置) 选项卡。
+2.  在左侧菜单中，向下滚动并点击 "Pages"。
+3.  在 "Build and deployment" (构建和部署) 部分，找到 "Source" (源) 选项。
+    *   将 "Deploy from a branch" (从分支部署) 设置为 "Branch" (分支)。
+    *   在下方选择 "main" (或 "master"，这取决于您的仓库默认分支名称) 作为分支。
+    *   选择文件夹为 `/ (root)` (根目录)。
+4.  点击 "Save" (保存) 按钮。
+5.  稍等几分钟，GitHub Pages 会开始构建您的网站。页面顶部会出现一个信息框，提示您的网站已准备好发布。
+6.  刷新页面，您会看到一个链接，显示 "Your site is live at <您的网站URL>" (例如：`https://您的用户名.github.io/captain-zeqi-portfolio/`)。点击这个链接，就可以看到您的网站了！
+
+**恭喜！您的优化后的、带有中英文切换功能、风格与参考网站完全一致，并集成了 Formspree 表单的静态网站已经成功部署到 GitHub Pages。**
+
+#### 步骤 5: 配置 Formspree (使联系表单工作)
+
+联系表单现在已经集成到网站代码中，但它还需要您在 Formspree 网站上进行配置才能正常工作。
+
+1.  **注册 Formspree 账号：**
+    *   访问 [Formspree 官网](https://formspree.io/)。
+    *   点击 "Sign Up" 或 "Get Started" 注册一个免费账号。
+
+2.  **创建新表单：**
+    *   登录 Formspree 后，点击 "+ New Form" (新建表单)。
+    *   给您的表单起一个名字，例如 "Captain Zeqi Contact Form"。
+    *   点击 "Create Form" (创建表单)。
+
+3.  **获取表单 ID：**
+    *   创建表单后，您会看到一个页面，上面有您的表单的 URL。这个 URL 看起来像 `https://formspree.io/f/xxxxxxxx`，其中 `xxxxxxxx` 就是您的唯一表单 ID。请复制这个完整的 URL。
+
+4.  **更新 `script.js` 中的表单 `action`：**
+    *   回到您在电脑上保存的 `tianzeqi-website` 文件夹。
+    *   用文本编辑器打开 `script.js` 文件。
+    *   在 `renderApp()` 函数中，找到 `<form action="https://formspree.io/f/YOUR_FORMSPREE_ID" method="POST" target="_blank" class="space-y-6">` 这一行。
+    *   将 `https://formspree.io/f/YOUR_FORMSPREE_ID` 替换为您从 Formspree 复制的完整 URL。
+    *   保存 `script.js` 文件。
+
+5.  **重新上传更新后的 `script.js` 到 GitHub：**
+    *   重复上面的 **步骤 3**，将您修改并保存的 `script.js` 文件重新上传到您的 GitHub 仓库。确保填写一个描述性的提交消息，例如 "Updated Formspree ID in script.js"。
+
+完成这些步骤后，您的网站上的联系表单就能够通过 Formspree 正常收集信息，并将它们发送到您注册 Formspree 时使用的邮箱了。
+
+如果您在任何步骤中遇到困难，或者对代码有任何疑问，请随时提问！
