@@ -2,643 +2,535 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title data-lang-zh="田泽琦" data-lang-en="Zeqi Tian">Zeqi Tian</title>
   <meta name="description" data-lang-zh="田泽琦" data-lang-en="Zeqi Tian" />
   <link rel="icon" type="image/jpeg" href="https://imgbed.captainzeqi.com/file/1758348585439_黑白路飞透明背景.png" />
 
-  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
   <link rel="stylesheet" href="style.css" />
 </head>
 
-<body class="min-h-screen bg-gray-50">
-  <div class="fixed top-4 right-4 z-50">
-    <button id="lang-toggle" class="primary-button text-sm px-4 py-2" data-lang-zh="中文" data-lang-en="English">
-      English
-    </button>
+<body>
+  <!-- Floating controls -->
+  <div class="floating">
+    <button id="lang-toggle" class="btn btn-ghost" data-lang-zh="中文" data-lang-en="English" aria-label="Toggle Language">English</button>
+    <button id="theme-toggle" class="btn btn-ghost" aria-label="Toggle Theme" title="Theme">☾</button>
+    <button id="to-top" class="btn btn-ghost" aria-label="Back to Top" title="Top">↑</button>
   </div>
 
-  <nav class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md z-40 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex justify-between items-center py-4">
-        <a href="#home" class="text-2xl font-bold text-gray-900" data-lang-zh="顺势而为，知行知止" data-lang-en="Keep On Going">
-          顺势而为，知行知止
-        </a>
+  <!-- Top bar (mobile) -->
+  <header class="topbar">
+    <a class="brand" href="#home" data-lang-zh="顺势而为，知行知止" data-lang-en="Keep On Going">顺势而为，知行知止</a>
+    <button id="mobile-menu-button" class="icon-btn" aria-controls="mobile-menu" aria-expanded="false">☰</button>
+  </header>
 
-        <div class="hidden md:flex space-x-8">
-          <a href="#home" class="nav-item text-gray-700 hover:text-blue-600" data-section-id="home" data-lang-zh="首页" data-lang-en="Home">首页</a>
-          <a href="#about" class="nav-item text-gray-700 hover:text-blue-600" data-section-id="about" data-lang-zh="个人介绍" data-lang-en="About Me">个人介绍</a>
-          <a href="#experience" class="nav-item text-gray-700 hover:text-blue-600" data-section-id="experience" data-lang-zh="职务" data-lang-en="Positions">职务</a>
-          <a href="#services" class="nav-item text-gray-700 hover:text-blue-600" data-section-id="services" data-lang-zh="工作领域" data-lang-en="Work Areas">工作领域</a>
-          <a href="#philosophy" class="nav-item text-gray-700 hover:text-blue-600" data-section-id="philosophy" data-lang-zh="商业理念" data-lang-en="Business Philosophy">商业理念</a>
-          <a href="#contact" class="nav-item text-gray-700 hover:text-blue-600" data-section-id="contact" data-lang-zh="与我联系" data-lang-en="Contact Me">与我联系</a>
-        </div>
+  <!-- Sidebar nav (desktop) -->
+  <aside class="sidebar">
+    <a class="brand brand-lg" href="#home" data-lang-zh="顺势而为，知行知止" data-lang-en="Keep On Going">顺势而为，知行知止</a>
 
-        <div class="md:hidden">
-          <button id="mobile-menu-button" class="text-gray-700 hover:text-blue-600">☰</button>
-        </div>
-      </div>
+    <nav class="nav">
+      <a href="#home" class="nav-item" data-section-id="home" data-lang-zh="首页" data-lang-en="Home">首页</a>
+      <a href="#about" class="nav-item" data-section-id="about" data-lang-zh="个人介绍" data-lang-en="About Me">个人介绍</a>
+      <a href="#experience" class="nav-item" data-section-id="experience" data-lang-zh="职务" data-lang-en="Positions">职务</a>
+      <a href="#services" class="nav-item" data-section-id="services" data-lang-zh="工作领域" data-lang-en="Work Areas">工作领域</a>
+      <a href="#philosophy" class="nav-item" data-section-id="philosophy" data-lang-zh="商业理念" data-lang-en="Business Philosophy">商业理念</a>
+      <a href="#contact" class="nav-item" data-section-id="contact" data-lang-zh="与我联系" data-lang-en="Contact Me">与我联系</a>
+    </nav>
+
+    <div class="sidebar-foot">
+      <a href="#contact" class="pill pill-link">
+  <span class="dot"></span>
+  <span data-lang-zh="与我联系" data-lang-en="Contact Me">与我联系</span>
+</a>
+      <div class="tiny" data-lang-zh="© 2025 田泽琦 (Captain Ninja)" data-lang-en="© 2025 Tian Zeqi (Captain Ninja)">© 2025 田泽琦 (Captain Ninja)</div>
     </div>
+  </aside>
 
-    <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
-      <div class="px-2 pt-2 pb-3 space-y-1">
-        <a href="#home" class="block px-3 py-2 rounded-md text-base font-medium w-full text-left text-gray-700 hover:text-blue-600" data-section-id="home" data-lang-zh="首页" data-lang-en="Home">首页</a>
-        <a href="#about" class="block px-3 py-2 rounded-md text-base font-medium w-full text-left text-gray-700 hover:text-blue-600" data-section-id="about" data-lang-zh="个人介绍" data-lang-en="About Me">个人介绍</a>
-        <a href="#experience" class="block px-3 py-2 rounded-md text-base font-medium w-full text-left text-gray-700 hover:text-blue-600" data-section-id="experience" data-lang-zh="职务" data-lang-en="Positions">职务</a>
-        <a href="#services" class="block px-3 py-2 rounded-md text-base font-medium w-full text-left text-gray-700 hover:text-blue-600" data-section-id="services" data-lang-zh="工作领域" data-lang-en="Work Areas">工作领域</a>
-        <a href="#philosophy" class="block px-3 py-2 rounded-md text-base font-medium w-full text-left text-gray-700 hover:text-blue-600" data-section-id="philosophy" data-lang-zh="商业理念" data-lang-en="Business Philosophy">商业理念</a>
-        <a href="#contact" class="block px-3 py-2 rounded-md text-base font-medium w-full text-left text-gray-700 hover:text-blue-600" data-section-id="contact" data-lang-zh="与我联系" data-lang-en="Contact Me">与我联系</a>
-      </div>
-    </div>
+  <!-- Mobile menu -->
+  <nav id="mobile-menu" class="mobile-menu" aria-hidden="true">
+    <a href="#home" class="nav-item" data-section-id="home" data-lang-zh="首页" data-lang-en="Home">首页</a>
+    <a href="#about" class="nav-item" data-section-id="about" data-lang-zh="个人介绍" data-lang-en="About Me">个人介绍</a>
+    <a href="#experience" class="nav-item" data-section-id="experience" data-lang-zh="职务" data-lang-en="Positions">职务</a>
+    <a href="#services" class="nav-item" data-section-id="services" data-lang-zh="工作领域" data-lang-en="Work Areas">工作领域</a>
+    <a href="#philosophy" class="nav-item" data-section-id="philosophy" data-lang-zh="商业理念" data-lang-en="Business Philosophy">商业理念</a>
+    <a href="#contact" class="nav-item" data-section-id="contact" data-lang-zh="与我联系" data-lang-en="Contact Me">与我联系</a>
   </nav>
 
-  <!-- HOME -->
-  <section id="home" class="pt-20 pb-16 bg-gradient-to-br from-blue-50 to-indigo-100">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex flex-col lg:flex-row items-center justify-between lg:space-x-12">
-        <!-- 首页图片：缩小比例（5/12） -->
-        <div class="lg:w-5/12 mb-10 lg:mb-0 flex justify-center">
-          <img
-            src="https://imgbed.captainzeqi.com/file/1757062405661_business.jpeg"
-            alt="田泽琦"
-            class="w-full h-auto object-cover rounded-2xl shadow-2xl hover-scale max-w-xl"
-          />
-        </div>
+  <main class="main">
+    <!-- HERO -->
+    <section id="home" class="section hero">
+      <div class="hero-grid">
+        <div class="hero-copy">
+          <div class="kicker" data-lang-zh="个人主页 · 业务介绍" data-lang-en="Profile · Business Overview">个人主页 · 业务介绍</div>
 
-        <!-- 首页文字：扩大比例（7/12） -->
-        <div class="lg:w-7/12">
-          <h1 class="text-4xl lg:text-6xl font-bold text-gray-900 mb-4">
+          <h1 class="h1">
             <span data-lang-zh="田泽琦" data-lang-en="Zeqi Tian">田泽琦</span>
-            <br />
-            <span class="text-blue-600 text-2xl lg:text-3xl" data-lang-zh="阿泽船长" data-lang-en="Captain Leon">阿泽船长</span>
+            <span class="sub" data-lang-zh="阿泽船长" data-lang-en="Captain Leon">阿泽船长</span>
           </h1>
 
-          <p
-            class="hero-tagline text-gray-700 mb-8 leading-relaxed"
-            data-lang-zh="中级区块链金融行业工程师 | 国际贸易5年从业者 | 企业全球化架构与跨境增长顾问 | 企业级 AI 私有化与自动化系统架构顾问 | 区块链金融与数字资产解决方案顾问"
-            data-lang-en="Intermediate Blockchain Finance Engineer | 5 Years in International Trade | Globalization Architecture & Cross-Border Growth Advisor | Enterprise AI Private Deployment & Automation Systems Architect | Blockchain Finance & Digital Asset Solutions Advisor"
-          >
+          <p class="tagline"
+             data-lang-zh="中级区块链金融行业工程师 | 国际贸易5年从业者 | 企业全球化架构与跨境增长顾问 | 企业级 AI 私有化与自动化系统架构顾问 | 区块链金融与数字资产解决方案顾问"
+             data-lang-en="Intermediate Blockchain Finance Engineer | 5 Years in International Trade | Globalization Architecture & Cross-Border Growth Advisor | Enterprise AI Private Deployment & Automation Systems Architect | Blockchain Finance & Digital Asset Solutions Advisor">
             中级区块链金融行业工程师 | 国际贸易5年从业者 | 企业全球化架构与跨境增长顾问 | 企业级 AI 私有化与自动化系统架构顾问 | 区块链金融与数字资产解决方案顾问
-          </p>
-
-          <div class="flex flex-col sm:flex-row gap-4">
-            <a href="#contact" class="primary-button" data-lang-zh="与我联系" data-lang-en="Contact Me">与我联系</a>
-            <a
-              href="#about"
-              class="border border-blue-600 text-blue-600 px-8 py-3 rounded-lg hover:bg-blue-50 transition-colors font-medium"
-              data-lang-zh="了解更多"
-              data-lang-en="Learn More"
-            >
-              了解更多
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ABOUT -->
-  <section id="about" class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <h2 class="text-4xl font-bold text-gray-900 mb-4" data-lang-zh="个人介绍" data-lang-en="Introduction">个人介绍</h2>
-        <div class="w-24 h-1 bg-blue-600 mx-auto"></div>
-      </div>
-
-      <div class="grid lg:grid-cols-12 gap-12 items-center">
-        <div class="lg:col-span-5">
-          <h3 class="text-2xl font-semibold text-gray-900 mb-6" data-lang-zh="你好！" data-lang-en="Hello there!">你好！</h3>
-          <p
-            class="text-gray-600 mb-6 leading-relaxed"
-            data-lang-zh="五年跨境电商从业经验，大学在校创业曾获得中国国际互联网+创业大赛国际三等奖、蓝桥杯创业大赛国家级一等奖。从事平台：亚马逊、ETSY、TikTok、Ozon、Wildberries、Temu、SHEIN、海外独立站。"
-            data-lang-en="Five years of experience in cross-border e-commerce. His university startup won third prize in the China International Internet Plus Entrepreneurship Competition and first prize in the Blue Bridge Cup National Entrepreneurship Competition. Platforms he worked on include Amazon, ETSY, TikTok, Ozon, Wildberries, Temu, SHEIN, and overseas independent websites."
-          >
+          
+          <p class="p"
+             data-lang-zh="五年跨境电商从业经验，大学在校创业曾获得中国国际互联网+创业大赛国际三等奖、蓝桥杯创业大赛国家级一等奖。从事平台：亚马逊、ETSY、TikTok、Ozon、Wildberries、Temu、SHEIN、海外独立站。"
+             data-lang-en="Five years of experience in cross-border e-commerce. His university startup won third prize in the China International Internet Plus Entrepreneurship Competition and first prize in the Blue Bridge Cup National Entrepreneurship Competition. Platforms he worked on include Amazon, ETSY, TikTok, Ozon, Wildberries, Temu, SHEIN, and overseas independent websites.">
             五年跨境电商从业经验，大学在校创业曾获得中国国际互联网+创业大赛国际三等奖、蓝桥杯创业大赛国家级一等奖。从事平台：亚马逊、ETSY、TikTok、Ozon、Wildberries、Temu、SHEIN、海外独立站。
           </p>
+</p>
 
-          <div class="about-strategy-wrap">
-            <p
-              class="about-lead"
-              data-lang-zh="集团致力于构建全球化商业生态，业务涵盖以下三大战略板块："
-              data-lang-en="The Group is committed to building a global business ecosystem, with operations spanning three strategic sectors:"
-            >
-              集团致力于构建全球化商业生态，业务涵盖以下三大战略板块：
-            </p>
+          
 
-            <div class="about-strategy-grid">
-              <div class="strategy-card">
-                <div class="strategy-badge" data-lang-zh="板块 01" data-lang-en="Sector 01">板块 01</div>
-                <h4 class="strategy-title" data-lang-zh="全球出海综合解决方案" data-lang-en="Comprehensive Global Expansion Solutions">
-                  全球出海综合解决方案
-                </h4>
-                <p
-                  class="strategy-desc"
-                  data-lang-zh="提供跨境贸易全链路服务，包括企业海外架构搭建、全球财税管理、国际品牌管理及全球开店支持；依托个性化定制供应链、国际物流与海外仓储体系，助力企业实现无缝全球化扩张。"
-                  data-lang-en="Providing end-to-end cross-border trade services, including the establishment of overseas corporate structures, global fiscal and tax management, international brand management, and global storefront setup support. Leveraging personalized supply chains, international logistics, and overseas warehousing systems, we empower enterprises to achieve seamless global expansion."
-                >
-                  提供跨境贸易全链路服务，包括企业海外架构搭建、全球财税管理、国际品牌管理及全球开店支持；依托个性化定制供应链、国际物流与海外仓储体系，助力企业实现无缝全球化扩张。
-                </p>
+          <div class="stats">
+            <div class="stat">
+              <div class="stat-num">5+</div>
+              <div class="stat-label" data-lang-zh="年跨境电商经验" data-lang-en="Years in Cross-border E-commerce">年跨境电商经验</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">6+</div>
+              <div class="stat-label" data-lang-zh="企业董事职位" data-lang-en="Corporate Director Positions">企业董事职位</div>
+            </div>
+            <div class="stat">
+              <div class="stat-num">3</div>
+              <div class="stat-label" data-lang-zh="战略板块" data-lang-en="Strategic Sectors">战略板块</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-media">
+          <!-- Keep image ratio: use width 100% / height auto + aspect box -->
+          <div class="media-card">
+            <div class="media-frame">
+              <img
+                src="https://imgbed.captainzeqi.com/file/1757062405661_business.jpeg"
+                alt="田泽琦"
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+            <div class="media-meta">
+              <div class="media-title" data-lang-zh="跨境增长 · 企业架构 · AI 私有化" data-lang-en="Growth · Structuring · Private AI">跨境增长 · 企业架构 · AI 私有化</div>
+              <div class="media-sub" data-lang-zh="面向全球市场的系统化交付" data-lang-en="Systematic delivery for global markets">面向全球市场的系统化交付</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="section">
+      <div class="section-head">
+        <h2 class="h2" data-lang-zh="业务介绍" data-lang-en="Business Overview">业务介绍</h2>
+        <p class="lead"
+           data-lang-zh="以商业结果为导向，兼顾合规、效率与可扩展性。"
+           data-lang-en="Outcome-driven execution with governance, efficiency, and scalability.">
+          以商业结果为导向，兼顾合规、效率与可扩展性。
+        </p>
+      </div>
+
+      <div class="about-grid">
+        <div class="card">
+          
+
+          <div class="divider"></div>
+
+          <p class="p strong"
+             data-lang-zh="集团致力于构建全球化商业生态，业务涵盖以下三大战略板块："
+             data-lang-en="The Group is committed to building a global business ecosystem, with operations spanning three strategic sectors:">
+            集团致力于构建全球化商业生态，业务涵盖以下三大战略板块：
+          </p>
+
+          <div class="accordion" id="strategy-accordion">
+            <details class="acc" open>
+              <summary>
+                <span class="arrow-icon" aria-hidden="true">➜</span>
+                <span class="acc-title" data-lang-zh="全球出海综合解决方案" data-lang-en="Comprehensive Global Expansion Solutions">全球出海综合解决方案</span>
+              </summary>
+              <div class="acc-body"
+                   data-lang-zh="提供跨境贸易全链路服务，包括企业海外架构搭建、全球财税管理、国际品牌管理及全球开店支持；依托个性化定制供应链、国际物流与海外仓储体系，助力企业实现无缝全球化扩张。"
+                   data-lang-en="Providing end-to-end cross-border trade services, including the establishment of overseas corporate structures, global fiscal and tax management, international brand management, and global storefront setup support. Leveraging personalized supply chains, international logistics, and overseas warehousing systems, we empower enterprises to achieve seamless global expansion.">
+                提供跨境贸易全链路服务，包括企业海外架构搭建、全球财税管理、国际品牌管理及全球开店支持；依托个性化定制供应链、国际物流与海外仓储体系，助力企业实现无缝全球化扩张。
               </div>
+            </details>
 
-              <div class="strategy-card">
-                <div class="strategy-badge" data-lang-zh="板块 02" data-lang-en="Sector 02">板块 02</div>
-                <h4 class="strategy-title" data-lang-zh="企业级数字化转型赋能" data-lang-en="Enterprise Digital Transformation Empowerment">
-                  企业级数字化转型赋能
-                </h4>
-                <p
-                  class="strategy-desc"
-                  data-lang-zh="深耕科技前沿，提供企业级私有化 AI 模型全栈交付（含向量数据库、Agent 编排、API 网关及权限治理）与自动化工作流（Workflow Automation）部署，通过数智化手段重塑多行业模态企业运营效率。"
-                  data-lang-en="Deeply rooted in cutting-edge technology, we provide full-stack delivery of private enterprise AI models (including Vector Databases, Agent Orchestration, API Gateways, and Governance & Permissions) and Workflow Automation deployment. We reshape the operational efficiency of multi-modal enterprises across various industries through intelligent digital integration."
-                >
-                  深耕科技前沿，提供企业级私有化 AI 模型全栈交付（含向量数据库、Agent 编排、API 网关及权限治理）与自动化工作流（Workflow Automation）部署，通过数智化手段重塑多行业模态企业运营效率。
-                </p>
+            <details class="acc">
+              <summary>
+                <span class="arrow-icon" aria-hidden="true">➜</span>
+                <span class="acc-title" data-lang-zh="企业级数字化转型赋能" data-lang-en="Enterprise Digital Transformation Empowerment">企业级数字化转型赋能</span>
+              </summary>
+              <div class="acc-body"
+                   data-lang-zh="深耕科技前沿，提供企业级私有化 AI 模型全栈交付（含向量数据库、Agent 编排、API 网关及权限治理）与自动化工作流（Workflow Automation）部署，通过数智化手段重塑多行业模态企业运营效率。"
+                   data-lang-en="Deeply rooted in cutting-edge technology, we provide full-stack delivery of private enterprise AI models (including Vector Databases, Agent Orchestration, API Gateways, and Governance & Permissions) and Workflow Automation deployment. We reshape the operational efficiency of multi-modal enterprises across various industries through intelligent digital integration.">
+                深耕科技前沿，提供企业级私有化 AI 模型全栈交付（含向量数据库、Agent 编排、API 网关及权限治理）与自动化工作流（Workflow Automation）部署，通过数智化手段重塑多行业模态企业运营效率。
               </div>
+            </details>
 
-              <div class="strategy-card">
-                <div class="strategy-badge" data-lang-zh="板块 03" data-lang-en="Sector 03">板块 03</div>
-                <h4
-                  class="strategy-title"
-                  data-lang-zh="金融科技与数字资产管理（离岸商事主体业务）"
-                  data-lang-en="Fintech & Digital Asset Management (Offshore Business Entities)"
-                >
+            <details class="acc">
+              <summary>
+                <span class="arrow-icon" aria-hidden="true">➜</span>
+                <span class="acc-title"
+                      data-lang-zh="金融科技与数字资产管理（离岸商事主体业务）"
+                      data-lang-en="Fintech & Digital Asset Management (Offshore Business Entities)">
                   金融科技与数字资产管理（离岸商事主体业务）
-                </h4>
-                <p
-                  class="strategy-desc"
-                  data-lang-zh="布局全球区块链金融领域，海外区块链金融及数字资产市场多因子模型量化自营（或募集基金）交易，企业 Web3 转型或资产数字化（数字出海），为全球市场提供深度流动性与资产增值服务。"
-                  data-lang-en="Strategically positioned in the global blockchain finance sector, we conduct proprietary quantitative trading (and fund management) in overseas digital asset markets based on multi-factor models. We facilitate enterprise Web3 transformation and asset digitization (Digital Expansion), providing deep liquidity and asset appreciation services to the global market."
-                >
-                  布局全球区块链金融领域，海外区块链金融及数字资产市场多因子模型量化自营（或募集基金）交易，企业 Web3 转型或资产数字化（数字出海），为全球市场提供深度流动性与资产增值服务。
-                </p>
+                </span>
+              </summary>
+              <div class="acc-body"
+                   data-lang-zh="布局全球区块链金融领域，海外区块链金融及数字资产市场多因子模型量化自营（或募集基金）交易，企业 Web3 转型或资产数字化（数字出海），为全球市场提供深度流动性与资产增值服务。"
+                   data-lang-en="Strategically positioned in the global blockchain finance sector, we conduct proprietary quantitative trading (and fund management) in overseas digital asset markets based on multi-factor models. We facilitate enterprise Web3 transformation and asset digitization (Digital Expansion), providing deep liquidity and asset appreciation services to the global market.">
+                布局全球区块链金融领域，海外区块链金融及数字资产市场多因子模型量化自营（或募集基金）交易，企业 Web3 转型或资产数字化（数字出海），为全球市场提供深度流动性与资产增值服务。
               </div>
-            </div>
-          </div>
-
-          <div class="grid grid-cols-2 gap-8 mt-10">
-            <div class="text-center">
-              <div class="text-4xl font-bold text-blue-600 mb-2">5+</div>
-              <div class="text-gray-600" data-lang-zh="年跨境电商经验" data-lang-en="Years Cross-border E-commerce Experience">年跨境电商经验</div>
-            </div>
-            <div class="text-center">
-              <div class="text-4xl font-bold text-purple-600 mb-2">6+</div>
-              <div class="text-gray-600" data-lang-zh="企业董事职位" data-lang-en="Corporate Director Positions">企业董事职位</div>
-            </div>
+            </details>
           </div>
         </div>
 
-        <div class="flex justify-center lg:col-span-7">
-          <img
-            src="https://imgbed.captainzeqi.com/file/1764061873786_顺为前台.png"
-            alt="About"
-            class="w-full max-w-2xl rounded-lg shadow-xl"
-          />
+        <div class="card media-card-lg">
+          <div class="media-frame">
+            <img
+              src="https://imgbed.captainzeqi.com/file/1764061873786_顺为前台.png"
+              alt="About"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+          <div class="media-meta">
+            <div class="media-title" data-lang-zh="全球化商业生态" data-lang-en="Global Business Ecosystem">全球化商业生态</div>
+            <div class="media-sub" data-lang-zh="结构化能力 + 交付体系" data-lang-en="Structured capability + delivery system">结构化能力 + 交付体系</div>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- EXPERIENCE -->
-  <section id="experience" class="py-20 bg-gray-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <h2 class="text-4xl font-bold text-gray-900 mb-4" data-lang-zh="职务" data-lang-en="Job Title">职务</h2>
-        <div class="w-24 h-1 bg-blue-600 mx-auto"></div>
+    <!-- EXPERIENCE -->
+    <section id="experience" class="section">
+      <div class="section-head">
+        <h2 class="h2" data-lang-zh="职务" data-lang-en="Positions">职务</h2>
+        <p class="lead" data-lang-zh="关键角色聚焦：战略、供应链、资本与技术。"
+           data-lang-en="Key roles across strategy, supply chain, capital, and technology.">
+          关键角色聚焦：战略、供应链、资本与技术。
+        </p>
       </div>
 
-      <div class="space-y-8">
-        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0">
-              <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                </svg>
-              </div>
-            </div>
-            <div class="flex-1">
-              <h3 class="text-xl font-semibold text-gray-900 mb-1" data-lang-zh="順為國際集團有限公司（香港）" data-lang-en="SHINEVISTA GLOBAL GROUP LIMITED (HK)">
-                順為國際集團有限公司（香港）
-              </h3>
-              <p class="text-blue-600 font-medium mb-2" data-lang-zh="法团董事会董事" data-lang-en="Director">法团董事会董事</p>
-              <p class="text-gray-600" data-lang-zh="负责集团整体战略规划和国际业务拓展" data-lang-en="Responsible for overall strategic planning and international business expansion">
-                负责集团整体战略规划和国际业务拓展
-              </p>
+      <div class="timeline">
+        <div class="t-item">
+          <div class="t-dot"></div>
+          <div class="t-card">
+            <div class="t-title" data-lang-zh="順為國際集團有限公司（香港）" data-lang-en="SHINEVISTA GLOBAL GROUP LIMITED (HK)">順為國際集團有限公司（香港）</div>
+            <div class="t-role" data-lang-zh="法团董事会董事" data-lang-en="Director">法团董事会董事</div>
+            <div class="t-desc" data-lang-zh="负责集团整体战略规划和国际业务拓展" data-lang-en="Responsible for overall strategic planning and international business expansion">
+              负责集团整体战略规划和国际业务拓展
             </div>
           </div>
         </div>
 
-        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0">
-              <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                </svg>
-              </div>
-            </div>
-            <div class="flex-1">
-              <h3 class="text-xl font-semibold text-gray-900 mb-1" data-lang-zh="深圳稳金国际供应链有限公司" data-lang-en="Shenzhen Wenjin International Supply Chain Co., Ltd.">
-                深圳稳金国际供应链有限公司
-              </h3>
-              <p class="text-blue-600 font-medium mb-2" data-lang-zh="董事" data-lang-en="Director">董事</p>
-              <p class="text-gray-600" data-lang-zh="管理国际供应链业务和跨境物流服务" data-lang-en="Managing international supply chain business and cross-border logistics services">
-                管理国际供应链业务和跨境物流服务
-              </p>
+        <div class="t-item">
+          <div class="t-dot"></div>
+          <div class="t-card">
+            <div class="t-title" data-lang-zh="深圳稳金国际供应链有限公司" data-lang-en="Shenzhen Wenjin International Supply Chain Co., Ltd.">深圳稳金国际供应链有限公司</div>
+            <div class="t-role" data-lang-zh="董事" data-lang-en="Director">董事</div>
+            <div class="t-desc" data-lang-zh="管理国际供应链业务和跨境物流服务" data-lang-en="Managing international supply chain business and cross-border logistics services">
+              管理国际供应链业务和跨境物流服务
             </div>
           </div>
         </div>
 
-        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0">
-              <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                </svg>
-              </div>
-            </div>
-            <div class="flex-1">
-              <h3 class="text-xl font-semibold text-gray-900 mb-1" data-lang-zh="内蒙古商舟资本管理有限公司" data-lang-en="Inner Mongolia Shangzhou Capital Management Co., Ltd.">
-                内蒙古商舟资本管理有限公司
-              </h3>
-              <p class="text-blue-600 font-medium mb-2" data-lang-zh="董事" data-lang-en="Director">董事</p>
-              <p class="text-gray-600" data-lang-zh="资本管理和投资决策" data-lang-en="Capital management and investment decisions">资本管理和投资决策</p>
-            </div>
+        <div class="t-item">
+          <div class="t-dot"></div>
+          <div class="t-card">
+            <div class="t-title" data-lang-zh="内蒙古商舟资本管理有限公司" data-lang-en="Inner Mongolia Shangzhou Capital Management Co., Ltd.">内蒙古商舟资本管理有限公司</div>
+            <div class="t-role" data-lang-zh="董事" data-lang-en="Director">董事</div>
+            <div class="t-desc" data-lang-zh="资本管理和投资决策" data-lang-en="Capital management and investment decisions">资本管理和投资决策</div>
           </div>
         </div>
 
-        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0">
-              <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                </svg>
-              </div>
-            </div>
-            <div class="flex-1">
-              <h3 class="text-xl font-semibold text-gray-900 mb-1" data-lang-zh="内蒙古快船商业管理有限公司" data-lang-en="Inner Mongolia Kuaichuan Commercial Management Co., Ltd.">
-                内蒙古快船商业管理有限公司
-              </h3>
-              <p class="text-blue-600 font-medium mb-2" data-lang-zh="董事" data-lang-en="Director">董事</p>
-              <p class="text-gray-600" data-lang-zh="商业管理和运营优化" data-lang-en="Business management and operational optimization">商业管理和运营优化</p>
-            </div>
+        <div class="t-item">
+          <div class="t-dot"></div>
+          <div class="t-card">
+            <div class="t-title" data-lang-zh="内蒙古快船商业管理有限公司" data-lang-en="Inner Mongolia Kuaichuan Commercial Management Co., Ltd.">内蒙古快船商业管理有限公司</div>
+            <div class="t-role" data-lang-zh="董事" data-lang-en="Director">董事</div>
+            <div class="t-desc" data-lang-zh="商业管理和运营优化" data-lang-en="Business management and operational optimization">商业管理和运营优化</div>
           </div>
         </div>
 
-        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0">
-              <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                </svg>
-              </div>
-            </div>
-            <div class="flex-1">
-              <h3 class="text-xl font-semibold text-gray-900 mb-1" data-lang-zh="内蒙古前川工程有限公司" data-lang-en="Inner Mongolia Qianchuan Engineering Co., Ltd.">
-                内蒙古前川工程有限公司
-              </h3>
-              <p class="text-blue-600 font-medium mb-2" data-lang-zh="投资人" data-lang-en="Investors">投资人</p>
-              <p class="text-gray-600" data-lang-zh="工程项目投资和管理" data-lang-en="Engineering project investment and management">工程项目投资和管理</p>
-            </div>
+        <div class="t-item">
+          <div class="t-dot"></div>
+          <div class="t-card">
+            <div class="t-title" data-lang-zh="内蒙古前川工程有限公司" data-lang-en="Inner Mongolia Qianchuan Engineering Co., Ltd.">内蒙古前川工程有限公司</div>
+            <div class="t-role" data-lang-zh="投资人" data-lang-en="Investor">投资人</div>
+            <div class="t-desc" data-lang-zh="工程项目投资和管理" data-lang-en="Engineering project investment and management">工程项目投资和管理</div>
           </div>
         </div>
 
-        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0">
-              <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                </svg>
-              </div>
-            </div>
-            <div class="flex-1">
-              <h3 class="text-xl font-semibold text-gray-900 mb-1" data-lang-zh="佰仕达国际商务(香港)有限公司" data-lang-en="Baishida International Business (Hong Kong) Co., Ltd.">
-                佰仕达国际商务(香港)有限公司
-              </h3>
-              <p class="text-blue-600 font-medium mb-2" data-lang-zh="代理公司负责人" data-lang-en="Agent Company Manager">代理公司负责人</p>
-              <p class="text-gray-600" data-lang-zh="代理业务管理和客户服务" data-lang-en="Agency business management and customer service">代理业务管理和客户服务</p>
-            </div>
+        <div class="t-item">
+          <div class="t-dot"></div>
+          <div class="t-card">
+            <div class="t-title" data-lang-zh="佰仕达国际商务(香港)有限公司" data-lang-en="Baishida International Business (Hong Kong) Co., Ltd.">佰仕达国际商务(香港)有限公司</div>
+            <div class="t-role" data-lang-zh="代理公司负责人" data-lang-en="Agent Company Manager">代理公司负责人</div>
+            <div class="t-desc" data-lang-zh="代理业务管理和客户服务" data-lang-en="Agency business management and customer service">代理业务管理和客户服务</div>
           </div>
         </div>
 
-        <div class="bg-white p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow">
-          <div class="flex items-start space-x-4">
-            <div class="flex-shrink-0">
-              <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                </svg>
-              </div>
-            </div>
-            <div class="flex-1">
-              <h3 class="text-xl font-semibold text-gray-900 mb-1" data-lang-zh="区块链金融行业" data-lang-en="Blockchain Financial Industry">区块链金融行业</h3>
-              <p class="text-blue-600 font-medium mb-2" data-lang-zh="中级工程师" data-lang-en="Intermediate Engineer">中级工程师</p>
-              <p class="text-gray-600" data-lang-zh="区块链技术在金融领域的应用和开发" data-lang-en="Application and development of blockchain technology in the financial field">
-                区块链技术在金融领域的应用和开发
-              </p>
+        <div class="t-item">
+          <div class="t-dot"></div>
+          <div class="t-card">
+            <div class="t-title" data-lang-zh="区块链金融行业" data-lang-en="Blockchain Financial Industry">区块链金融行业</div>
+            <div class="t-role" data-lang-zh="中级工程师" data-lang-en="Intermediate Engineer">中级工程师</div>
+            <div class="t-desc" data-lang-zh="区块链技术在金融领域的应用和开发" data-lang-en="Application and development of blockchain technology in the financial field">
+              区块链技术在金融领域的应用和开发
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- SERVICES -->
-  <section id="services" class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <h2 class="text-4xl font-bold text-gray-900 mb-4" data-lang-zh="工作领域" data-lang-en="Work Areas">工作领域</h2>
-        <div class="w-24 h-1 bg-blue-600 mx-auto"></div>
+    <!-- SERVICES -->
+    <section id="services" class="section">
+      <div class="section-head">
+        <h2 class="h2" data-lang-zh="工作领域" data-lang-en="Work Areas">工作领域</h2>
+        <p class="lead"
+           data-lang-zh="以能力域组织：合规与架构、品牌与供应链、AI 交付与自动化、金融科技与数字资产。"
+           data-lang-en="Organized by capability domains: governance & structuring, brand & supply chain, AI delivery & automation, fintech & digital assets.">
+          以能力域组织：合规与架构、品牌与供应链、AI 交付与自动化、金融科技与数字资产。
+        </p>
       </div>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-        <!-- 1 跨境合规与架构 -->
-        <div class="service-card">
-          <div class="service-icon-wrap">
-            <svg class="service-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <div class="cards-grid">
+        <!-- Icons keep original visual ratio via inline SVG viewBox -->
+        <article class="svc card">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M12 3l7 4v6c0 5-3 8-7 9-4-1-7-4-7-9V7l7-4z"></path>
               <path d="M9 12l2 2 4-4"></path>
-              <path d="M12 6.2l4.2 2.3v3.7c0 3-1.6 5-4.2 5.9-2.6-.9-4.2-2.9-4.2-5.9V8.5L12 6.2z" fill="#22c55e" stroke="none"></path>
             </svg>
           </div>
-          <h3 class="service-title" data-lang-zh="跨境合规与架构" data-lang-en="Cross-Border Compliance & Structuring">跨境合规与架构</h3>
-          <p class="service-desc" data-lang-zh="提供海外架构搭建及全球财税合规管理服务。" data-lang-en="Overseas entity setup and global tax & compliance governance.">
-            提供海外架构搭建及全球财税合规管理服务。
-          </p>
-        </div>
+          <h3 class="h3 sm" data-lang-zh="跨境合规与架构" data-lang-en="Cross-Border Compliance & Structuring">跨境合规与架构</h3>
+          <p class="p" data-lang-zh="提供海外架构搭建及全球财税合规管理服务。" data-lang-en="Overseas entity setup and global tax & compliance governance.">提供海外架构搭建及全球财税合规管理服务。</p>
+        </article>
 
-        <!-- 2 国际品牌管理 -->
-        <div class="service-card">
-          <div class="service-icon-wrap">
-            <svg class="service-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <article class="svc card">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
               <rect x="6" y="3" width="12" height="18" rx="2"></rect>
               <path d="M9 21v-4h6v4"></path>
-              <rect x="8.4" y="6.2" width="2" height="2" fill="#06b6d4" stroke="none"></rect>
-              <rect x="11" y="6.2" width="2" height="2" fill="#06b6d4" stroke="none"></rect>
-              <rect x="13.6" y="6.2" width="2" height="2" fill="#06b6d4" stroke="none"></rect>
-              <rect x="8.4" y="9.2" width="2" height="2" fill="#06b6d4" stroke="none"></rect>
-              <rect x="11" y="9.2" width="2" height="2" fill="#06b6d4" stroke="none"></rect>
-              <rect x="13.6" y="9.2" width="2" height="2" fill="#06b6d4" stroke="none"></rect>
-              <rect x="8.4" y="12.2" width="2" height="2" fill="#06b6d4" stroke="none"></rect>
-              <rect x="11" y="12.2" width="2" height="2" fill="#06b6d4" stroke="none"></rect>
-              <rect x="13.6" y="12.2" width="2" height="2" fill="#06b6d4" stroke="none"></rect>
             </svg>
           </div>
-          <h3 class="service-title" data-lang-zh="国际品牌管理" data-lang-en="International Brand Management">国际品牌管理</h3>
-          <p class="service-desc" data-lang-zh="助力企业品牌出海，提供全球开店与运营支持。" data-lang-en="Brand globalization with global store setup and operational enablement.">
-            助力企业品牌出海，提供全球开店与运营支持。
-          </p>
-        </div>
+          <h3 class="h3 sm" data-lang-zh="国际品牌管理" data-lang-en="International Brand Management">国际品牌管理</h3>
+          <p class="p" data-lang-zh="助力企业品牌出海，提供全球开店与运营支持。" data-lang-en="Brand globalization with global store setup and operational enablement.">助力企业品牌出海，提供全球开店与运营支持。</p>
+        </article>
 
-        <!-- 3 全球智慧供应链 -->
-        <div class="service-card">
-          <div class="service-icon-wrap">
-            <svg class="service-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <article class="svc card">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M4 7l8-4 8 4-8 4-8-4z"></path>
               <path d="M4 7v10l8 4 8-4V7"></path>
               <path d="M12 11v10"></path>
-              <path d="M9.3 5.7l5.4 2.7"></path>
-              <rect x="14.2" y="12.2" width="4.8" height="3.2" rx="0.6" fill="#f59e0b" stroke="none"></rect>
             </svg>
           </div>
-          <h3 class="service-title" data-lang-zh="全球智慧供应链" data-lang-en="Global Smart Supply Chain">全球智慧供应链</h3>
-          <p class="service-desc" data-lang-zh="依托海外仓储体系，提供定制化跨境供应链。" data-lang-en="Customized cross-border supply chain powered by overseas warehousing.">
-            依托海外仓储体系，提供定制化跨境供应链。
-          </p>
-        </div>
+          <h3 class="h3 sm" data-lang-zh="全球智慧供应链" data-lang-en="Global Smart Supply Chain">全球智慧供应链</h3>
+          <p class="p" data-lang-zh="依托海外仓储体系，提供定制化跨境供应链。" data-lang-en="Customized cross-border supply chain powered by overseas warehousing.">依托海外仓储体系，提供定制化跨境供应链。</p>
+        </article>
 
-        <!-- 4 私有化 AI 交付 -->
-        <div class="service-card">
-          <div class="service-icon-wrap">
-            <svg class="service-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <article class="svc card">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
               <rect x="7" y="7" width="10" height="10" rx="2"></rect>
-              <rect x="10" y="10" width="4" height="4" rx="1" fill="#3b82f6" stroke="none"></rect>
               <path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3"></path>
             </svg>
           </div>
-          <h3 class="service-title" data-lang-zh="私有化 AI 交付" data-lang-en="Private AI Delivery">私有化 AI 交付</h3>
-          <p class="service-desc" data-lang-zh="提供企业级全栈 AI 模型与向量数据库部署。" data-lang-en="Enterprise AI full-stack delivery with vector database deployment.">
-            提供企业级全栈 AI 模型与向量数据库部署。
-          </p>
-        </div>
+          <h3 class="h3 sm" data-lang-zh="私有化 AI 交付" data-lang-en="Private AI Delivery">私有化 AI 交付</h3>
+          <p class="p" data-lang-zh="提供企业级全栈 AI 模型与向量数据库部署。" data-lang-en="Enterprise AI full-stack delivery with vector database deployment.">提供企业级全栈 AI 模型与向量数据库部署。</p>
+        </article>
 
-        <!-- 5 智能Agent -->
-        <div class="service-card">
-          <div class="service-icon-wrap">
-            <svg class="service-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <article class="svc card">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="6" y="7" width="12" height="10" rx="3"></rect>
               <path d="M9 3h6"></path>
               <path d="M12 3v2"></path>
-              <rect x="6" y="7" width="12" height="10" rx="3"></rect>
               <path d="M8 17v2"></path>
               <path d="M16 17v2"></path>
-              <circle cx="10" cy="12" r="1.2" fill="#a855f7" stroke="none"></circle>
-              <circle cx="14" cy="12" r="1.2" fill="#a855f7" stroke="none"></circle>
               <path d="M9.5 14.5h5"></path>
             </svg>
           </div>
-          <h3 class="service-title" data-lang-zh="智能Agent" data-lang-en="Intelligent Agents">智能Agent</h3>
-          <p class="service-desc" data-lang-zh="负责智能体编排、API 网关及权限安全治理。" data-lang-en="Agent orchestration, API gateway integration, and access/security governance.">
-            负责智能体编排、API 网关及权限安全治理。
-          </p>
-        </div>
+          <h3 class="h3 sm" data-lang-zh="智能Agent" data-lang-en="Intelligent Agents">智能Agent</h3>
+          <p class="p" data-lang-zh="负责智能体编排、API 网关及权限安全治理。" data-lang-en="Agent orchestration, API gateway integration, and access/security governance.">负责智能体编排、API 网关及权限安全治理。</p>
+        </article>
 
-        <!-- 6 自动化工作流 -->
-        <div class="service-card">
-          <div class="service-icon-wrap">
-            <svg class="service-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <article class="svc card">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
               <rect x="3" y="6" width="7" height="5" rx="1.2"></rect>
               <rect x="14" y="13" width="7" height="5" rx="1.2"></rect>
               <rect x="14" y="6" width="7" height="5" rx="1.2"></rect>
               <path d="M10 8.5h4"></path>
               <path d="M10 8.5c2.5 0 2.5 7 4 7"></path>
-              <rect x="11.4" y="7.6" width="1.8" height="1.8" fill="#06b6d4" stroke="none"></rect>
             </svg>
           </div>
-          <h3 class="service-title" data-lang-zh="自动化工作流" data-lang-en="Workflow Automation">自动化工作流</h3>
-          <p class="service-desc" data-lang-zh="通过自动化工作流重塑企业多模态运营效率。" data-lang-en="Rebuild operational efficiency via automation across multi-modal business processes.">
-            通过自动化工作流重塑企业多模态运营效率。
-          </p>
-        </div>
+          <h3 class="h3 sm" data-lang-zh="自动化工作流" data-lang-en="Workflow Automation">自动化工作流</h3>
+          <p class="p" data-lang-zh="通过自动化工作流重塑企业多模态运营效率。" data-lang-en="Rebuild operational efficiency via automation across multi-modal business processes.">通过自动化工作流重塑企业多模态运营效率。</p>
+        </article>
 
-        <!-- 7 数字资产量化 -->
-        <div class="service-card">
-          <div class="service-icon-wrap">
-            <svg class="service-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <article class="svc card">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M4 19V5"></path>
               <path d="M4 19h16"></path>
               <path d="M7 14l3-3 3 2 4-5"></path>
-              <circle cx="7" cy="14" r="1.1" fill="#22c55e" stroke="none"></circle>
-              <circle cx="10" cy="11" r="1.1" fill="#22c55e" stroke="none"></circle>
-              <circle cx="13" cy="13" r="1.1" fill="#22c55e" stroke="none"></circle>
-              <circle cx="17" cy="8" r="1.1" fill="#22c55e" stroke="none"></circle>
+              <circle cx="7" cy="14" r="1.1"></circle>
+              <circle cx="10" cy="11" r="1.1"></circle>
+              <circle cx="13" cy="13" r="1.1"></circle>
+              <circle cx="17" cy="8" r="1.1"></circle>
             </svg>
           </div>
-          <h3 class="service-title" data-lang-zh="数字资产量化" data-lang-en="Digital Asset Quant">数字资产量化</h3>
-          <p class="service-desc" data-lang-zh="专注全球区块链金融与多因子模型量化交易。" data-lang-en="Global blockchain finance with multi-factor quantitative trading models.">
-            专注全球区块链金融与多因子模型量化交易。
-          </p>
-        </div>
+          <h3 class="h3 sm" data-lang-zh="数字资产量化" data-lang-en="Digital Asset Quant">数字资产量化</h3>
+          <p class="p" data-lang-zh="专注全球区块链金融与多因子模型量化交易。" data-lang-en="Global blockchain finance with multi-factor quantitative trading models.">专注全球区块链金融与多因子模型量化交易。</p>
+        </article>
 
-        <!-- 8 Web3数字化 -->
-        <div class="service-card">
-          <div class="service-icon-wrap">
-            <svg class="service-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <article class="svc card">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M12 2l8 4v6c0 5-3 9-8 10C7 21 4 17 4 12V6l8-4z"></path>
               <path d="M8 11l4-2 4 2-4 2-4-2z"></path>
               <path d="M8 11v4l4 2 4-2v-4"></path>
-              <circle cx="12" cy="9" r="1.1" fill="#3b82f6" stroke="none"></circle>
-              <circle cx="8" cy="11" r="1.1" fill="#3b82f6" stroke="none"></circle>
-              <circle cx="16" cy="11" r="1.1" fill="#3b82f6" stroke="none"></circle>
             </svg>
           </div>
-          <h3 class="service-title" data-lang-zh="Web3数字化" data-lang-en="Web3 Digitization">Web3数字化</h3>
-          <p class="service-desc" data-lang-zh="引导企业实现资产数字化及 Web3 业务转型。" data-lang-en="Enable asset digitization and enterprise Web3 transformation.">
-            引导企业实现资产数字化及 Web3 业务转型。
-          </p>
-        </div>
+          <h3 class="h3 sm" data-lang-zh="Web3数字化" data-lang-en="Web3 Digitization">Web3数字化</h3>
+          <p class="p" data-lang-zh="引导企业实现资产数字化及 Web3 业务转型。" data-lang-en="Enable asset digitization and enterprise Web3 transformation.">引导企业实现资产数字化及 Web3 业务转型。</p>
+        </article>
 
-        <!-- 9 离岸金融服务 -->
-        <div class="service-card">
-          <div class="service-icon-wrap">
-            <svg class="service-icon" viewBox="0 0 24 24" aria-hidden="true">
+        <article class="svc card">
+          <div class="svc-icon">
+            <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M4 9l8-4 8 4"></path>
               <path d="M6 9v10"></path>
               <path d="M10 9v10"></path>
               <path d="M14 9v10"></path>
               <path d="M18 9v10"></path>
               <path d="M4 19h16"></path>
-              <rect x="10.6" y="11" width="2.8" height="6.5" rx="0.6" fill="#f59e0b" stroke="none"></rect>
             </svg>
           </div>
-          <h3 class="service-title" data-lang-zh="离岸金融服务" data-lang-en="Offshore Financial Services">离岸金融服务</h3>
-          <p class="service-desc" data-lang-zh="为全球市场提供流动性支撑与离岸商事管理。" data-lang-en="Liquidity support and offshore business administration for global markets.">
-            为全球市场提供流动性支撑与离岸商事管理。
-          </p>
-        </div>
+          <h3 class="h3 sm" data-lang-zh="离岸金融服务" data-lang-en="Offshore Financial Services">离岸金融服务</h3>
+          <p class="p" data-lang-zh="为全球市场提供流动性支撑与离岸商事管理。" data-lang-en="Liquidity support and offshore business administration for global markets.">为全球市场提供流动性支撑与离岸商事管理。</p>
+        </article>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- PHILOSOPHY -->
-  <section id="philosophy" class="py-20 bg-gray-900 text-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <h2 class="text-4xl font-bold mb-4" data-lang-zh="商业理念" data-lang-en="Business Concept">商业理念</h2>
-        <div class="w-24 h-1 bg-blue-400 mx-auto"></div>
+    <!-- PHILOSOPHY -->
+    <section id="philosophy" class="section philosophy">
+      <div class="section-head">
+        <h2 class="h2" data-lang-zh="商业理念" data-lang-en="Business Philosophy">商业理念</h2>
+        <p class="lead" data-lang-zh="原则是长期主义的护城河。" data-lang-en="Principles are the moat for long-term compounding.">原则是长期主义的护城河。</p>
       </div>
 
-      <div class="grid md:grid-cols-2 gap-8">
-        <div class="bg-gray-800 p-6 rounded-lg">
-          <h3 class="text-xl font-semibold mb-3 text-blue-400" data-lang-zh="资源整合创造价值" data-lang-en="Resource Integration Creates Value">资源整合创造价值</h3>
-          <p class="text-gray-300 mb-4" data-lang-zh="通过资源的高效利用和整合创造价值" data-lang-en="Create value through the efficient use and integration of resources">通过资源的高效利用和整合创造价值</p>
-          <p class="text-sm text-gray-400 italic philosophy-subtitle-en" data-lang-en="CREATE VALUE THROUGH THE EFFICIENT USE AND INTEGRATION OF RESOURCES."></p>
-        </div>
+      <div class="ph-grid">
+        <article class="card ph">
+          <div class="ph-top">
+            <span class="ph-accent"></span>
+            <h3 class="h3 sm" data-lang-zh="资源整合创造价值" data-lang-en="Resource Integration Creates Value">资源整合创造价值</h3>
+          </div>
+          <p class="p" data-lang-zh="通过资源的高效利用和整合创造价值" data-lang-en="Create value through the efficient use and integration of resources">通过资源的高效利用和整合创造价值</p>
+          <p class="tiny italic philosophy-subtitle-en" data-lang-en="CREATE VALUE THROUGH THE EFFICIENT USE AND INTEGRATION OF RESOURCES."></p>
+        </article>
 
-        <div class="bg-gray-800 p-6 rounded-lg">
-          <h3 class="text-xl font-semibold mb-3 text-blue-400" data-lang-zh="信息不对称优势" data-lang-en="Information Asymmetry Advantage">信息不对称优势</h3>
-          <p class="text-gray-300 mb-4" data-lang-zh="通过利用信息不对称创造价值" data-lang-en="Create value by exploiting information asymmetries">通过利用信息不对称创造价值</p>
-          <p class="text-sm text-gray-400 italic philosophy-subtitle-en" data-lang-en="CREATE VALUE BY EXPLOITING INFORMATION ASYMMETRIES."></p>
-        </div>
+        <article class="card ph">
+          <div class="ph-top">
+            <span class="ph-accent"></span>
+            <h3 class="h3 sm" data-lang-zh="信息不对称优势" data-lang-en="Information Asymmetry Advantage">信息不对称优势</h3>
+          </div>
+          <p class="p" data-lang-zh="通过利用信息不对称创造价值" data-lang-en="Create value by exploiting information asymmetries">通过利用信息不对称创造价值</p>
+          <p class="tiny italic philosophy-subtitle-en" data-lang-en="CREATE VALUE BY EXPLOITING INFORMATION ASYMMETRIES."></p>
+        </article>
 
-        <div class="bg-gray-800 p-6 rounded-lg">
-          <h3 class="text-xl font-semibold mb-3 text-blue-400" data-lang-zh="顺应市场趋势" data-lang-en="Follow Market Trends">顺应市场趋势</h3>
-          <p class="text-gray-300 mb-4" data-lang-zh="顺应潮流——与主流趋势保持一致" data-lang-en="Move with the tide—align with prevailing trends">顺应潮流——与主流趋势保持一致</p>
-          <p class="text-sm text-gray-400 italic philosophy-subtitle-en" data-lang-en="MOVE WITH THE TIDE—ALIGN WITH PREVAILING TRENDS."></p>
-        </div>
+        <article class="card ph">
+          <div class="ph-top">
+            <span class="ph-accent"></span>
+            <h3 class="h3 sm" data-lang-zh="顺应市场趋势" data-lang-en="Follow Market Trends">顺应市场趋势</h3>
+          </div>
+          <p class="p" data-lang-zh="顺应潮流——与主流趋势保持一致" data-lang-en="Move with the tide—align with prevailing trends">顺应潮流——与主流趋势保持一致</p>
+          <p class="tiny italic philosophy-subtitle-en" data-lang-en="MOVE WITH THE TIDE—ALIGN WITH PREVAILING TRENDS."></p>
+        </article>
 
-        <div class="bg-gray-800 p-6 rounded-lg">
-          <h3 class="text-xl font-semibold mb-3 text-blue-400" data-lang-zh="持续自我投资" data-lang-en="Continuous Self-Investment">持续自我投资</h3>
-          <p class="text-gray-300 mb-4" data-lang-zh="投资自己以提高内在价值：永不停止学习" data-lang-en="Invest in yourself to raise your intrinsic worth: never stop learning">投资自己以提高内在价值：永不停止学习</p>
-          <p class="text-sm text-gray-400 italic philosophy-subtitle-en" data-lang-en="INVEST IN YOURSELF TO RAISE YOUR INTRINSIC WORTH: NEVER STOP LEARNING."></p>
-        </div>
+        <article class="card ph">
+          <div class="ph-top">
+            <span class="ph-accent"></span>
+            <h3 class="h3 sm" data-lang-zh="持续自我投资" data-lang-en="Continuous Self-Investment">持续自我投资</h3>
+          </div>
+          <p class="p" data-lang-zh="投资自己以提高内在价值：永不停止学习" data-lang-en="Invest in yourself to raise your intrinsic worth: never stop learning">投资自己以提高内在价值：永不停止学习</p>
+          <p class="tiny italic philosophy-subtitle-en" data-lang-en="INVEST IN YOURSELF TO RAISE YOUR INTRINSIC WORTH: NEVER STOP LEARNING."></p>
+        </article>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- CONTACT -->
-  <section id="contact" class="py-20 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center mb-16">
-        <h2 class="text-4xl font-bold text-gray-900 mb-4" data-lang-zh="与我联系" data-lang-en="Contact Me">与我联系</h2>
-        <p class="text-xl text-gray-600" data-lang-zh="Connect with me" data-lang-en="Connect with me">Connect with me</p>
-        <div class="w-24 h-1 bg-blue-600 mx-auto mt-4"></div>
+    <!-- CONTACT -->
+    <section id="contact" class="section">
+      <div class="section-head">
+        <h2 class="h2" data-lang-zh="与我联系" data-lang-en="Contact Me">与我联系</h2>
+        <p class="lead" data-lang-zh="Connect with me" data-lang-en="Connect with me">Connect with me</p>
       </div>
 
-      <div class="grid lg:grid-cols-2 gap-12">
-        <div>
-          <div class="space-y-8">
-            <div>
-              <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
-                </svg>
-                <span data-lang-zh="地址" data-lang-en="Address">地址</span>
-              </h3>
-              <p
-                class="text-gray-600 ml-7"
-                data-lang-zh="香港九龙新蒲岗太子道东 704 号新时代工贸商业中心 1701-02 室 AO7 房"
-                data-lang-en="RM AO7,1701-02 NEW TREND CENTRE, 704 PRINCE EDWARD ROAD EAST, SAN PO KONG KLN"
-              >
-                香港九龙新蒲岗太子道东 704 号新时代工贸商业中心 1701-02 室 AO7 房
-              </p>
+      <div class="contact-grid">
+        <div class="card">
+          <div class="info-block">
+            <div class="info-title">
+              <span class="ico">📍</span>
+              <span data-lang-zh="地址" data-lang-en="Address">地址</span>
+            </div>
+            <div class="p"
+                 data-lang-zh="香港九龙新蒲岗太子道东 704 号新时代工贸商业中心 1701-02 室 AO7 房"
+                 data-lang-en="RM AO7,1701-02 NEW TREND CENTRE, 704 PRINCE EDWARD ROAD EAST, SAN PO KONG KLN">
+              香港九龙新蒲岗太子道东 704 号新时代工贸商业中心 1701-02 室 AO7 房
+            </div>
+          </div>
+
+          <div class="info-block">
+            <div class="info-title">
+              <span class="ico">✉️</span>
+              <span data-lang-zh="邮箱" data-lang-en="Email">邮箱</span>
+            </div>
+            <div class="p mono">
+              <div>Shinevistagroup@gmail.com</div>
+              <div>Captain@tianzeqi.com</div>
+            </div>
+          </div>
+
+          <div class="info-block">
+            <div class="info-title">
+              <span class="ico">📞</span>
+              <span data-lang-zh="电话" data-lang-en="Phone">电话</span>
+            </div>
+            <div class="p mono">
+              <div>+852 61600784</div>
+              <div>+44 07933066791</div>
+              <div>+86 18347348633</div>
+              <div>+86 15799916014</div>
             </div>
 
-            <div>
-              <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
-                </svg>
-                <span data-lang-zh="邮箱" data-lang-en="Email">邮箱</span>
-              </h3>
-              <div class="ml-7 space-y-2">
-                <p class="text-gray-600">Shinevistagroup@gmail.com</p>
-                <p class="text-gray-600">Captain@tianzeqi.com</p>
-              </div>
-            </div>
-
-            <div>
-              <h3 class="text-lg font-semibold text-gray-900 mb-4 flex items-center">
-                <svg class="w-5 h-5 mr-2 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
-                </svg>
-                <span data-lang-zh="电话" data-lang-en="Phone">电话</span>
-              </h3>
-
-              <div class="ml-7 space-y-2 mb-4">
-                <p class="text-gray-600">+852 61600784</p>
-                <p class="text-gray-600">+44 07933066791</p>
-                <p class="text-gray-600">+86 18347348633</p>
-                <p class="text-gray-600">+86 15799916014</p>
-              </div>
-
-              <div class="ml-7 flex space-x-6">
-                <a href="https://imgbed.captainzeqi.com/file/1757058060066_dd722ecf76badf1bd9771e980c0e102.png" target="_blank" class="w-10 h-10 block social-link hover:opacity-75 transition-opacity" title="WeChat">
-                  <img src="https://imgbed.captainzeqi.com/file/1757051827097_WeChat.png" alt="WeChat" class="w-full h-full object-contain" />
-                </a>
-                <a href="https://t.me/shinevista" target="_blank" class="w-10 h-10 block social-link hover:opacity-75 transition-opacity" title="Telegram">
-                  <img src="https://imgbed.captainzeqi.com/file/1757051831675_Telegram.png" alt="Telegram" class="w-full h-full object-contain" />
-                </a>
-                <a href="https://wa.me/85261600784" target="_blank" class="w-10 h-10 block social-link hover:opacity-75 transition-opacity" title="WhatsApp">
-                  <img src="https://imgbed.captainzeqi.com/file/1757051826538_WhatsApp.png" alt="WhatsApp" class="w-full h-full object-contain" />
-                </a>
-              </div>
+            <div class="social">
+              <a href="https://imgbed.captainzeqi.com/file/1757058060066_dd722ecf76badf1bd9771e980c0e102.png" target="_blank" rel="noopener" class="social-link" title="WeChat" aria-label="WeChat">
+                <img src="https://imgbed.captainzeqi.com/file/1757051827097_WeChat.png" alt="WeChat" />
+              </a>
+              <a href="https://t.me/shinevista" target="_blank" rel="noopener" class="social-link" title="Telegram" aria-label="Telegram">
+                <img src="https://imgbed.captainzeqi.com/file/1757051831675_Telegram.png" alt="Telegram" />
+              </a>
+              <a href="https://wa.me/85261600784" target="_blank" rel="noopener" class="social-link" title="WhatsApp" aria-label="WhatsApp">
+                <img src="https://imgbed.captainzeqi.com/file/1757051826538_WhatsApp.png" alt="WhatsApp" />
+              </a>
             </div>
           </div>
         </div>
 
-        <div>
-          <form action="https://formsubmit.co/shinevista@163.com" method="POST" class="space-y-6">
-            <div>
-              <label for="contact-name" class="block text-sm font-medium text-gray-700 mb-2" data-lang-zh="姓名" data-lang-en="Name">姓名</label>
+        <div class="card">
+          <form action="https://formsubmit.co/shinevista@163.com" method="POST" class="form">
+            <div class="field">
+              <label for="contact-name" data-lang-zh="姓名" data-lang-en="Name">姓名</label>
               <input
                 type="text"
                 id="contact-name"
                 name="name"
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 data-lang-zh-placeholder="您的姓名"
                 data-lang-en-placeholder="Your Name"
                 placeholder="您的姓名"
@@ -646,13 +538,12 @@
               />
             </div>
 
-            <div>
-              <label for="contact-email" class="block text-sm font-medium text-gray-700 mb-2" data-lang-zh="邮箱" data-lang-en="Email">邮箱</label>
+            <div class="field">
+              <label for="contact-email" data-lang-zh="邮箱" data-lang-en="Email">邮箱</label>
               <input
                 type="email"
                 id="contact-email"
                 name="email"
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 data-lang-zh-placeholder="您的邮箱"
                 data-lang-en-placeholder="Your Email"
                 placeholder="您的邮箱"
@@ -660,13 +551,12 @@
               />
             </div>
 
-            <div>
-              <label for="contact-message" class="block text-sm font-medium text-gray-700 mb-2" data-lang-zh="消息" data-lang-en="Message">消息</label>
+            <div class="field">
+              <label for="contact-message" data-lang-zh="消息" data-lang-en="Message">消息</label>
               <textarea
                 id="contact-message"
                 name="message"
                 rows="5"
-                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 data-lang-zh-placeholder="您的消息"
                 data-lang-en-placeholder="Your Message"
                 placeholder="您的消息"
@@ -674,33 +564,25 @@
               ></textarea>
             </div>
 
-            <button type="submit" class="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors font-medium" data-lang-zh="发送消息" data-lang-en="Send Message">
-              发送消息
-            </button>
+            <button type="submit" class="btn btn-primary full" data-lang-zh="发送消息" data-lang-en="Send Message">发送消息</button>
           </form>
         </div>
       </div>
-    </div>
-  </section>
+    </section>
 
-  <footer class="bg-gray-900 text-white py-8">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="text-center">
-        <p class="text-gray-400" data-lang-zh="&copy; 2025 田泽琦 (AZ Captain). 版权所有。" data-lang-en="&copy; 2025 Tian Zeqi (AZ Captain). All rights reserved.">
-          &copy; 2025 田泽琦 (AZ CAPTAIN). 版权所有。
-        </p>
-      </div>
-    </div>
-  </footer>
+    <footer class="footer">
+      <div class="tiny" data-lang-zh="© 2025 田泽琦 (Captain Ninja). 版权所有。" data-lang-en="© 2025 Tian Zeqi (Captain Ninja). All rights reserved.">© 2025 田泽琦 (Captain Ninja). 版权所有。</div>
+    </footer>
+  </main>
 
   <script src="script.js"></script>
 
+  <!-- Tawk -->
   <script type="text/javascript">
-    var Tawk_API = Tawk_API || {},
-      Tawk_LoadStart = new Date();
+    var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
     (function () {
       var s1 = document.createElement("script"),
-        s0 = document.getElementsByTagName("script")[0];
+          s0 = document.getElementsByTagName("script")[0];
       s1.async = true;
       s1.src = "https://embed.tawk.to/68cba403ce8a271924f5a472/1j5dnhbei";
       s1.charset = "UTF-8";
