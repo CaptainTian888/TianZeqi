@@ -1,4 +1,7 @@
 :root {
+  --service-icon-wrap-size: 3rem;
+  --service-icon-size: 2.4rem; /* ~80% of wrap */
+
   --primary-blue: #2563eb;
   --primary-blue-hover: #1d4ed8;
   --secondary-purple: #9333ea;
@@ -150,8 +153,8 @@ html {
 
 /* ===== Work Areas Icons: outline + flat color (same style as your sample) ===== */
 .service-icon-wrap {
-  width: 3rem;
-  height: 3rem;
+  width: var(--service-icon-wrap-size);
+  height: var(--service-icon-wrap-size);
   border-radius: 0.85rem;
   display: inline-flex;
   align-items: center;
@@ -162,15 +165,17 @@ html {
   margin-bottom: 0.9rem;
 }
 
+
 .service-icon {
-  width: 30px;
-  height: 30px;
+  width: var(--service-icon-size);
+  height: var(--service-icon-size);
   stroke: #111827;
   stroke-width: 1.8;
   stroke-linecap: round;
   stroke-linejoin: round;
   fill: none;
 }
+
 
 /* Responsive */
 @media (max-width: 992px) {
@@ -180,8 +185,13 @@ html {
 }
 
 @media (max-width: 480px) {
+
   .service-icon-wrap {
     width: 2.8rem;
     height: 2.8rem;
+
+  :root {
+    --service-icon-wrap-size: 2.8rem;
+    --service-icon-size: 2.2rem; /* ~79% of wrap */
   }
 }
