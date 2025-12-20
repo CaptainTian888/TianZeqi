@@ -596,3 +596,12 @@ input:focus, textarea:focus{
 /* Social icon enhancement */
 .social-link{ width:52px; height:52px; }
 .social-link img{ width:34px; height:34px; }
+
+
+
+/* ===== Contact social icons: dark mode purple ===== */
+:root:not([data-theme="light"]) .social-link img{
+  /* Recolor monochrome SVG icons to violet (#7c3aed) in dark mode */
+  filter: brightness(0) saturate(100%) invert(23%) sepia(88%) saturate(4554%) hue-rotate(257deg) brightness(98%) contrast(104%);
+}
+
