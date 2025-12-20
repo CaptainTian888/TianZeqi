@@ -592,3 +592,7 @@ input:focus, textarea:focus{
 :root[data-theme="light"] .acc-body{
   border-left: 2px solid rgba(0,0,0,.18);
 }
+
+/* Social icon enhancement */
+.social-link{ width:52px; height:52px; }
+.social-link img{ width:34px; height:34px; }
