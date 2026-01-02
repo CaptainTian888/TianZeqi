@@ -118,4 +118,42 @@ document.addEventListener('DOMContentLoaded', () => {
   // Init
   applyLanguage(currentLang);
   setActiveNavLink();
+
+  // ---------- WeChat image modal (floating window) ----------
+  const wechatBtns = document.querySelectorAll('.wechat-btn');
+  const imageModal = document.getElementById('image-modal');
+  if (imageModal) {
+    const backdrop = imageModal.querySelector('.image-modal-backdrop');
+    const win = imageModal.querySelector('.image-modal-window');
+    const imgEl = imageModal.querySelector('.image-modal-img');
+    const closeBtn = imageModal.querySelector('.image-modal-close');
+
+    function openImageModal(url) {
+      if (!url) return;
+      imgEl.src = url;
+      imageModal.setAttribute('aria-hidden', 'false');
+      document.documentElement.style.overflow = 'hidden';
+    }
+
+    function closeImageModal() {
+      imageModal.setAttribute('aria-hidden', 'true');
+      imgEl.src = '';
+      document.documentElement.style.overflow = '';
+    }
+
+    wechatBtns.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const url = btn.dataset.imageUrl || btn.getAttribute('href');
+        openImageModal(url);
+      });
+    });
+
+    backdrop && backdrop.addEventListener('click', closeImageModal);
+    closeBtn && closeBtn.addEventListener('click', closeImageModal);
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && imageModal.getAttribute('aria-hidden') === 'false') closeImageModal();
+    });
+  }
 });
