@@ -605,3 +605,17 @@ input:focus, textarea:focus{
   filter: brightness(0) saturate(100%) invert(23%) sepia(88%) saturate(4554%) hue-rotate(257deg) brightness(98%) contrast(104%);
 }
 
+/* Image modal (floating window) */
+.image-modal{ display:none; position:fixed; inset:0; z-index:200; align-items:center; justify-content:center; }
+.image-modal[aria-hidden="false"]{ display:flex; }
+.image-modal-backdrop{ position:absolute; inset:0; background:rgba(0,0,0,0.55); backdrop-filter: blur(6px); }
+.image-modal-window{ position:relative; z-index:210; max-width:92%; max-height:92%; border-radius:12px; overflow:hidden; box-shadow: 0 30px 80px rgba(2,6,23,.65); background: var(--panel2); border: 1px solid var(--border); display:flex; align-items:center; justify-content:center; }
+.image-modal-img{ width: auto; max-width:100%; max-height:86vh; height: auto; display:block; }
+.image-modal-close{ position:absolute; right:8px; top:8px; z-index:220; background: rgba(0,0,0,0.35); color: #fff; border: none; width:36px; height:36px; border-radius:8px; font-weight:800; cursor:pointer; }
+:root[data-theme="light"] .image-modal-close{ background: rgba(255,255,255,0.85); color: #111; }
+
+@media (max-width:560px){
+  .image-modal-window{ width: 92%; height: auto; max-height: 86vh; border-radius: 10px; }
+  .image-modal-img{ max-height:72vh; }
+}
+
