@@ -155,6 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---------- WeChat image modal (floating window) ----------
   const wechatBtns = document.querySelectorAll('.wechat-btn');
+  const kakaoBtns = document.querySelectorAll('.kakao-btn');
   const imageModal = document.getElementById('image-modal');
   if (imageModal) {
     const backdrop = imageModal.querySelector('.image-modal-backdrop');
@@ -176,6 +177,14 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     wechatBtns.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        const url = btn.dataset.imageUrl || btn.getAttribute('href');
+        openImageModal(url);
+      });
+    });
+
+    kakaoBtns.forEach((btn) => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
         const url = btn.dataset.imageUrl || btn.getAttribute('href');
