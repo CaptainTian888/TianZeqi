@@ -627,6 +627,31 @@ input:focus, textarea:focus{
   grid-template-columns: repeat(2, minmax(0,1fr));
   gap: 12px;
 }
+/* Single featured entry layout */
+.learn-more-single{
+  grid-template-columns: minmax(0, 560px);
+  justify-content: center;
+}
+.learn-card-featured{
+  min-height: 128px;
+  padding: 22px 26px;
+  border-color: rgba(124,58,237,.28);
+  background: linear-gradient(135deg, rgba(124,58,237,.08), rgba(96,165,250,.04));
+}
+:root[data-theme="light"] .learn-card-featured{
+  border-color: rgba(109,40,217,.22);
+  background: linear-gradient(135deg, rgba(109,40,217,.05), rgba(37,99,235,.03));
+}
+.learn-card-featured .learn-card-icon{
+  width: 64px;
+  height: 64px;
+  flex: 0 0 64px;
+  border-radius: 16px;
+}
+.learn-card-featured:hover{
+  transform: translateY(-4px);
+  box-shadow: 0 14px 34px rgba(124,58,237,.18);
+}
 .learn-card{
   display:flex;
   align-items:center;
