@@ -515,6 +515,10 @@ input:focus, textarea:focus{
   border-color: rgba(96,165,250,.55);
   background: rgba(96,165,250,.06);
 }
+#contact-message{
+  min-height: 190px;
+  resize: vertical;
+}
 
 .footer{
   max-width: var(--max);
