@@ -5,13 +5,37 @@
   <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title data-lang-zh="田泽琦" data-lang-en="Zack Miller">Zack Miller</title>
   <meta name="description" data-lang-zh="田泽琦" data-lang-en="Zack Miller" />
-  <link rel="icon" type="image/jpeg" href="https://imagehub.tianzeqi.dev/file/1758348585439_黑白路飞透明背景.png" />
+  <meta name="theme-color" content="#0b1020" />
+  <meta name="color-scheme" content="dark light" />
+  <meta name="referrer" content="strict-origin-when-cross-origin" />
+  <meta name="robots" content="index,follow,max-image-preview:large" />
+  <link rel="canonical" href="https://www.tianzeqi.com/" />
+  <meta property="og:type" content="profile" />
+  <meta property="og:title" content="Zack Miller · Tian ZeQi" />
+  <meta property="og:description" content="Personal profile and business overview." />
+  <meta property="og:url" content="https://www.tianzeqi.com/" />
+  <meta property="og:image" content="https://imagehub.tianzeqi.dev/file/常用/1757062317294_business.jpeg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Tian ZeQi",
+      "alternateName": "Zack Miller",
+      "url": "https://www.tianzeqi.com/",
+      "image": "https://imagehub.tianzeqi.dev/file/常用/1757062317294_business.jpeg",
+      "jobTitle": "Blockchain Finance Engineer",
+      "email": "mailto:captain@tianzeqi.com"
+    }
+  </script>
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://imagehub.tianzeqi.dev" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css?v=20260725" />
 </head>
 
 <body>
@@ -30,21 +54,21 @@
 
   <!-- Floating controls -->
   <div class="floating">
-    <div id="lang-toggle" class="lang-switch" role="button" tabindex="0" aria-label="切换语言 / Toggle Language">
+    <button id="lang-toggle" class="lang-switch" type="button" aria-label="切换语言 / Toggle Language">
       <span class="lang-option" data-lang="zh-CN">中文</span>
       <span class="lang-option" data-lang="en">English</span>
-    </div>
-    <div id="theme-toggle" class="theme-switch" role="button" tabindex="0" aria-label="切换主题 / Toggle Theme">
+    </button>
+    <button id="theme-toggle" class="theme-switch" type="button" aria-label="切换主题 / Toggle Theme">
       <span class="theme-option" data-theme-val="dark"><span class="theme-ico">☾</span><span data-lang-zh="深色" data-lang-en="Dark">深色</span></span>
       <span class="theme-option" data-theme-val="light"><span class="theme-ico">☀</span><span data-lang-zh="浅色" data-lang-en="Light">浅色</span></span>
-    </div>
-    <button id="to-top" class="btn btn-ghost" aria-label="Back to Top" title="Top">↑</button>
+    </button>
+    <button id="to-top" class="btn btn-ghost" type="button" aria-label="Back to Top" title="Top" hidden>↑</button>
   </div>
 
   <!-- Top bar (mobile) -->
   <header class="topbar">
     <a class="brand" href="#home" data-lang-zh="顺势而为，知行知止" data-lang-en="Keep On Going">顺势而为，知行知止</a>
-    <button id="mobile-menu-button" class="icon-btn" aria-controls="mobile-menu" aria-expanded="false">☰</button>
+    <button id="mobile-menu-button" class="icon-btn" type="button" aria-controls="mobile-menu" aria-expanded="false" aria-label="打开导航菜单">☰</button>
   </header>
 
   <!-- Sidebar nav (desktop) -->
@@ -89,8 +113,10 @@
           <div class="media-card tilt-card">
             <div class="media-frame">
               <img
-                src="https://imagehub.tianzeqi.dev/file/常用/1757062317294_business.jpeg"
+                src="assets/profile-business.jpeg"
                 alt="田泽琦"
+                width="1332"
+                height="2000"
                 loading="eager"
                 decoding="async"
               />
@@ -117,7 +143,7 @@
             </div>
             <div class="role-item">
               <span class="role-node"></span>
-              <span class="role-text" data-lang-zh="国际贸易<span class=&quot;auto-years-inline&quot;></span>年从业者" data-lang-en="<span class=&quot;auto-years-inline&quot;></span> Years in International Trade">国际贸易<span class="auto-years-inline"></span>年从业者</span>
+              <span class="role-text" data-lang-html data-lang-zh="国际贸易<span class=&quot;auto-years-inline&quot;></span>年从业者" data-lang-en="<span class=&quot;auto-years-inline&quot;></span> Years in International Trade">国际贸易<span class="auto-years-inline"></span>年从业者</span>
             </div>
             <div class="role-item">
               <span class="role-node"></span>
@@ -134,12 +160,13 @@
           </div>
 
           <p class="p bio-callout"
+             data-lang-html
              data-lang-zh="<span class=&quot;auto-years-inline&quot;></span>年跨境电商从业经验，大学在校创业曾获得中国国际互联网+创业大赛国际三等奖、蓝桥杯创业大赛国家级一等奖。从事平台：亚马逊、ETSY、TikTok、Ozon、Wildberries、海外独立站。"
              data-lang-en="<span class=&quot;auto-years-inline&quot;></span> years of experience in cross-border e-commerce. His university startup won third prize in the China International Internet Plus Entrepreneurship Competition and first prize in the Blue Bridge Cup National Entrepreneurship Competition. Platforms he worked on include Amazon, ETSY, TikTok, Ozon, Wildberries, and overseas independent websites.">
             <span class="auto-years-inline"></span>年跨境电商从业经验，大学在校创业曾获得中国国际互联网+创业大赛国际三等奖、蓝桥杯创业大赛国家级一等奖。从事平台：亚马逊、ETSY、TikTok、Ozon、Wildberries、海外独立站。
           </p>
 
-          
+
 
           <div class="stats">
             <div class="stat" data-reveal data-reveal-delay="300">
@@ -227,8 +254,10 @@
         <div class="card media-card-lg tilt-card" data-reveal data-reveal-delay="200">
           <div class="media-frame">
             <img
-              src="https://imagehub.tianzeqi.dev/file/1764061873786_顺为前台.png"
+              src="assets/business-ecosystem.png"
               alt="About"
+              width="1280"
+              height="853"
               loading="lazy"
               decoding="async"
             />
@@ -538,32 +567,32 @@
               <span data-lang-zh="电话" data-lang-en="Phone">电话</span>
             </div>
             <div class="p mono phone-list">
-              <div class="phone-row"><span class="phone-country" title="United States"><img class="phone-flag" src="https://flagcdn.com/us.svg" alt="United States flag" loading="lazy"><span>US</span></span><span class="phone-number">+1 (448)442-6431</span></div>
-              <div class="phone-row"><span class="phone-country" title="United States"><img class="phone-flag" src="https://flagcdn.com/us.svg" alt="United States flag" loading="lazy"><span>US</span></span><span class="phone-number">+1 (448)443-6357</span></div>
-              <div class="phone-row"><span class="phone-country" title="Hong Kong"><img class="phone-flag" src="https://flagcdn.com/hk.svg" alt="Hong Kong flag" loading="lazy"><span>HK</span></span><span class="phone-number">+852 61600784</span></div>
-              <div class="phone-row"><span class="phone-country" title="United Kingdom"><img class="phone-flag" src="https://flagcdn.com/gb.svg" alt="United Kingdom flag" loading="lazy"><span>UK</span></span><span class="phone-number">+44 7933066791</span></div>
-              <div class="phone-row"><span class="phone-country" title="China"><img class="phone-flag" src="https://flagcdn.com/cn.svg" alt="China flag" loading="lazy"><span>CN</span></span><span class="phone-number">+86 18347348633</span></div>
-              <div class="phone-row"><span class="phone-country" title="China"><img class="phone-flag" src="https://flagcdn.com/cn.svg" alt="China flag" loading="lazy"><span>CN</span></span><span class="phone-number">+86 15799916014</span></div>
+              <div class="phone-row"><span class="phone-country" title="United States"><img class="phone-flag" src="assets/flags/us.svg" alt="United States flag" loading="lazy" width="24" height="18"><span>US</span></span><span class="phone-number">+1 (448)442-6431</span></div>
+              <div class="phone-row"><span class="phone-country" title="United States"><img class="phone-flag" src="assets/flags/us.svg" alt="United States flag" loading="lazy" width="24" height="18"><span>US</span></span><span class="phone-number">+1 (448)443-6357</span></div>
+              <div class="phone-row"><span class="phone-country" title="Hong Kong"><img class="phone-flag" src="assets/flags/hk.svg" alt="Hong Kong flag" loading="lazy" width="24" height="18"><span>HK</span></span><span class="phone-number">+852 61600784</span></div>
+              <div class="phone-row"><span class="phone-country" title="United Kingdom"><img class="phone-flag" src="assets/flags/gb.svg" alt="United Kingdom flag" loading="lazy" width="24" height="18"><span>UK</span></span><span class="phone-number">+44 7933066791</span></div>
+              <div class="phone-row"><span class="phone-country" title="China"><img class="phone-flag" src="assets/flags/cn.svg" alt="China flag" loading="lazy" width="24" height="18"><span>CN</span></span><span class="phone-number">+86 18347348633</span></div>
+              <div class="phone-row"><span class="phone-country" title="China"><img class="phone-flag" src="assets/flags/cn.svg" alt="China flag" loading="lazy" width="24" height="18"><span>CN</span></span><span class="phone-number">+86 15799916014</span></div>
             </div>
 
             <div class="social">
               <a href="#" class="social-link wechat-btn" data-image-url="https://imagehub.tianzeqi.dev/file/1767369324489_a96b97c8845796169d00f098f6fc1d51.jpg" title="WeChat" aria-label="WeChat">
-                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/wechat.svg" alt="WeChat" />
+                <img src="assets/icons/wechat.svg" alt="" width="34" height="34" />
               </a>
               <a href="https://t.me/shinevista" target="_blank" rel="noopener" class="social-link" title="Telegram" aria-label="Telegram">
-                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" alt="Telegram" />
+                <img src="assets/icons/telegram.svg" alt="" width="34" height="34" />
               </a>
               <a href="https://line.me/ti/p/HkqTEuP4tF" target="_blank" rel="noopener" class="social-link" title="Line" aria-label="Line">
-                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/line.svg" alt="Line" />
+                <img src="assets/icons/line.svg" alt="" width="34" height="34" />
               </a>
               <a href="https://wa.me/85261600784" target="_blank" rel="noopener" class="social-link" title="WhatsApp" aria-label="WhatsApp">
-                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/whatsapp.svg" alt="WhatsApp" />
+                <img src="assets/icons/whatsapp.svg" alt="" width="34" height="34" />
               </a>
               <a href="https://discord.gg/fp8ruHDW" target="_blank" rel="noopener" class="social-link" title="Discord" aria-label="Discord">
-                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" alt="Discord" />
+                <img src="assets/icons/discord.svg" alt="" width="34" height="34" />
               </a>
               <a href="#" class="social-link kakao-btn" data-image-url="https://imagehub.tianzeqi.dev/file/1775973860333_5b7696df59e1c6ac9a3c4a1f89e130b7.jpg" title="KakaoTalk" aria-label="KakaoTalk">
-                <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/kakaotalk.svg" alt="KakaoTalk" />
+                <img src="assets/icons/kakaotalk.svg" alt="" width="34" height="34" />
               </a>
             </div>
           </div>
@@ -639,7 +668,7 @@
       <div class="learn-more-grid learn-more-single">
         <a class="learn-card learn-card-featured card tilt-card magnetic" href="https://www.tianzeqi.link/" target="_blank" rel="noopener noreferrer" data-reveal>
           <div class="learn-card-top">
-            <img class="learn-card-icon" src="https://imagehub.tianzeqi.dev/file/favicon/1766540951185_5.png" alt="Tian ZeQi Link" loading="lazy" decoding="async" />
+            <img class="learn-card-icon" src="assets/tianzeqi-link.png" alt="Tian ZeQi Link" loading="lazy" decoding="async" width="56" height="56" />
             <div>
               <h3 class="h3 sm" data-lang-zh="业务导航" data-lang-en="Business Portal">业务导航</h3>
               <p class="p learn-url">www.tianzeqi.link</p>
@@ -666,23 +695,23 @@
     </footer>
   </main>
 
-  <script src="script.js"></script>
+  <script src="script.js?v=20260725"></script>
 
   <!-- Tawk -->
   <!-- Image modal for WeChat (in-page floating window) -->
   <div id="image-modal" class="image-modal" aria-hidden="true">
-    <div class="image-modal-backdrop"></div>
-    <div class="image-modal-window" role="dialog" aria-modal="true">
-      <button class="image-modal-close" aria-label="Close">✕</button>
+    <div class="image-modal-backdrop" aria-hidden="true"></div>
+    <div class="image-modal-window" role="dialog" aria-modal="true" aria-label="Social contact QR code">
+      <button class="image-modal-close" type="button" aria-label="Close">✕</button>
       <img class="image-modal-img" src="" alt="WeChat" />
     </div>
   </div>
 
   <!-- Legal / Privacy modal -->
   <div id="legal-modal" class="legal-modal" aria-hidden="true">
-    <div class="legal-modal-backdrop"></div>
+    <div class="legal-modal-backdrop" aria-hidden="true"></div>
     <div class="legal-modal-window" role="dialog" aria-modal="true" aria-labelledby="legal-modal-title">
-      <button class="legal-modal-close" aria-label="Close">✕</button>
+      <button class="legal-modal-close" type="button" aria-label="Close">✕</button>
       <div class="legal-modal-header">
         <h2 class="h2" id="legal-modal-title" data-lang-zh="法律与隐私声明" data-lang-en="Legal & Privacy Notice">法律与隐私声明</h2>
         <p class="lead legal-modal-sub" data-lang-zh="最后更新：2026 年 7 月" data-lang-en="Last updated: July 2026">最后更新：2026 年 7 月</p>
@@ -842,17 +871,23 @@
     </div>
   </div>
 
-  <script type="text/javascript">
+  <script>
     var Tawk_API = Tawk_API || {}, Tawk_LoadStart = new Date();
-    (function () {
+    function loadSupportChat() {
+      if (document.querySelector('script[data-support-chat]')) return;
       var s1 = document.createElement("script"),
           s0 = document.getElementsByTagName("script")[0];
       s1.async = true;
+      s1.dataset.supportChat = "true";
       s1.src = "https://embed.tawk.to/68cba403ce8a271924f5a472/1j5dnhbei";
       s1.charset = "UTF-8";
-      s1.setAttribute("crossorigin", "*");
+      s1.crossOrigin = "anonymous";
       s0.parentNode.insertBefore(s1, s0);
-    })();
+    }
+    window.addEventListener("load", function () {
+      if ("requestIdleCallback" in window) requestIdleCallback(loadSupportChat, { timeout: 2500 });
+      else setTimeout(loadSupportChat, 1500);
+    }, { once: true });
   </script>
 </body>
 </html>

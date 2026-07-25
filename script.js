@@ -9,8 +9,41 @@ document.addEventListener('DOMContentLoaded', () => {
   const allNavItems = document.querySelectorAll('.nav-item');
   const sections = document.querySelectorAll('section');
 
+  // ---------- Safe browser preferences ----------
+  const preferences = {
+    get(key, fallback) {
+      try {
+        return window.localStorage.getItem(key) || fallback;
+      } catch (_) {
+        return fallback;
+      }
+    },
+    set(key, value) {
+      try {
+        window.localStorage.setItem(key, value);
+      } catch (_) {
+        // Storage can be unavailable in private mode and embedded WebViews.
+      }
+    }
+  };
+  const focusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
+  function keepFocusInside(event, container) {
+    if (event.key !== 'Tab') return;
+    const focusable = [...container.querySelectorAll(focusableSelector)].filter((el) => !el.hidden);
+    if (!focusable.length) return;
+    const first = focusable[0];
+    const last = focusable[focusable.length - 1];
+    if (event.shiftKey && document.activeElement === first) {
+      event.preventDefault();
+      last.focus();
+    } else if (!event.shiftKey && document.activeElement === last) {
+      event.preventDefault();
+      first.focus();
+    }
+  }
+
   // ---------- Language ----------
-  let currentLang = localStorage.getItem('lang') || 'zh-CN';
+  let currentLang = preferences.get('lang', 'zh-CN');
 
   function applyLanguage(lang) {
     document.documentElement.lang = lang;
@@ -18,12 +51,17 @@ document.addEventListener('DOMContentLoaded', () => {
     var siteDomain = window.location.hostname || 'www.tianzeqi.com';
 
     document.querySelectorAll('[data-lang-zh], [data-lang-en]').forEach((el) => {
-      if (lang === 'zh-CN' && el.dataset.langZh) el.innerHTML = el.dataset.langZh;
-      if (lang === 'en' && el.dataset.langEn) el.innerHTML = el.dataset.langEn;
-      // Auto-replace {SITE_DOMAIN} placeholder with current hostname
-      if (el.innerHTML.indexOf('{SITE_DOMAIN}') !== -1) {
-        el.innerHTML = el.innerHTML.replace(/{SITE_DOMAIN}/g, siteDomain);
+      let value = lang === 'zh-CN' ? el.dataset.langZh : el.dataset.langEn;
+      if (!value) return;
+      value = value.replace(/{SITE_DOMAIN}/g, siteDomain);
+      if (el.tagName === 'META') {
+        el.setAttribute('content', value);
+        return;
       }
+      // Only the two explicitly marked strings contain the controlled inline
+      // span used by the automatic years feature.
+      if (el.hasAttribute('data-lang-html')) el.innerHTML = value;
+      else el.textContent = value;
     });
 
     document.querySelectorAll('[data-lang-zh-placeholder], [data-lang-en-placeholder]').forEach((el) => {
@@ -32,7 +70,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // highlight active language option
-    langToggleBtn.querySelectorAll('.lang-option').forEach(opt => {
+    langToggleBtn?.querySelectorAll('.lang-option').forEach(opt => {
       opt.classList.toggle('active', opt.dataset.lang === lang);
     });
 
@@ -56,16 +94,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  langToggleBtn.addEventListener('click', (e) => {
+  langToggleBtn?.addEventListener('click', (e) => {
     const opt = e.target.closest('.lang-option');
     const targetLang = opt ? opt.dataset.lang : (currentLang === 'zh-CN' ? 'en' : 'zh-CN');
     if (targetLang !== currentLang) {
       currentLang = targetLang;
-      localStorage.setItem('lang', currentLang);
+      preferences.set('lang', currentLang);
       applyLanguage(currentLang);
     }
   });
-  langToggleBtn.addEventListener('keydown', (e) => {
+  langToggleBtn?.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       langToggleBtn.click();
@@ -73,30 +111,31 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ---------- Theme ----------
-  const savedTheme = localStorage.getItem('theme') || 'dark';
+  const savedTheme = preferences.get('theme', 'dark');
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
+    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'light' ? '#f7f8fb' : '#0b1020');
     // highlight active theme option
-    themeToggleBtn.querySelectorAll('.theme-option').forEach(opt => {
+    themeToggleBtn?.querySelectorAll('.theme-option').forEach(opt => {
       opt.classList.toggle('active', opt.dataset.themeVal === theme);
     });
   }
   applyTheme(savedTheme);
 
-  themeToggleBtn.querySelectorAll('.theme-option').forEach(opt => {
+  themeToggleBtn?.querySelectorAll('.theme-option').forEach(opt => {
     opt.addEventListener('click', () => {
       const val = opt.dataset.themeVal;
-      localStorage.setItem('theme', val);
+      preferences.set('theme', val);
       applyTheme(val);
     });
   });
 
-  themeToggleBtn.addEventListener('keydown', (e) => {
+  themeToggleBtn?.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       const current = document.documentElement.getAttribute('data-theme');
       const next = current === 'light' ? 'dark' : 'light';
-      localStorage.setItem('theme', next);
+      preferences.set('theme', next);
       applyTheme(next);
     }
   });
@@ -104,11 +143,12 @@ document.addEventListener('DOMContentLoaded', () => {
   // ---------- Mobile menu ----------
   let isMobileMenuOpen = false;
 
-  function setMobileMenu(open) {
+    function setMobileMenu(open) {
+    if (!mobileMenu || !mobileMenuButton) return;
     isMobileMenuOpen = open;
     mobileMenu.setAttribute('aria-hidden', String(!open));
     mobileMenuButton.setAttribute('aria-expanded', String(open));
-    mobileMenu.style.display = open ? 'flex' : 'none';
+    mobileMenuButton.setAttribute('aria-label', open ? '关闭导航菜单' : '打开导航菜单');
     mobileMenuButton.textContent = open ? '✕' : '☰';
   }
 
@@ -157,15 +197,31 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  window.addEventListener('scroll', setActiveNavLink, { passive: true });
-  window.addEventListener('resize', setActiveNavLink);
-
   // ---------- Back to top ----------
   function toggleToTop() {
-    toTopBtn.style.display = window.scrollY > 600 ? 'inline-flex' : 'none';
+    if (toTopBtn) toTopBtn.hidden = window.scrollY <= 600;
   }
-  toTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-  window.addEventListener('scroll', toggleToTop, { passive: true });
+  toTopBtn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+
+  let viewportUpdatePending = false;
+  function updateViewportUi() {
+    viewportUpdatePending = false;
+    setActiveNavLink();
+    toggleToTop();
+    const scrollProgress = document.getElementById('scroll-progress');
+    if (scrollProgress) {
+      const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = scrollTotal > 0 ? (window.scrollY / scrollTotal) * 100 : 0;
+      scrollProgress.style.width = progress + '%';
+    }
+  }
+  function scheduleViewportUpdate() {
+    if (viewportUpdatePending) return;
+    viewportUpdatePending = true;
+    requestAnimationFrame(updateViewportUi);
+  }
+  window.addEventListener('scroll', scheduleViewportUpdate, { passive: true });
+  window.addEventListener('resize', scheduleViewportUpdate, { passive: true });
   toggleToTop();
 
   // Init
@@ -195,25 +251,30 @@ document.addEventListener('DOMContentLoaded', () => {
     const win = imageModal.querySelector('.image-modal-window');
     const imgEl = imageModal.querySelector('.image-modal-img');
     const closeBtn = imageModal.querySelector('.image-modal-close');
+    let imageModalTrigger = null;
 
-    function openImageModal(url) {
+    function openImageModal(url, trigger) {
       if (!url) return;
+      imageModalTrigger = trigger || document.activeElement;
       imgEl.src = url;
+      imgEl.alt = trigger?.getAttribute('aria-label') || trigger?.title || 'Social contact QR code';
       imageModal.setAttribute('aria-hidden', 'false');
-      document.documentElement.style.overflow = 'hidden';
+      document.documentElement.classList.add('modal-open');
+      closeBtn?.focus();
     }
 
     function closeImageModal() {
       imageModal.setAttribute('aria-hidden', 'true');
       imgEl.src = '';
-      document.documentElement.style.overflow = '';
+      document.documentElement.classList.remove('modal-open');
+      imageModalTrigger?.focus();
     }
 
     wechatBtns.forEach((btn) => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
         const url = btn.dataset.imageUrl || btn.getAttribute('href');
-        openImageModal(url);
+        openImageModal(url, btn);
       });
     });
 
@@ -221,7 +282,7 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
         const url = btn.dataset.imageUrl || btn.getAttribute('href');
-        openImageModal(url);
+        openImageModal(url, btn);
       });
     });
 
@@ -230,6 +291,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && imageModal.getAttribute('aria-hidden') === 'false') closeImageModal();
+      if (imageModal.getAttribute('aria-hidden') === 'false') keepFocusInside(e, imageModal);
     });
   }
 
@@ -241,10 +303,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const legalCloseBtn = legalModal.querySelector('.legal-modal-close');
     const legalBody = legalModal.querySelector('.legal-modal-body');
     const legalLinks = document.querySelectorAll('[data-legal-target]');
+    let legalModalTrigger = null;
 
-    function openLegalModal(targetId) {
+    function openLegalModal(targetId, trigger) {
+      legalModalTrigger = trigger || document.activeElement;
       legalModal.setAttribute('aria-hidden', 'false');
-      document.documentElement.style.overflow = 'hidden';
+      document.documentElement.classList.add('modal-open');
+      legalCloseBtn?.focus();
 
       // Open and scroll to the target section
       if (targetId) {
@@ -263,14 +328,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function closeLegalModal() {
       legalModal.setAttribute('aria-hidden', 'true');
-      document.documentElement.style.overflow = '';
+      document.documentElement.classList.remove('modal-open');
+      legalModalTrigger?.focus();
     }
 
     legalLinks.forEach((link) => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         const target = link.dataset.legalTarget;
-        openLegalModal(target);
+        openLegalModal(target, link);
       });
     });
 
@@ -279,6 +345,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && legalModal.getAttribute('aria-hidden') === 'false') closeLegalModal();
+      if (legalModal.getAttribute('aria-hidden') === 'false') keepFocusInside(e, legalModal);
     });
   }
 
@@ -289,25 +356,40 @@ document.addEventListener('DOMContentLoaded', () => {
   // ============================================================
 
   const isTouchDevice = window.matchMedia('(hover: none)').matches;
+  const pointer = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
+  const pointerSubscribers = [];
+  let pointerFramePending = false;
+  function onPointerMove(callback) {
+    pointerSubscribers.push(callback);
+  }
+  if (!isTouchDevice) {
+    document.addEventListener('mousemove', (event) => {
+      pointer.x = event.clientX;
+      pointer.y = event.clientY;
+      if (pointerFramePending) return;
+      pointerFramePending = true;
+      requestAnimationFrame(() => {
+        pointerFramePending = false;
+        pointerSubscribers.forEach((callback) => callback(pointer));
+      });
+    }, { passive: true });
+  }
 
   // ---------- Custom Cursor ----------
   const cursorDot = document.getElementById('cursor-dot');
   const cursorRing = document.getElementById('cursor-ring');
 
   if (cursorDot && cursorRing && !isTouchDevice) {
-    let mouseX = 0, mouseY = 0;
     let ringX = 0, ringY = 0;
 
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      cursorDot.style.left = mouseX + 'px';
-      cursorDot.style.top = mouseY + 'px';
+    onPointerMove((position) => {
+      cursorDot.style.left = position.x + 'px';
+      cursorDot.style.top = position.y + 'px';
     });
 
     function animateRing() {
-      ringX += (mouseX - ringX) * 0.15;
-      ringY += (mouseY - ringY) * 0.15;
+      ringX += (pointer.x - ringX) * 0.15;
+      ringY += (pointer.y - ringY) * 0.15;
       cursorRing.style.left = ringX + 'px';
       cursorRing.style.top = ringY + 'px';
       requestAnimationFrame(animateRing);
@@ -334,17 +416,10 @@ document.addEventListener('DOMContentLoaded', () => {
   if (gradientOrb && !isTouchDevice) {
     let orbX = window.innerWidth / 2;
     let orbY = window.innerHeight / 2;
-    let targetX = orbX, targetY = orbY;
-
-    document.addEventListener('mousemove', (e) => {
-      targetX = e.clientX;
-      targetY = e.clientY;
-      gradientOrb.style.opacity = '0.4';
-    });
 
     function animateOrb() {
-      orbX += (targetX - orbX) * 0.05;
-      orbY += (targetY - orbY) * 0.05;
+      orbX += (pointer.x - orbX) * 0.05;
+      orbY += (pointer.y - orbY) * 0.05;
       gradientOrb.style.left = orbX + 'px';
       gradientOrb.style.top = orbY + 'px';
       requestAnimationFrame(animateOrb);
@@ -352,7 +427,7 @@ document.addEventListener('DOMContentLoaded', () => {
     animateOrb();
 
     let idleTimer;
-    document.addEventListener('mousemove', () => {
+    onPointerMove(() => {
       clearTimeout(idleTimer);
       gradientOrb.style.opacity = '0.4';
       idleTimer = setTimeout(() => { gradientOrb.style.opacity = '0'; }, 3000);
@@ -361,13 +436,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---------- Scroll Progress Bar ----------
   const scrollProgress = document.getElementById('scroll-progress');
-  if (scrollProgress) {
-    window.addEventListener('scroll', () => {
-      const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = (window.scrollY / scrollTotal) * 100;
-      scrollProgress.style.width = progress + '%';
-    }, { passive: true });
-  }
+  if (scrollProgress) scheduleViewportUpdate();
 
   // ---------- Scroll Reveal ----------
   const revealElements = document.querySelectorAll('[data-reveal]');
@@ -399,24 +468,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---------- Counter Animation ----------
   const counters = document.querySelectorAll('[data-count-target]');
-  const counterObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const el = entry.target;
-        const target = parseInt(el.dataset.countTarget);
-        const suffix = el.dataset.countSuffix || '';
-        if (target === 0) {
-          const years = Math.max(new Date().getFullYear() - 2020, 0);
-          animateCounter(el, years, '+');
-        } else {
-          animateCounter(el, target, suffix);
+  const showCounter = (el, animate = false) => {
+    const target = parseInt(el.dataset.countTarget, 10);
+    const suffix = target === 0 ? '+' : (el.dataset.countSuffix || '');
+    const value = target === 0 ? Math.max(new Date().getFullYear() - 2020, 0) : target;
+    if (animate) animateCounter(el, value, suffix);
+    else el.textContent = value + suffix;
+  };
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          showCounter(entry.target, true);
+          counterObserver.unobserve(entry.target);
         }
-        counterObserver.unobserve(el);
-      }
-    });
-  }, { threshold: 0.5 });
-
-  counters.forEach((el) => counterObserver.observe(el));
+      });
+    }, { threshold: 0.35 });
+    counters.forEach((el) => counterObserver.observe(el));
+  } else {
+    counters.forEach((el) => showCounter(el));
+  }
 
   function animateCounter(el, target, suffix) {
     const duration = 1600;
@@ -480,7 +551,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---------- Particle Network ----------
   const canvas = document.getElementById('particle-canvas');
-  if (canvas && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const shouldAnimateParticles = !isTouchDevice
+    && !window.matchMedia('(max-width: 980px)').matches
+    && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    && !navigator.connection?.saveData;
+  if (canvas && shouldAnimateParticles) {
     const ctx = canvas.getContext('2d');
     let particles = [];
     let animationId;
@@ -491,11 +566,11 @@ document.addEventListener('DOMContentLoaded', () => {
       canvas.height = window.innerHeight;
     }
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('resize', resizeCanvas, { passive: true });
 
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
+    onPointerMove((position) => {
+      mouseX = position.x;
+      mouseY = position.y;
     });
 
     function Particle() {
@@ -546,7 +621,11 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
     initParticles();
-    window.addEventListener('resize', initParticles);
+    let particleResizeTimer;
+    window.addEventListener('resize', () => {
+      clearTimeout(particleResizeTimer);
+      particleResizeTimer = setTimeout(initParticles, 150);
+    }, { passive: true });
 
     function drawConnections() {
       var isLight = document.documentElement.getAttribute('data-theme') === 'light';
@@ -606,14 +685,17 @@ document.addEventListener('DOMContentLoaded', () => {
         animate();
       }
     });
+  } else if (canvas) {
+    canvas.hidden = true;
   }
 
   // ---------- Nav Click Pulse ----------
   allNavItems.forEach((item) => {
     item.addEventListener('click', () => {
-      item.style.transform = 'scale(0.96)';
-      setTimeout(() => { item.style.transform = ''; }, 200);
+      item.classList.remove('nav-pulse');
+      requestAnimationFrame(() => item.classList.add('nav-pulse'));
     });
+    item.addEventListener('animationend', () => item.classList.remove('nav-pulse'));
   });
 
   // ---------- Hero Image Parallax ----------
@@ -621,9 +703,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (heroMedia && !isTouchDevice) {
     const heroImg = heroMedia.querySelector('img');
     if (heroImg) {
-      document.addEventListener('mousemove', (e) => {
-        var x = (e.clientX / window.innerWidth - 0.5) * 10;
-        var y = (e.clientY / window.innerHeight - 0.5) * 10;
+      onPointerMove((position) => {
+        var x = (position.x / window.innerWidth - 0.5) * 10;
+        var y = (position.y / window.innerHeight - 0.5) * 10;
         heroImg.style.transform = 'scale(1.02) translate(' + x + 'px, ' + y + 'px)';
       });
     }
