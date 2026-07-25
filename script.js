@@ -371,19 +371,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---------- Scroll Reveal ----------
   const revealElements = document.querySelectorAll('[data-reveal]');
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (entry.isIntersecting) {
-        const delay = parseInt(entry.target.dataset.revealDelay || '0');
-        setTimeout(() => {
-          entry.target.classList.add('revealed');
-        }, delay);
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    const revealObserver = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const delay = parseInt(entry.target.dataset.revealDelay || '0', 10);
+          setTimeout(() => {
+            entry.target.classList.add('revealed');
+          }, delay);
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.05, rootMargin: '0px 0px -20px 0px' });
 
-  revealElements.forEach((el) => revealObserver.observe(el));
+    document.documentElement.classList.add('reveal-ready');
+    revealElements.forEach((el) => revealObserver.observe(el));
+
+    // A safety net for WebViews that expose IntersectionObserver but fail to
+    // deliver callbacks reliably after restoring a background tab.
+    window.setTimeout(() => {
+      revealElements.forEach((el) => el.classList.add('revealed'));
+      document.documentElement.classList.remove('reveal-ready');
+    }, 2500);
+  } else {
+    revealElements.forEach((el) => el.classList.add('revealed'));
+  }
 
   // ---------- Counter Animation ----------
   const counters = document.querySelectorAll('[data-count-target]');
