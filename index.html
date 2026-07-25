@@ -15,10 +15,29 @@
 </head>
 
 <body>
+  <!-- Particle canvas -->
+  <canvas id="particle-canvas" class="particle-canvas"></canvas>
+
+  <!-- Mouse-following gradient orb -->
+  <div class="gradient-orb" id="gradient-orb"></div>
+
+  <!-- Custom cursor -->
+  <div class="cursor-dot" id="cursor-dot"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
+
+  <!-- Scroll progress bar -->
+  <div class="scroll-progress" id="scroll-progress"></div>
+
   <!-- Floating controls -->
   <div class="floating">
-    <button id="lang-toggle" class="btn btn-ghost" data-lang-zh="中文" data-lang-en="English" aria-label="Toggle Language">English</button>
-    <button id="theme-toggle" class="btn btn-ghost" aria-label="Toggle Theme" title="Theme">☾</button>
+    <div id="lang-toggle" class="lang-switch" role="button" tabindex="0" aria-label="切换语言 / Toggle Language">
+      <span class="lang-option" data-lang="zh-CN">中文</span>
+      <span class="lang-option" data-lang="en">English</span>
+    </div>
+    <div id="theme-toggle" class="theme-switch" role="button" tabindex="0" aria-label="切换主题 / Toggle Theme">
+      <span class="theme-option" data-theme-val="dark"><span class="theme-ico">☾</span><span data-lang-zh="深色" data-lang-en="Dark">深色</span></span>
+      <span class="theme-option" data-theme-val="light"><span class="theme-ico">☀</span><span data-lang-zh="浅色" data-lang-en="Light">浅色</span></span>
+    </div>
     <button id="to-top" class="btn btn-ghost" aria-label="Back to Top" title="Top">↑</button>
   </div>
 
@@ -66,9 +85,8 @@
     <!-- HERO -->
     <section id="home" class="section hero">
       <div class="hero-grid">
-        <div class="hero-media">
-          <!-- Keep image ratio: use width 100% / height auto + aspect box -->
-          <div class="media-card">
+        <div class="hero-media" data-reveal data-reveal-delay="0">
+          <div class="media-card tilt-card">
             <div class="media-frame">
               <img
                 src="https://imagehub.tianzeqi.dev/file/常用/1757062317294_business.jpeg"
@@ -84,7 +102,7 @@
           </div>
         </div>
 
-        <div class="hero-copy">
+        <div class="hero-copy" data-reveal data-reveal-delay="150">
           <div class="kicker" data-lang-zh="个人主页 · 业务介绍" data-lang-en="Profile · Business Overview">个人主页 · 业务介绍</div>
 
           <h1 class="h1">
@@ -92,30 +110,48 @@
             <span class="sub" data-lang-zh="船长" data-lang-en="Captain">船长</span>
           </h1>
 
-          <p class="tagline"
-             data-lang-zh="中级区块链金融行业工程师 | 国际贸易<span class=&quot;auto-years-inline&quot;></span>年从业者 | 企业全球化架构与跨境增长顾问 | 企业级 AI 私有化与自动化系统架构顾问 | 区块链金融与数字资产解决方案顾问"
-             data-lang-en="Intermediate Blockchain Finance Engineer | <span class=&quot;auto-years-inline&quot;></span> Years in International Trade | Globalization Architecture & Cross-Border Growth Advisor | Enterprise AI Private Deployment & Automation Systems Architect | Blockchain Finance & Digital Asset Solutions Advisor">
-            中级区块链金融行业工程师 | 国际贸易<span class="auto-years-inline"></span>年从业者 | 企业全球化架构与跨境增长顾问 | 企业级 AI 私有化与自动化系统架构顾问 | 区块链金融与数字资产解决方案顾问
-          
-          <p class="p"
+          <div class="roles-v">
+            <div class="role-item">
+              <span class="role-node"></span>
+              <span class="role-text" data-lang-zh="中级区块链金融行业工程师" data-lang-en="Intermediate Blockchain Finance Engineer">中级区块链金融行业工程师</span>
+            </div>
+            <div class="role-item">
+              <span class="role-node"></span>
+              <span class="role-text" data-lang-zh="国际贸易<span class=&quot;auto-years-inline&quot;></span>年从业者" data-lang-en="<span class=&quot;auto-years-inline&quot;></span> Years in International Trade">国际贸易<span class="auto-years-inline"></span>年从业者</span>
+            </div>
+            <div class="role-item">
+              <span class="role-node"></span>
+              <span class="role-text" data-lang-zh="企业全球化架构与跨境增长顾问" data-lang-en="Globalization Architecture &amp; Cross-Border Growth Advisor">企业全球化架构与跨境增长顾问</span>
+            </div>
+            <div class="role-item">
+              <span class="role-node"></span>
+              <span class="role-text" data-lang-zh="企业级 AI 私有化与自动化系统架构顾问" data-lang-en="Enterprise AI Private Deployment &amp; Automation Systems Architect">企业级 AI 私有化与自动化系统架构顾问</span>
+            </div>
+            <div class="role-item">
+              <span class="role-node"></span>
+              <span class="role-text" data-lang-zh="区块链金融与数字资产解决方案顾问" data-lang-en="Blockchain Finance &amp; Digital Asset Solutions Advisor">区块链金融与数字资产解决方案顾问</span>
+            </div>
+          </div>
+
+          <p class="p bio-callout"
              data-lang-zh="<span class=&quot;auto-years-inline&quot;></span>年跨境电商从业经验，大学在校创业曾获得中国国际互联网+创业大赛国际三等奖、蓝桥杯创业大赛国家级一等奖。从事平台：亚马逊、ETSY、TikTok、Ozon、Wildberries、海外独立站。"
              data-lang-en="<span class=&quot;auto-years-inline&quot;></span> years of experience in cross-border e-commerce. His university startup won third prize in the China International Internet Plus Entrepreneurship Competition and first prize in the Blue Bridge Cup National Entrepreneurship Competition. Platforms he worked on include Amazon, ETSY, TikTok, Ozon, Wildberries, and overseas independent websites.">
             <span class="auto-years-inline"></span>年跨境电商从业经验，大学在校创业曾获得中国国际互联网+创业大赛国际三等奖、蓝桥杯创业大赛国家级一等奖。从事平台：亚马逊、ETSY、TikTok、Ozon、Wildberries、海外独立站。
-</p>
+          </p>
 
           
 
           <div class="stats">
-            <div class="stat">
-              <div class="stat-num auto-years-plus"></div>
+            <div class="stat" data-reveal data-reveal-delay="300">
+              <div class="stat-num auto-years-plus" data-count-target="0"></div>
               <div class="stat-label" data-lang-zh="年跨境电商经验" data-lang-en="Years in Cross-border E-commerce">年跨境电商经验</div>
             </div>
-            <div class="stat">
-              <div class="stat-num">6+</div>
+            <div class="stat" data-reveal data-reveal-delay="380">
+              <div class="stat-num" data-count-target="6" data-count-suffix="+">6+</div>
               <div class="stat-label" data-lang-zh="企业董事职位" data-lang-en="Corporate Director Positions">企业董事职位</div>
             </div>
-            <div class="stat">
-              <div class="stat-num">3</div>
+            <div class="stat" data-reveal data-reveal-delay="460">
+              <div class="stat-num" data-count-target="3">3</div>
               <div class="stat-label" data-lang-zh="战略板块" data-lang-en="Strategic Sectors">战略板块</div>
             </div>
           </div>
@@ -125,7 +161,7 @@
 
     <!-- ABOUT -->
     <section id="about" class="section">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <h2 class="h2" data-lang-zh="业务介绍" data-lang-en="Business Overview">业务介绍</h2>
         <p class="lead"
            data-lang-zh="以商业结果为导向，兼顾合规、效率与可扩展性。"
@@ -135,8 +171,7 @@
       </div>
 
       <div class="about-grid">
-        <div class="card">
-          
+        <div class="card" data-reveal data-reveal-delay="100">
 
           <div class="divider"></div>
 
@@ -189,7 +224,7 @@
           </div>
         </div>
 
-        <div class="card media-card-lg">
+        <div class="card media-card-lg tilt-card" data-reveal data-reveal-delay="200">
           <div class="media-frame">
             <img
               src="https://imagehub.tianzeqi.dev/file/1764061873786_顺为前台.png"
@@ -208,7 +243,7 @@
 
     <!-- EXPERIENCE -->
     <section id="experience" class="section">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <h2 class="h2" data-lang-zh="职务" data-lang-en="Positions">职务</h2>
         <p class="lead" data-lang-zh="关键角色聚焦：战略、供应链、资本与技术。"
            data-lang-en="Key roles across strategy, supply chain, capital, and technology.">
@@ -217,7 +252,7 @@
       </div>
 
       <div class="timeline">
-        <div class="t-item">
+        <div class="t-item" data-reveal data-reveal-delay="0">
           <div class="t-dot"></div>
           <div class="t-card">
             <div class="t-title" data-lang-zh="順為國際集團有限公司（香港）" data-lang-en="SHINEVISTA GLOBAL GROUP LIMITED (HK)">順為國際集團有限公司（香港）</div>
@@ -228,7 +263,7 @@
           </div>
         </div>
 
-        <div class="t-item">
+        <div class="t-item" data-reveal data-reveal-delay="80">
           <div class="t-dot"></div>
           <div class="t-card">
             <div class="t-title" data-lang-zh="稳链投资控股（海南）有限公司" data-lang-en="Stable Chain Investment Holding (Hainan) Co., Ltd.">稳链投资控股（海南）有限公司</div>
@@ -237,7 +272,7 @@
           </div>
         </div>
 
-        <div class="t-item">
+        <div class="t-item" data-reveal data-reveal-delay="160">
           <div class="t-dot"></div>
           <div class="t-card">
             <div class="t-title" data-lang-zh="稳金科技（深圳）有限公司" data-lang-en="Stable Gold Technology (Shenzhen) Co., Ltd.">稳金科技（深圳）有限公司</div>
@@ -248,7 +283,7 @@
           </div>
         </div>
 
-        <div class="t-item">
+        <div class="t-item" data-reveal data-reveal-delay="240">
           <div class="t-dot"></div>
           <div class="t-card">
             <div class="t-title" data-lang-zh="马邦商务服务（内蒙古）有限公司" data-lang-en="Mabang Business Services (Inner Mongolia) Co., Ltd.">马邦商务服务（内蒙古）有限公司</div>
@@ -257,7 +292,7 @@
           </div>
         </div>
 
-        <div class="t-item">
+        <div class="t-item" data-reveal data-reveal-delay="320">
           <div class="t-dot"></div>
           <div class="t-card">
             <div class="t-title" data-lang-zh="内蒙古前川工程有限公司" data-lang-en="Inner Mongolia Qianchuan Engineering Co., Ltd.">内蒙古前川工程有限公司</div>
@@ -266,7 +301,7 @@
           </div>
         </div>
 
-        <div class="t-item">
+        <div class="t-item" data-reveal data-reveal-delay="400">
           <div class="t-dot"></div>
           <div class="t-card">
             <div class="t-title" data-lang-zh="佰仕达国际商务(香港)有限公司" data-lang-en="Baishida International Business (Hong Kong) Co., Ltd.">佰仕达国际商务(香港)有限公司</div>
@@ -275,7 +310,7 @@
           </div>
         </div>
 
-        <div class="t-item">
+        <div class="t-item" data-reveal data-reveal-delay="480">
           <div class="t-dot"></div>
           <div class="t-card">
             <div class="t-title" data-lang-zh="区块链金融行业" data-lang-en="Blockchain Financial Industry">区块链金融行业</div>
@@ -290,7 +325,7 @@
 
     <!-- SERVICES -->
     <section id="services" class="section">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <h2 class="h2" data-lang-zh="工作领域" data-lang-en="Work Areas">工作领域</h2>
         <p class="lead"
            data-lang-zh="以能力域组织：合规与架构、品牌与供应链、AI 交付与自动化、金融科技与数字资产。"
@@ -300,8 +335,7 @@
       </div>
 
       <div class="cards-grid">
-        <!-- Icons keep original visual ratio via inline SVG viewBox -->
-        <article class="svc card">
+        <article class="svc card tilt-card" data-reveal data-reveal-delay="0">
           <div class="svc-icon">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M12 3l7 4v6c0 5-3 8-7 9-4-1-7-4-7-9V7l7-4z"></path>
@@ -312,7 +346,7 @@
           <p class="p" data-lang-zh="提供海外架构搭建及全球财税合规管理服务。" data-lang-en="Overseas entity setup and global tax & compliance governance.">提供海外架构搭建及全球财税合规管理服务。</p>
         </article>
 
-        <article class="svc card">
+        <article class="svc card tilt-card" data-reveal data-reveal-delay="60">
           <div class="svc-icon">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <rect x="6" y="3" width="12" height="18" rx="2"></rect>
@@ -323,7 +357,7 @@
           <p class="p" data-lang-zh="助力企业品牌出海，提供全球开店与运营支持。" data-lang-en="Brand globalization with global store setup and operational enablement.">助力企业品牌出海，提供全球开店与运营支持。</p>
         </article>
 
-        <article class="svc card">
+        <article class="svc card tilt-card" data-reveal data-reveal-delay="120">
           <div class="svc-icon">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M4 7l8-4 8 4-8 4-8-4z"></path>
@@ -335,7 +369,7 @@
           <p class="p" data-lang-zh="依托海外仓储体系，提供定制化跨境供应链。" data-lang-en="Customized cross-border supply chain powered by overseas warehousing.">依托海外仓储体系，提供定制化跨境供应链。</p>
         </article>
 
-        <article class="svc card">
+        <article class="svc card tilt-card" data-reveal data-reveal-delay="180">
           <div class="svc-icon">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <rect x="7" y="7" width="10" height="10" rx="2"></rect>
@@ -346,7 +380,7 @@
           <p class="p" data-lang-zh="提供企业级全栈 AI 模型与向量数据库部署。" data-lang-en="Enterprise AI full-stack delivery with vector database deployment.">提供企业级全栈 AI 模型与向量数据库部署。</p>
         </article>
 
-        <article class="svc card">
+        <article class="svc card tilt-card" data-reveal data-reveal-delay="240">
           <div class="svc-icon">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <rect x="6" y="7" width="12" height="10" rx="3"></rect>
@@ -361,7 +395,7 @@
           <p class="p" data-lang-zh="负责智能体编排、API 网关及权限安全治理。" data-lang-en="Agent orchestration, API gateway integration, and access/security governance.">负责智能体编排、API 网关及权限安全治理。</p>
         </article>
 
-        <article class="svc card">
+        <article class="svc card tilt-card" data-reveal data-reveal-delay="300">
           <div class="svc-icon">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <rect x="3" y="6" width="7" height="5" rx="1.2"></rect>
@@ -375,7 +409,7 @@
           <p class="p" data-lang-zh="通过自动化工作流重塑企业多模态运营效率。" data-lang-en="Rebuild operational efficiency via automation across multi-modal business processes.">通过自动化工作流重塑企业多模态运营效率。</p>
         </article>
 
-        <article class="svc card">
+        <article class="svc card tilt-card" data-reveal data-reveal-delay="360">
           <div class="svc-icon">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M4 19V5"></path>
@@ -391,7 +425,7 @@
           <p class="p" data-lang-zh="专注全球区块链金融与多因子模型量化交易。" data-lang-en="Global blockchain finance with multi-factor quantitative trading models.">专注全球区块链金融与多因子模型量化交易。</p>
         </article>
 
-        <article class="svc card">
+        <article class="svc card tilt-card" data-reveal data-reveal-delay="420">
           <div class="svc-icon">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M12 2l8 4v6c0 5-3 9-8 10C7 21 4 17 4 12V6l8-4z"></path>
@@ -403,7 +437,7 @@
           <p class="p" data-lang-zh="引导企业实现资产数字化及 Web3 业务转型。" data-lang-en="Enable asset digitization and enterprise Web3 transformation.">引导企业实现资产数字化及 Web3 业务转型。</p>
         </article>
 
-        <article class="svc card">
+        <article class="svc card tilt-card" data-reveal data-reveal-delay="480">
           <div class="svc-icon">
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M4 9l8-4 8 4"></path>
@@ -422,13 +456,13 @@
 
     <!-- PHILOSOPHY -->
     <section id="philosophy" class="section philosophy">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <h2 class="h2" data-lang-zh="商业理念" data-lang-en="Business Philosophy">商业理念</h2>
         <p class="lead" data-lang-zh="原则是长期主义的护城河。" data-lang-en="Principles are the moat for long-term compounding.">原则是长期主义的护城河。</p>
       </div>
 
       <div class="ph-grid">
-        <article class="card ph">
+        <article class="card ph tilt-card" data-reveal data-reveal-delay="0">
           <div class="ph-top">
             <span class="ph-accent"></span>
             <h3 class="h3 sm" data-lang-zh="资源整合创造价值" data-lang-en="Resource Integration Creates Value">资源整合创造价值</h3>
@@ -437,7 +471,7 @@
           <p class="tiny italic philosophy-subtitle-en" data-lang-en="CREATE VALUE THROUGH THE EFFICIENT USE AND INTEGRATION OF RESOURCES."></p>
         </article>
 
-        <article class="card ph">
+        <article class="card ph tilt-card" data-reveal data-reveal-delay="80">
           <div class="ph-top">
             <span class="ph-accent"></span>
             <h3 class="h3 sm" data-lang-zh="信息不对称优势" data-lang-en="Information Asymmetry Advantage">信息不对称优势</h3>
@@ -446,7 +480,7 @@
           <p class="tiny italic philosophy-subtitle-en" data-lang-en="CREATE VALUE BY EXPLOITING INFORMATION ASYMMETRIES."></p>
         </article>
 
-        <article class="card ph">
+        <article class="card ph tilt-card" data-reveal data-reveal-delay="160">
           <div class="ph-top">
             <span class="ph-accent"></span>
             <h3 class="h3 sm" data-lang-zh="顺应市场趋势" data-lang-en="Follow Market Trends">顺应市场趋势</h3>
@@ -455,7 +489,7 @@
           <p class="tiny italic philosophy-subtitle-en" data-lang-en="MOVE WITH THE TIDE—ALIGN WITH PREVAILING TRENDS."></p>
         </article>
 
-        <article class="card ph">
+        <article class="card ph tilt-card" data-reveal data-reveal-delay="240">
           <div class="ph-top">
             <span class="ph-accent"></span>
             <h3 class="h3 sm" data-lang-zh="持续自我投资" data-lang-en="Continuous Self-Investment">持续自我投资</h3>
@@ -468,13 +502,13 @@
 
     <!-- CONTACT -->
     <section id="contact" class="section">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <h2 class="h2" data-lang-zh="与我联系" data-lang-en="Contact Me">与我联系</h2>
         <p class="lead" data-lang-zh="Connect with me" data-lang-en="Connect with me">Connect with me</p>
       </div>
 
       <div class="contact-grid">
-        <div class="card">
+        <div class="card" data-reveal data-reveal-delay="0">
           <div class="info-block">
             <div class="info-title">
               <span class="ico">📍</span>
@@ -535,7 +569,7 @@
           </div>
         </div>
 
-        <div class="card">
+        <div class="card" data-reveal data-reveal-delay="100">
           <form action="https://formsubmit.co/shinevista@163.com" method="POST" class="form">
             <div class="field">
               <label for="contact-name" class="contact-form-title">
@@ -585,7 +619,7 @@
               ></textarea>
             </div>
 
-            <button type="submit" class="btn btn-primary full" data-lang-zh="发送消息" data-lang-en="Send Message">发送消息</button>
+            <button type="submit" class="btn btn-primary full magnetic" data-lang-zh="发送消息" data-lang-en="Send Message">发送消息</button>
           </form>
         </div>
       </div>
@@ -593,7 +627,7 @@
 
     <!-- LEARN MORE -->
     <section id="learn-more" class="section">
-      <div class="section-head">
+      <div class="section-head" data-reveal>
         <h2 class="h2" data-lang-zh="了解更多" data-lang-en="Learn More">了解更多</h2>
         <p class="lead"
            data-lang-zh="一个入口，通往全部业务与相关网站"
@@ -603,7 +637,7 @@
       </div>
 
       <div class="learn-more-grid learn-more-single">
-        <a class="learn-card learn-card-featured card" href="https://www.tianzeqi.link/" target="_blank" rel="noopener noreferrer">
+        <a class="learn-card learn-card-featured card tilt-card magnetic" href="https://www.tianzeqi.link/" target="_blank" rel="noopener noreferrer" data-reveal>
           <div class="learn-card-top">
             <img class="learn-card-icon" src="https://imagehub.tianzeqi.dev/file/favicon/1766540951185_5.png" alt="Tian ZeQi Link" loading="lazy" decoding="async" />
             <div>
@@ -617,7 +651,18 @@
     </section>
 
     <footer class="footer">
-      <div class="tiny auto-current-year-text" data-lang-zh="© 2026 田泽琦 (Captain Ninja). 版权所有。" data-lang-en="© 2026 Tian ZeQi (Captain Ninja). All rights reserved.">© 2026 田泽琦 (Captain Ninja). 版权所有。</div>
+      <div class="footer-inner">
+        <div class="tiny auto-current-year-text" data-lang-zh="© 2026 田泽琦 (Captain Ninja). 版权所有。" data-lang-en="© 2026 Tian ZeQi (Captain Ninja). All rights reserved.">© 2026 田泽琦 (Captain Ninja). 版权所有。</div>
+        <div class="footer-links">
+          <a href="#" class="footer-link" data-legal-target="privacy" data-lang-zh="隐私政策" data-lang-en="Privacy Policy">隐私政策</a>
+          <span class="footer-sep">·</span>
+          <a href="#" class="footer-link" data-legal-target="terms" data-lang-zh="使用条款" data-lang-en="Terms of Use">使用条款</a>
+          <span class="footer-sep">·</span>
+          <a href="#" class="footer-link" data-legal-target="disclaimer" data-lang-zh="免责声明" data-lang-en="Disclaimer">免责声明</a>
+          <span class="footer-sep">·</span>
+          <a href="#" class="footer-link" data-legal-target="data-protection" data-lang-zh="数据保护" data-lang-en="Data Protection">数据保护</a>
+        </div>
+      </div>
     </footer>
   </main>
 
@@ -630,6 +675,170 @@
     <div class="image-modal-window" role="dialog" aria-modal="true">
       <button class="image-modal-close" aria-label="Close">✕</button>
       <img class="image-modal-img" src="" alt="WeChat" />
+    </div>
+  </div>
+
+  <!-- Legal / Privacy modal -->
+  <div id="legal-modal" class="legal-modal" aria-hidden="true">
+    <div class="legal-modal-backdrop"></div>
+    <div class="legal-modal-window" role="dialog" aria-modal="true" aria-labelledby="legal-modal-title">
+      <button class="legal-modal-close" aria-label="Close">✕</button>
+      <div class="legal-modal-header">
+        <h2 class="h2" id="legal-modal-title" data-lang-zh="法律与隐私声明" data-lang-en="Legal & Privacy Notice">法律与隐私声明</h2>
+        <p class="lead legal-modal-sub" data-lang-zh="最后更新：2026 年 7 月" data-lang-en="Last updated: July 2026">最后更新：2026 年 7 月</p>
+      </div>
+      <div class="legal-modal-body">
+        <div class="accordion legal-accordion">
+
+          <!-- Privacy Policy -->
+          <details class="acc" id="legal-privacy" open>
+            <summary>
+              <span class="arrow-icon" aria-hidden="true">➜</span>
+              <span class="acc-title" data-lang-zh="隐私政策" data-lang-en="Privacy Policy">隐私政策</span>
+            </summary>
+            <div class="acc-body">
+              <p class="p" data-lang-zh="本网站（{SITE_DOMAIN}）由順為國際集團有限公司（香港）（以下简称&ldquo;我们&rdquo;）运营。我们尊重并依法保护您的个人隐私。本政策说明我们如何收集、使用、共享和保护您的个人信息，以及您享有的权利。请您在使用本网站前仔细阅读本政策。" data-lang-en="This website ({SITE_DOMAIN}) is operated by Shinevista International Group Limited (Hong Kong) (&ldquo;we&rdquo;). We respect and protect your personal privacy in accordance with applicable laws. This policy explains how we collect, use, share, and protect your personal information, as well as the rights you have. Please read this policy carefully before using this website.">本网站（{SITE_DOMAIN}）由順為國際集團有限公司（香港）（以下简称"我们"）运营。我们尊重并依法保护您的个人隐私。本政策说明我们如何收集、使用、共享和保护您的个人信息，以及您享有的权利。请您在使用本网站前仔细阅读本政策。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="1. 信息收集" data-lang-en="1. Information We Collect">1. 信息收集</p>
+              <p class="p" data-lang-zh="我们收集的信息分为两类：您主动提供的信息和自动收集的信息。" data-lang-en="The information we collect falls into two categories: information you actively provide and information automatically collected.">我们收集的信息分为两类：您主动提供的信息和自动收集的信息。</p>
+              <p class="p strong legal-sub-title" data-lang-zh="1.1 您主动提供的信息" data-lang-en="1.1 Information You Provide">1.1 您主动提供的信息</p>
+              <p class="p" data-lang-zh="当您通过本网站联系表单提交信息时，我们会收集您主动提供的姓名、电子邮箱及消息内容。这些信息仅用于回复您的咨询和提供相关业务服务。" data-lang-en="When you submit information via the contact form, we collect the name, email address, and message content you voluntarily provide. This information is used solely to respond to your inquiries and provide relevant business services.">当您通过本网站联系表单提交信息时，我们会收集您主动提供的姓名、电子邮箱及消息内容。这些信息仅用于回复您的咨询和提供相关业务服务。</p>
+              <p class="p strong legal-sub-title" data-lang-zh="1.2 自动收集的信息" data-lang-en="1.2 Automatically Collected Information">1.2 自动收集的信息</p>
+              <p class="p" data-lang-zh="在您访问本网站时，我们及相关服务提供商可能自动收集以下技术信息：访问日志、浏览器类型与版本、操作系统、设备标识符、IP 地址（可能被截断或匿名化处理）、访问时间、页面停留时间、来源页面（Referrer URL）及页面交互行为。这些信息用于网站运营、安全防护和体验优化，通常无法直接识别您的身份。" data-lang-en="When you visit this website, we and our service providers may automatically collect the following technical information: access logs, browser type and version, operating system, device identifiers, IP address (which may be truncated or anonymized), access time, page dwell time, referring page (Referrer URL), and page interaction behavior. This information is used for website operation, security, and experience optimization, and is generally not directly identifiable to you.">在您访问本网站时，我们及相关服务提供商可能自动收集以下技术信息：访问日志、浏览器类型与版本、操作系统、设备标识符、IP 地址（可能被截断或匿名化处理）、访问时间、页面停留时间、来源页面（Referrer URL）及页面交互行为。这些信息用于网站运营、安全防护和体验优化，通常无法直接识别您的身份。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="2. 信息使用" data-lang-en="2. How We Use Information">2. 信息使用</p>
+              <p class="p" data-lang-zh="我们收集的信息仅用于以下目的：" data-lang-en="The information we collect is used solely for the following purposes:">我们收集的信息仅用于以下目的：</p>
+              <p class="p" data-lang-zh="（1）回复您的咨询并提供业务服务；（2）改善网站功能和用户体验；（3）进行网站安全监控与异常检测；（4）分析访问流量和使用趋势；（5）遵守适用的法律法规要求。我们不会将您的个人信息出售或租赁给第三方。" data-lang-en="(1) Responding to your inquiries and providing business services; (2) Improving website functionality and user experience; (3) Website security monitoring and anomaly detection; (4) Analyzing traffic and usage trends; (5) Complying with applicable legal requirements. We do not sell or rent your personal information to third parties.">（1）回复您的咨询并提供业务服务；（2）改善网站功能和用户体验；（3）进行网站安全监控与异常检测；（4）分析访问流量和使用趋势；（5）遵守适用的法律法规要求。我们不会将您的个人信息出售或租赁给第三方。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="3. Cookie 与同类技术" data-lang-en="3. Cookies & Similar Technologies">3. Cookie 与同类技术</p>
+              <p class="p" data-lang-zh="本网站使用 Cookie 和浏览器本地存储（localStorage）技术，分为以下类别：" data-lang-en="This website uses cookies and browser local storage (localStorage) technologies, categorized as follows:">本网站使用 Cookie 和浏览器本地存储（localStorage）技术，分为以下类别：</p>
+              <p class="p" data-lang-zh="（1）必要 Cookie：用于实现语言切换、主题偏好（深色/浅色模式）等基本功能，禁用后部分功能将无法正常使用。（2）分析 Cookie：用于了解访问者的使用行为和流量来源，帮助我们优化网站内容和结构。（3）偏好 Cookie：用于记住您的语言选择和界面设置，避免重复选择。" data-lang-en="(1) Necessary Cookies: Used for basic functions such as language switching and theme preference (dark/light mode). Disabling these may cause some features to not work properly. (2) Analytics Cookies: Used to understand visitor behavior and traffic sources, helping us optimize website content and structure. (3) Preference Cookies: Used to remember your language selection and interface settings, avoiding repeated selections.">（1）必要 Cookie：用于实现语言切换、主题偏好（深色/浅色模式）等基本功能，禁用后部分功能将无法正常使用。（2）分析 Cookie：用于了解访问者的使用行为和流量来源，帮助我们优化网站内容和结构。（3）偏好 Cookie：用于记住您的语言选择和界面设置，避免重复选择。</p>
+              <p class="p" data-lang-zh="您可以通过浏览器设置查看、禁用或删除 Cookie。但请注意，禁用必要 Cookie 可能影响网站的正常功能。" data-lang-en="You can view, disable, or delete cookies through your browser settings. However, please note that disabling necessary cookies may affect the normal functionality of the website.">您可以通过浏览器设置查看、禁用或删除 Cookie。但请注意，禁用必要 Cookie 可能影响网站的正常功能。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="4. 第三方共享与披露" data-lang-en="4. Third-Party Sharing & Disclosure">4. 第三方共享与披露</p>
+              <p class="p" data-lang-zh="除以下情形外，我们不会与第三方共享您的个人信息：" data-lang-en="Except in the following circumstances, we do not share your personal information with third parties:">除以下情形外，我们不会与第三方共享您的个人信息：</p>
+              <p class="p" data-lang-zh="（1）服务提供商：我们委托以下第三方服务提供商处理特定功能，它们可能在其服务过程中访问您的个人信息。（2）法律要求：在法律法规要求、政府机关依法请求或为保护我们及公众合法权益时，我们可能披露必要的信息。" data-lang-en="(1) Service Providers: We engage the following third-party service providers to handle specific functions, and they may access your personal information during the provision of their services. (2) Legal Requirements: We may disclose necessary information when required by law, upon lawful government request, or to protect our rights and the public interest.">（1）服务提供商：我们委托以下第三方服务提供商处理特定功能，它们可能在其服务过程中访问您的个人信息。（2）法律要求：在法律法规要求、政府机关依法请求或为保护我们及公众合法权益时，我们可能披露必要的信息。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="5. 第三方服务说明" data-lang-en="5. Third-Party Services">5. 第三方服务说明</p>
+              <p class="p" data-lang-zh="本网站使用了以下第三方服务，各服务均有独立的隐私政策：" data-lang-en="This website uses the following third-party services, each with its own privacy policy:">本网站使用了以下第三方服务，各服务均有独立的隐私政策：</p>
+              <p class="p" data-lang-zh="（1）FormSubmit：用于处理联系表单提交，将您的消息转发至我们的邮箱。（2）Tawk.to：提供在线客服聊天功能，可能收集您的会话信息和 IP 地址。（3）Google Fonts：提供网页字体加载服务，可能收集您的 IP 地址。（4）jsDelivr CDN / flagcdn：提供静态资源（图标、国旗图片）的 CDN 加速服务。上述服务提供商可能依据其各自隐私政策收集和处理数据，详情请参阅各服务商的官方政策。" data-lang-en="(1) FormSubmit: Used to process contact form submissions, forwarding your messages to our email. (2) Tawk.to: Provides live chat functionality, may collect your session information and IP address. (3) Google Fonts: Provides web font loading services, may collect your IP address. (4) jsDelivr CDN / flagcdn: Provides CDN acceleration for static resources (icons, flag images). The above service providers may collect and process data according to their respective privacy policies. For details, please refer to each provider's official policy.">（1）FormSubmit：用于处理联系表单提交，将您的消息转发至我们的邮箱。（2）Tawk.to：提供在线客服聊天功能，可能收集您的会话信息和 IP 地址。（3）Google Fonts：提供网页字体加载服务，可能收集您的 IP 地址。（4）jsDelivr CDN / flagcdn：提供静态资源（图标、国旗图片）的 CDN 加速服务。上述服务提供商可能依据其各自隐私政策收集和处理数据，详情请参阅各服务商的官方政策。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="6. 信息存储与安全" data-lang-en="6. Data Storage & Security">6. 信息存储与安全</p>
+              <p class="p" data-lang-zh="我们采取合理的技术和管理措施保护您的个人信息免受未经授权的访问、披露、修改或破坏，包括但不限于：HTTPS 加密传输、访问权限控制、定期安全审计。信息可能存储于中国香港及其他司法管辖区的服务器，具体存储位置取决于所使用的服务提供商的基础设施分布。" data-lang-en="We take reasonable technical and administrative measures to protect your personal information from unauthorized access, disclosure, modification, or destruction, including but not limited to: HTTPS encrypted transmission, access control, and regular security audits. Information may be stored on servers in Hong Kong, China and other jurisdictions, depending on the infrastructure distribution of the service providers used.">我们采取合理的技术和管理措施保护您的个人信息免受未经授权的访问、披露、修改或破坏，包括但不限于：HTTPS 加密传输、访问权限控制、定期安全审计。信息可能存储于中国香港及其他司法管辖区的服务器，具体存储位置取决于所使用的服务提供商的基础设施分布。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="7. 您的权利" data-lang-en="7. Your Rights">7. 您的权利</p>
+              <p class="p" data-lang-zh="根据适用的数据保护法律，您享有以下权利：" data-lang-en="Under applicable data protection laws, you have the following rights:">根据适用的数据保护法律，您享有以下权利：</p>
+              <p class="p" data-lang-zh="（1）访问权：了解我们持有的您的个人信息。（2）更正权：要求更正不准确或不完整的信息。（3）删除权：要求删除您的个人信息。（4）数据可携带权：以结构化格式获取您的个人信息。（5）反对权：反对特定目的的信息处理。（6）撤回同意权：随时撤回您此前给予的同意。如需行使上述权利，请通过本网站公布的联系方式与我们沟通。" data-lang-en="(1) Right of Access: Know what personal information we hold about you. (2) Right to Rectification: Request correction of inaccurate or incomplete information. (3) Right to Erasure: Request deletion of your personal information. (4) Right to Data Portability: Obtain your personal information in a structured format. (5) Right to Object: Object to the processing of your information for specific purposes. (6) Right to Withdraw Consent: Withdraw your previously given consent at any time. To exercise these rights, please contact us through the contact information provided on this website.">（1）访问权：了解我们持有的您的个人信息。（2）更正权：要求更正不准确或不完整的信息。（3）删除权：要求删除您的个人信息。（4）数据可携带权：以结构化格式获取您的个人信息。（5）反对权：反对特定目的的信息处理。（6）撤回同意权：随时撤回您此前给予的同意。如需行使上述权利，请通过本网站公布的联系方式与我们沟通。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="8. 未成年人隐私" data-lang-en="8. Children's Privacy">8. 未成年人隐私</p>
+              <p class="p" data-lang-zh="本网站面向具备完全民事行为能力的成年人，不面向 18 周岁以下的未成年人。如果我们发现无意中收集了未成年人的个人信息，将依法及时删除。如家长或监护人发现我们可能收集了未成年人的信息，请通过本网站公布的联系方式与我们联系。" data-lang-en="This website is intended for adults with full civil capacity and is not directed at individuals under 18 years of age. If we discover that we have inadvertently collected personal information from a minor, we will promptly delete it in accordance with the law. If a parent or guardian discovers that we may have collected information from a minor, please contact us through the contact information provided on this website.">本网站面向具备完全民事行为能力的成年人，不面向 18 周岁以下的未成年人。如果我们发现无意中收集了未成年人的个人信息，将依法及时删除。如家长或监护人发现我们可能收集了未成年人的信息，请通过本网站公布的联系方式与我们联系。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="9. 政策更新" data-lang-en="9. Policy Updates">9. 政策更新</p>
+              <p class="p" data-lang-zh="我们可能不时更新本隐私政策。更新后的政策自发布于本网站之日起生效。对于重大变更（如信息收集范围或使用方式的实质性调整），我们将在网站上通过显著提示进行告知。建议您定期查阅本政策以了解最新内容。" data-lang-en="We may update this privacy policy from time to time. The updated policy takes effect from the date it is published on this website. For material changes (such as substantive adjustments to the scope of information collection or usage), we will provide prominent notice on the website. We recommend that you review this policy periodically to stay informed of the latest content.">我们可能不时更新本隐私政策。更新后的政策自发布于本网站之日起生效。对于重大变更（如信息收集范围或使用方式的实质性调整），我们将在网站上通过显著提示进行告知。建议您定期查阅本政策以了解最新内容。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="10. 适用法律与争议解决" data-lang-en="10. Governing Law & Dispute Resolution">10. 适用法律与争议解决</p>
+              <p class="p" data-lang-zh="本隐私政策的解释和适用，以及与本政策相关的任何争议，均适用中国香港特别行政区法律。如发生争议，双方应首先尝试通过友好协商解决；协商不成的，任何一方均可向中国香港特别行政区有管辖权的法院提起诉讼。" data-lang-en="The interpretation and application of this privacy policy, and any disputes related to this policy, are governed by the laws of the Hong Kong Special Administrative Region of China. In the event of a dispute, the parties shall first attempt to resolve it through amicable negotiation; if negotiation fails, either party may bring proceedings before a court of competent jurisdiction in the Hong Kong Special Administrative Region of China.">本隐私政策的解释和适用，以及与本政策相关的任何争议，均适用中国香港特别行政区法律。如发生争议，双方应首先尝试通过友好协商解决；协商不成的，任何一方均可向中国香港特别行政区有管辖权的法院提起诉讼。</p>
+            </div>
+          </details>
+
+          <!-- Terms of Use -->
+          <details class="acc" id="legal-terms">
+            <summary>
+              <span class="arrow-icon" aria-hidden="true">➜</span>
+              <span class="acc-title" data-lang-zh="使用条款" data-lang-en="Terms of Use">使用条款</span>
+            </summary>
+            <div class="acc-body">
+              <p class="p" data-lang-zh="访问和使用本网站即表示您同意以下条款。如您不同意任何条款，请立即停止使用本网站。" data-lang-en="By accessing and using this website, you agree to the following terms. If you do not agree with any of these terms, please stop using this website immediately.">访问和使用本网站即表示您同意以下条款。如您不同意任何条款，请立即停止使用本网站。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="1. 内容用途" data-lang-en="1. Content Purpose">1. 内容用途</p>
+              <p class="p" data-lang-zh="本网站所有内容（包括文字、图片、标识、图标等）仅供信息展示目的，不构成任何投资建议、法律意见、税务建议或商业要约。您不应仅依据本网站内容做出任何商业或投资决策。" data-lang-en="All content on this website (including text, images, logos, icons, etc.) is for informational display purposes only and does not constitute any investment advice, legal opinion, tax advice, or commercial offer. You should not make any business or investment decisions based solely on the content of this website.">本网站所有内容（包括文字、图片、标识、图标等）仅供信息展示目的，不构成任何投资建议、法律意见、税务建议或商业要约。您不应仅依据本网站内容做出任何商业或投资决策。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="2. 知识产权" data-lang-en="2. Intellectual Property">2. 知识产权</p>
+              <p class="p" data-lang-zh="本网站的所有内容（包括但不限于文字、图片、标识、版面设计、代码等）版权归順為國際集團有限公司（香港）所有，受适用的知识产权法律保护。未经书面授权，不得复制、转载、传播、改编或用于其他商业目的。" data-lang-en="All content on this website (including but not limited to text, images, logos, layout design, code, etc.) is copyrighted by Shinevista International Group Limited (Hong Kong) and protected by applicable intellectual property laws. Without written authorization, it may not be copied, reproduced, distributed, adapted, or used for other commercial purposes.">本网站的所有内容（包括但不限于文字、图片、标识、版面设计、代码等）版权归順為國際集團有限公司（香港）所有，受适用的知识产权法律保护。未经书面授权，不得复制、转载、传播、改编或用于其他商业目的。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="3. 商标声明" data-lang-en="3. Trademark Notice">3. 商标声明</p>
+              <p class="p" data-lang-zh="本网站中出现的所有商标、服务标记和商号（包括但不限于&ldquo;順為&rdquo;、&ldquo;SHINEVISTA&rdquo;、&ldquo;稳链&rdquo;、&ldquo;稳金&rdquo;、&ldquo;马邦&rdquo;等）均为相关权利人所有。未经授权，不得使用上述任何商标或标识。" data-lang-en="All trademarks, service marks, and trade names appearing on this website (including but not limited to &ldquo;SHINEVISTA&rdquo;, &ldquo;Stable Chain&rdquo;, &ldquo;Stable Gold&rdquo;, &ldquo;Mabang&rdquo;, etc.) are owned by their respective rights holders. No such trademarks or logos may be used without authorization.">本网站中出现的所有商标、服务标记和商号（包括但不限于"順為"、"SHINEVISTA"、"稳链"、"稳金"、"马邦"等）均为相关权利人所有。未经授权，不得使用上述任何商标或标识。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="4. 使用限制" data-lang-en="4. Usage Restrictions">4. 使用限制</p>
+              <p class="p" data-lang-zh="您不得以任何非法方式或与本网站用途相悖的方式使用本网站，包括但不限于：（1）试图破坏网站安全机制或进行未授权的访问；（2）上传或传播恶意代码、病毒或其他有害程序；（3）未经授权抓取、采集或复制网站数据；（4）以自动化方式对网站进行大规模请求，影响正常服务；（5）冒用他人身份提交虚假信息。" data-lang-en="You may not use this website in any illegal manner or in a way contrary to its intended purpose, including but not limited to: (1) Attempting to breach website security or gain unauthorized access; (2) Uploading or distributing malicious code, viruses, or other harmful programs; (3) Unauthorized scraping, harvesting, or copying of website data; (4) Making large-scale automated requests that affect normal service; (5) Impersonating others or submitting false information.">您不得以任何非法方式或与本网站用途相悖的方式使用本网站，包括但不限于：（1）试图破坏网站安全机制或进行未授权的访问；（2）上传或传播恶意代码、病毒或其他有害程序；（3）未经授权抓取、采集或复制网站数据；（4）以自动化方式对网站进行大规模请求，影响正常服务；（5）冒用他人身份提交虚假信息。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="5. 第三方链接" data-lang-en="5. Third-Party Links">5. 第三方链接</p>
+              <p class="p" data-lang-zh="本网站可能包含指向第三方网站的链接。这些链接仅为方便您访问而提供，不代表我们对第三方网站内容的认可。我们对第三方网站的内容、隐私政策或运营行为不承担任何责任。访问第三方网站的风险由您自行承担。" data-lang-en="This website may contain links to third-party websites. These links are provided for your convenience only and do not imply our endorsement of the third-party website content. We are not responsible for the content, privacy policies, or operational practices of third-party websites. You access third-party websites at your own risk.">本网站可能包含指向第三方网站的链接。这些链接仅为方便您访问而提供，不代表我们对第三方网站内容的认可。我们对第三方网站的内容、隐私政策或运营行为不承担任何责任。访问第三方网站的风险由您自行承担。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="6. 服务可用性" data-lang-en="6. Service Availability">6. 服务可用性</p>
+              <p class="p" data-lang-zh="本网站按&ldquo;现状&rdquo;提供，我们不保证网站将持续可用、不间断运行或免于错误。因系统维护、升级、故障、网络中断或其他不可抗力原因导致网站暂时不可用的，我们不承担由此造成的损失。" data-lang-en="This website is provided &ldquo;as is&rdquo; and we do not guarantee that it will be continuously available, uninterrupted, or error-free. We are not liable for losses caused by temporary unavailability due to system maintenance, upgrades, failures, network interruptions, or other force majeure events.">本网站按"现状"提供，我们不保证网站将持续可用、不间断运行或免于错误。因系统维护、升级、故障、网络中断或其他不可抗力原因导致网站暂时不可用的，我们不承担由此造成的损失。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="7. 条款变更" data-lang-en="7. Changes to Terms">7. 条款变更</p>
+              <p class="p" data-lang-zh="我们保留随时修改本条款的权利。修改后的条款自发布于本网站之日起生效。继续使用本网站即视为接受修改后的条款。如对修改有异议，请停止使用本网站。" data-lang-en="We reserve the right to modify these terms at any time. Modified terms take effect from the date they are published on this website. Continued use of this website constitutes acceptance of the modified terms. If you disagree with the modifications, please stop using this website.">我们保留随时修改本条款的权利。修改后的条款自发布于本网站之日起生效。继续使用本网站即视为接受修改后的条款。如对修改有异议，请停止使用本网站。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="8. 适用法律" data-lang-en="8. Governing Law">8. 适用法律</p>
+              <p class="p" data-lang-zh="本使用条款的解释和适用均适用中国香港特别行政区法律。" data-lang-en="The interpretation and application of these Terms of Use are governed by the laws of the Hong Kong Special Administrative Region of China.">本使用条款的解释和适用均适用中国香港特别行政区法律。</p>
+            </div>
+          </details>
+
+          <!-- Disclaimer -->
+          <details class="acc" id="legal-disclaimer">
+            <summary>
+              <span class="arrow-icon" aria-hidden="true">➜</span>
+              <span class="acc-title" data-lang-zh="免责声明" data-lang-en="Disclaimer">免责声明</span>
+            </summary>
+            <div class="acc-body">
+              <p class="p strong legal-sub-title" data-lang-zh="1. 一般免责" data-lang-en="1. General Disclaimer">1. 一般免责</p>
+              <p class="p" data-lang-zh="本网站提供的所有信息以&ldquo;现状&rdquo;提供，不附带任何明示或暗示的保证。在适用法律允许的最大范围内，我们不对信息的准确性、完整性、可靠性或适用性作出任何保证。" data-lang-en="All information provided on this website is offered &ldquo;as is&rdquo; without any express or implied warranties. To the maximum extent permitted by applicable law, we make no warranties regarding the accuracy, completeness, reliability, or suitability of the information.">本网站提供的所有信息以"现状"提供，不附带任何明示或暗示的保证。在适用法律允许的最大范围内，我们不对信息的准确性、完整性、可靠性或适用性作出任何保证。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="2. 非投资建议" data-lang-en="2. Not Investment Advice">2. 非投资建议</p>
+              <p class="p" data-lang-zh="本网站涉及区块链金融、数字资产量化交易及跨境贸易等内容，仅供参考交流，不构成任何形式的投资建议、金融建议或交易指导。数字资产（包括但不限于加密货币）交易具有极高风险，可能导致全部本金损失。过往业绩不代表未来表现。在做出任何投资或交易决策前，请咨询持有合法牌照的专业财务顾问，并充分了解相关风险。" data-lang-en="Content on this website related to blockchain finance, digital asset quantitative trading, and cross-border trade is for reference only and does not constitute any form of investment advice, financial advice, or trading guidance. Trading in digital assets (including but not limited to cryptocurrencies) involves extreme risk and may result in the loss of your entire principal. Past performance does not guarantee future results. Before making any investment or trading decisions, please consult a licensed professional financial advisor and fully understand the associated risks.">本网站涉及区块链金融、数字资产量化交易及跨境贸易等内容，仅供参考交流，不构成任何形式的投资建议、金融建议或交易指导。数字资产（包括但不限于加密货币）交易具有极高风险，可能导致全部本金损失。过往业绩不代表未来表现。在做出任何投资或交易决策前，请咨询持有合法牌照的专业财务顾问，并充分了解相关风险。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="3. 合规说明" data-lang-en="3. Compliance Notice">3. 合规说明</p>
+              <p class="p" data-lang-zh="本网站所述离岸商事主体业务及区块链金融服务均在相关司法管辖区法律框架下开展。不同国家和地区对区块链金融、数字资产及跨境贸易的监管政策存在差异。用户应自行了解并遵守所在地区的适用法律法规，包括但不限于外汇管制、税务申报、数字资产交易合规等要求。" data-lang-en="The offshore business and blockchain finance services described on this website are conducted within the legal framework of the relevant jurisdictions. Regulatory policies regarding blockchain finance, digital assets, and cross-border trade vary across different countries and regions. Users should independently understand and comply with applicable laws and regulations in their region, including but not limited to foreign exchange controls, tax reporting, and digital asset trading compliance requirements.">本网站所述离岸商事主体业务及区块链金融服务均在相关司法管辖区法律框架下开展。不同国家和地区对区块链金融、数字资产及跨境贸易的监管政策存在差异。用户应自行了解并遵守所在地区的适用法律法规，包括但不限于外汇管制、税务申报、数字资产交易合规等要求。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="4. 准确性与及时性" data-lang-en="4. Accuracy & Timeliness">4. 准确性与及时性</p>
+              <p class="p" data-lang-zh="尽管我们尽力确保网站信息的准确性，但不对信息的及时性、完整性或不含错误作出保证。网站内容可能未及时更新，我们不对因依赖过时信息而产生的任何后果承担责任。" data-lang-en="Although we strive to ensure the accuracy of website information, we do not guarantee its timeliness, completeness, or freedom from errors. Website content may not be updated in a timely manner, and we are not liable for any consequences arising from reliance on outdated information.">尽管我们尽力确保网站信息的准确性，但不对信息的及时性、完整性或不含错误作出保证。网站内容可能未及时更新，我们不对因依赖过时信息而产生的任何后果承担责任。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="5. 第三方内容" data-lang-en="5. Third-Party Content">5. 第三方内容</p>
+              <p class="p" data-lang-zh="本网站可能引用或展示来自第三方的信息、数据或观点。这些内容的版权归原作者所有，我们对其准确性和完整性不承担责任。引用第三方内容不构成对其观点的认可。" data-lang-en="This website may reference or display information, data, or opinions from third parties. The copyright of such content belongs to the original authors, and we are not responsible for their accuracy or completeness. Referencing third-party content does not constitute an endorsement of their views.">本网站可能引用或展示来自第三方的信息、数据或观点。这些内容的版权归原作者所有，我们对其准确性和完整性不承担责任。引用第三方内容不构成对其观点的认可。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="6. 责任限制" data-lang-en="6. Limitation of Liability">6. 责任限制</p>
+              <p class="p" data-lang-zh="在适用法律允许的最大范围内，对于因使用或无法使用本网站、或因依赖本网站任何信息而导致的任何直接、间接、附带、特殊或后果性损失（包括但不限于利润损失、数据丢失或业务中断），我们不承担责任。" data-lang-en="To the maximum extent permitted by applicable law, we are not liable for any direct, indirect, incidental, special, or consequential damages (including but not limited to loss of profits, data loss, or business interruption) arising from the use of or inability to use this website, or from reliance on any information on this website.">在适用法律允许的最大范围内，对于因使用或无法使用本网站、或因依赖本网站任何信息而导致的任何直接、间接、附带、特殊或后果性损失（包括但不限于利润损失、数据丢失或业务中断），我们不承担责任。</p>
+            </div>
+          </details>
+
+          <!-- Data Protection -->
+          <details class="acc" id="legal-data-protection">
+            <summary>
+              <span class="arrow-icon" aria-hidden="true">➜</span>
+              <span class="acc-title" data-lang-zh="数据保护" data-lang-en="Data Protection">数据保护</span>
+            </summary>
+            <div class="acc-body">
+              <p class="p" data-lang-zh="我们致力于按照适用的数据保护法律法规处理您的个人信息，包括但不限于：《中华人民共和国个人信息保护法》（PIPL）、欧盟《通用数据保护条例》（GDPR）以及中国香港《个人资料（私隐）条例》（PDPO）。" data-lang-en="We are committed to processing your personal information in compliance with applicable data protection laws, including but not limited to: the Personal Information Protection Law of the People's Republic of China (PIPL), the EU General Data Protection Regulation (GDPR), and the Personal Data (Privacy) Ordinance (PDPO) of Hong Kong, China.">我们致力于按照适用的数据保护法律法规处理您的个人信息，包括但不限于：《中华人民共和国个人信息保护法》（PIPL）、欧盟《通用数据保护条例》（GDPR）以及中国香港《个人资料（私隐）条例》（PDPO）。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="1. 数据处理的法律依据" data-lang-en="1. Legal Basis for Processing">1. 数据处理的法律依据</p>
+              <p class="p" data-lang-zh="我们处理您个人信息的法律依据包括：（1）同意——在您主动提交联系表单时基于您的同意处理信息；（2）合同必要——为回应您的咨询和提供您请求的服务所必需；（3）合法利益——为网站安全运营、欺诈防范和体验优化所必需；（4）法律义务——为遵守适用法律法规的要求。" data-lang-en="The legal bases for our processing of your personal information include: (1) Consent — processing based on your consent when you voluntarily submit the contact form; (2) Contractual Necessity — necessary to respond to your inquiries and provide the services you request; (3) Legitimate Interests — necessary for website security, fraud prevention, and experience optimization; (4) Legal Obligation — necessary to comply with applicable laws and regulations.">我们处理您个人信息的法律依据包括：（1）同意——在您主动提交联系表单时基于您的同意处理信息；（2）合同必要——为回应您的咨询和提供您请求的服务所必需；（3）合法利益——为网站安全运营、欺诈防范和体验优化所必需；（4）法律义务——为遵守适用法律法规的要求。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="2. 数据主体权利" data-lang-en="2. Data Subject Rights">2. 数据主体权利</p>
+              <p class="p" data-lang-zh="根据 GDPR 及其他适用法律，数据主体享有以下权利：（1）知情权——了解其个人信息是否被处理及处理方式；（2）访问权——获取其个人信息的副本；（3）更正权——要求更正不准确的信息；（4）删除权（&ldquo;被遗忘权&rdquo;）——在特定情形下要求删除个人信息；（5）限制处理权——在特定情形下要求限制信息处理；（6）数据可携带权——以结构化、常用格式获取其个人信息；（7）反对权——反对基于合法利益的信息处理；（8）免于自动化决策权——在特定情形下免于完全基于自动化处理的决策。" data-lang-en="Under the GDPR and other applicable laws, data subjects have the following rights: (1) Right to be Informed — know whether their personal information is being processed and how; (2) Right of Access — obtain a copy of their personal information; (3) Right to Rectification — request correction of inaccurate information; (4) Right to Erasure (&ldquo;right to be forgotten&rdquo;) — request deletion of personal information in certain circumstances; (5) Right to Restrict Processing — request restriction of processing in certain circumstances; (6) Right to Data Portability — obtain personal information in a structured, commonly used format; (7) Right to Object — object to processing based on legitimate interests; (8) Right to be Free from Automated Decision-Making — in certain circumstances, not be subject to decisions based solely on automated processing.">根据 GDPR 及其他适用法律，数据主体享有以下权利：（1）知情权——了解其个人信息是否被处理及处理方式；（2）访问权——获取其个人信息的副本；（3）更正权——要求更正不准确的信息；（4）删除权（"被遗忘权"）——在特定情形下要求删除个人信息；（5）限制处理权——在特定情形下要求限制信息处理；（6）数据可携带权——以结构化、常用格式获取其个人信息；（7）反对权——反对基于合法利益的信息处理；（8）免于自动化决策权——在特定情形下免于完全基于自动化处理的决策。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="3. 跨境数据传输" data-lang-en="3. Cross-Border Data Transfer">3. 跨境数据传输</p>
+              <p class="p" data-lang-zh="由于业务涉及跨境贸易与国际化运营，您的个人信息可能在所在司法管辖区之外进行处理。在进行跨境数据传输时，我们将采取适当保障措施，包括但不限于：评估接收方的数据保护水平、签订数据处理协议、确保传输符合适用法律（如 PIPL 第38条、GDPR 第44-49条）的要求。" data-lang-en="As our business involves cross-border trade and international operations, your personal information may be processed outside the jurisdiction in which it was collected. When conducting cross-border data transfers, we will take appropriate safeguards, including but not limited to: assessing the data protection level of the recipient, signing data processing agreements, and ensuring transfers comply with applicable legal requirements (such as Article 38 of PIPL, Articles 44-49 of GDPR).">由于业务涉及跨境贸易与国际化运营，您的个人信息可能在所在司法管辖区之外进行处理。在进行跨境数据传输时，我们将采取适当保障措施，包括但不限于：评估接收方的数据保护水平、签订数据处理协议、确保传输符合适用法律（如 PIPL 第38条、GDPR 第44-49条）的要求。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="4. 数据保留" data-lang-en="4. Data Retention">4. 数据保留</p>
+              <p class="p" data-lang-zh="我们仅在实现收集目的所必需的期限内保留您的个人信息：联系表单提交的信息保留至咨询回复完成后合理期限（通常不超过 24 个月）；自动收集的访问日志保留期限通常不超过 12 个月；法律法规另有要求的，按规定期限保留。超出保留期限后，我们将删除或匿名化处理相关信息。" data-lang-en="We retain your personal information only for as long as necessary to fulfill the purpose of collection: contact form information is retained for a reasonable period after the inquiry is resolved (typically no more than 24 months); automatically collected access logs are typically retained for no more than 12 months; where required by law, information is retained for the prescribed period. After the retention period expires, we will delete or anonymize the relevant information.">我们仅在实现收集目的所必需的期限内保留您的个人信息：联系表单提交的信息保留至咨询回复完成后合理期限（通常不超过 24 个月）；自动收集的访问日志保留期限通常不超过 12 个月；法律法规另有要求的，按规定期限保留。超出保留期限后，我们将删除或匿名化处理相关信息。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="5. 数据安全措施" data-lang-en="5. Data Security Measures">5. 数据安全措施</p>
+              <p class="p" data-lang-zh="我们采用以下技术和管理措施保护您的个人信息：（1）传输加密——全站采用 HTTPS/TLS 加密传输；（2）访问控制——基于最小权限原则限制信息访问；（3）安全审计——定期进行安全评估和漏洞排查；（4）数据最小化——仅收集实现目的所必需的信息；（5）员工培训——对相关人员定期进行数据保护培训。" data-lang-en="We employ the following technical and administrative measures to protect your personal information: (1) Encryption in Transit — site-wide HTTPS/TLS encrypted transmission; (2) Access Control — information access restricted based on the principle of least privilege; (3) Security Audits — regular security assessments and vulnerability scanning; (4) Data Minimization — collecting only information necessary for the intended purpose; (5) Staff Training — regular data protection training for relevant personnel.">我们采用以下技术和管理措施保护您的个人信息：（1）传输加密——全站采用 HTTPS/TLS 加密传输；（2）访问控制——基于最小权限原则限制信息访问；（3）安全审计——定期进行安全评估和漏洞排查；（4）数据最小化——仅收集实现目的所必需的信息；（5）员工培训——对相关人员定期进行数据保护培训。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="6. 数据泄露响应" data-lang-en="6. Data Breach Response">6. 数据泄露响应</p>
+              <p class="p" data-lang-zh="如发生个人信息泄露、损毁或丢失事件，我们将立即启动应急响应预案，采取补救措施，并依法在规定时限内向监管部门报告、通知受影响的个人信息主体。" data-lang-en="In the event of a personal data breach, loss, or destruction, we will immediately activate our emergency response plan, take remedial measures, and report to regulatory authorities and notify affected data subjects within the timeframes required by law.">如发生个人信息泄露、损毁或丢失事件，我们将立即启动应急响应预案，采取补救措施，并依法在规定时限内向监管部门报告、通知受影响的个人信息主体。</p>
+
+              <p class="p strong legal-sub-title" data-lang-zh="7. 联系方式" data-lang-en="7. Contact">7. 联系方式</p>
+              <p class="p" data-lang-zh="如您对本法律与隐私声明有任何疑问，或需行使您的数据主体权利，请通过以下方式联系我们：" data-lang-en="If you have any questions about this Legal & Privacy Notice, or need to exercise your data subject rights, please contact us via:">如您对本法律与隐私声明有任何疑问，或需行使您的数据主体权利，请通过以下方式联系我们：</p>
+              <p class="p mono" data-lang-zh="邮箱：captain@tianzeqi.com" data-lang-en="Email: captain@tianzeqi.com">邮箱：captain@tianzeqi.com</p>
+              <p class="p" data-lang-zh="地址：香港九龙尖沙咀科学馆道14号新文华中心B座7楼701室108单位" data-lang-en="Address: Room 701, Unit 108, 7/F, Tower B, New Mandarin Plaza, 14 Science Museum Road, Tsim Sha Tsui, Kowloon, Hong Kong">地址：香港九龙尖沙咀科学馆道14号新文华中心B座7楼701室108单位</p>
+            </div>
+          </details>
+
+        </div>
+      </div>
     </div>
   </div>
 
