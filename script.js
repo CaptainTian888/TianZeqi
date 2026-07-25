@@ -111,20 +111,44 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ---------- Theme ----------
-  const savedTheme = preferences.get('theme', 'dark');
+  const systemThemeQuery = window.matchMedia('(prefers-color-scheme: light)');
+  const storedTheme = preferences.get('theme', null);
+  let savedTheme = storedTheme === 'light' || storedTheme === 'dark' ? storedTheme : null;
+  const getSystemTheme = () => systemThemeQuery.matches ? 'light' : 'dark';
+
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
     document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'light' ? '#f7f8fb' : '#0b1020');
-    // highlight active theme option
+    themeToggleBtn?.setAttribute('aria-label', theme === 'light'
+      ? '当前为浅色主题，点击切换主题'
+      : '当前为深色主题，点击切换主题');
     themeToggleBtn?.querySelectorAll('.theme-option').forEach(opt => {
-      opt.classList.toggle('active', opt.dataset.themeVal === theme);
+      const isActive = opt.dataset.themeVal === theme;
+      opt.classList.toggle('active', isActive);
     });
   }
-  applyTheme(savedTheme);
+
+  function syncThemeWithPreference() {
+    applyTheme(savedTheme || getSystemTheme());
+  }
+
+  syncThemeWithPreference();
+
+  // Follow live operating-system changes only while no manual preference has
+  // been saved. The button highlight is updated by the same applyTheme path.
+  const handleSystemThemeChange = () => {
+    if (!savedTheme) syncThemeWithPreference();
+  };
+  if (systemThemeQuery.addEventListener) {
+    systemThemeQuery.addEventListener('change', handleSystemThemeChange);
+  } else {
+    systemThemeQuery.addListener(handleSystemThemeChange);
+  }
 
   themeToggleBtn?.querySelectorAll('.theme-option').forEach(opt => {
     opt.addEventListener('click', () => {
       const val = opt.dataset.themeVal;
+      savedTheme = val;
       preferences.set('theme', val);
       applyTheme(val);
     });
@@ -135,9 +159,19 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       const current = document.documentElement.getAttribute('data-theme');
       const next = current === 'light' ? 'dark' : 'light';
+      savedTheme = next;
       preferences.set('theme', next);
       applyTheme(next);
     }
+  });
+
+  // Keep multiple open tabs in sync when the preference changes elsewhere.
+  window.addEventListener('storage', (event) => {
+    if (event.key !== 'theme') return;
+    savedTheme = event.newValue === 'light' || event.newValue === 'dark'
+      ? event.newValue
+      : null;
+    syncThemeWithPreference();
   });
 
   // ---------- Mobile menu ----------
