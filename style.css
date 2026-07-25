@@ -848,7 +848,8 @@ input:focus, textarea:focus{
   .sidebar{ display:none; }
   .topbar{ display:flex; }
   .main{ margin-left: 0; padding-top: 76px; }
-  .mobile-menu{ display:flex; }
+  .mobile-menu{ display:none; }
+  .mobile-menu[aria-hidden="false"]{ display:flex; }
   .floating{ top: 70px; }
   .hero-grid, .about-grid{ grid-template-columns: 1fr; }
   .stats{ grid-template-columns: 1fr 1fr 1fr; }
@@ -1219,14 +1220,24 @@ input:focus, textarea:focus{
 
 /* ---------- Scroll Reveal ---------- */
 [data-reveal]{
+  opacity: 1;
+  transform: none;
+  transition: opacity .7s var(--ease-out), transform .7s var(--ease-out);
+}
+/*
+  Content must remain visible when JavaScript is unavailable or a browser does
+  not support IntersectionObserver. The script adds .reveal-ready only after
+  the observer has been created successfully.
+*/
+.reveal-ready [data-reveal]:not(.revealed){
   opacity: 0;
   transform: translateY(40px);
-  transition: opacity .7s var(--ease-out), transform .7s var(--ease-out);
   will-change: opacity, transform;
 }
 [data-reveal].revealed{
   opacity: 1;
   transform: translateY(0);
+  will-change: auto;
 }
 
 /* ---------- 3D Tilt Card ---------- */
@@ -1323,6 +1334,49 @@ input:focus, textarea:focus{
   }
   [data-reveal]{ opacity: 1; transform: none; }
   .particle-canvas{ display: none; }
+}
+
+@media (max-width: 560px){
+  html, body{
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  .main{
+    padding: 68px 16px 44px;
+  }
+  .section{
+    padding: 34px 0;
+  }
+  .hero{
+    padding-top: 14px;
+  }
+  .hero-grid{
+    gap: 20px;
+  }
+  .h1{
+    font-size: clamp(36px, 12vw, 52px);
+  }
+  .floating{
+    top: 66px;
+    right: 12px;
+    bottom: auto;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+  }
+  .floating .lang-switch,
+  .floating .theme-switch{
+    background: rgba(7,10,20,.88);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 8px 24px rgba(0,0,0,.18);
+  }
+  :root[data-theme="light"] .floating .lang-switch,
+  :root[data-theme="light"] .floating .theme-switch{
+    background: rgba(255,255,255,.92);
+  }
+  .gradient-orb{
+    display: none;
+  }
 }
 
 /* ---------- Selection ---------- */
