@@ -53,6 +53,14 @@ vm.runInNewContext(supportChatScript, {
 });
 
 assert.ok(window.Tawk_API, 'Tawk API must be exposed on window for Cloudflare-delayed execution');
+let maximized = false;
+window.Tawk_API.showWidget = function () {};
+window.Tawk_API.maximize = function () {
+  maximized = true;
+};
+assert.equal(typeof window.Tawk_API.onLoad, 'function', 'Tawk must register an onLoad callback');
+window.Tawk_API.onLoad();
+assert.equal(maximized, true, 'Tawk dialog must expand after the widget loads');
 assert.ok(insertedScript, 'Tawk.to must load when the loader runs after window.load');
 assert.equal(
   insertedScript.src,

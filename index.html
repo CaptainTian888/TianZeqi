@@ -886,6 +886,10 @@
   <script>
     window.Tawk_API = window.Tawk_API || {};
     window.Tawk_LoadStart = new Date();
+    window.Tawk_API.onLoad = function () {
+      window.Tawk_API.showWidget();
+      window.Tawk_API.maximize();
+    };
     function loadSupportChat() {
       if (document.querySelector('script[data-support-chat]')) return;
       var s1 = document.createElement("script"),
