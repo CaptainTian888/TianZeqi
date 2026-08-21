@@ -33,6 +33,9 @@ const document = {
 };
 
 const window = {
+  requestIdleCallback() {
+    // A busy page may not get an idle period promptly.
+  },
   addEventListener() {
     // The page load event already occurred before this loader executed.
   },
@@ -44,10 +47,12 @@ const window = {
 vm.runInNewContext(supportChatScript, {
   document,
   window,
+  requestIdleCallback: window.requestIdleCallback,
   setTimeout: window.setTimeout,
   Date,
 });
 
+assert.ok(window.Tawk_API, 'Tawk API must be exposed on window for Cloudflare-delayed execution');
 assert.ok(insertedScript, 'Tawk.to must load when the loader runs after window.load');
 assert.equal(
   insertedScript.src,

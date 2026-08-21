@@ -839,6 +839,7 @@ input, textarea{
 :root[data-theme="light"] input, :root[data-theme="light"] textarea{ background: rgba(0,0,0,.03); }
 
 .form-honeypot{
+  display:none !important;
   position:absolute !important;
   width:1px !important;
   height:1px !important;

@@ -19,6 +19,11 @@ assert.match(
   /<script[^>]+src="contact-form\.js[^\"]*"/i,
   'contact form controller must be loaded'
 );
+assert.match(
+  html,
+  /<input[^>]+name="_honey"[^>]+\shidden(?:\s|\/?>)/i,
+  'the spam honeypot must never occupy visible form layout space'
+);
 
 const controller = fs.readFileSync('contact-form.js', 'utf8');
 assert.match(controller, /preventDefault\(\)/, 'AJAX submission must prevent page navigation');
