@@ -837,6 +837,32 @@ input, textarea{
   transition: border-color .15s ease, background .15s ease;
 }
 :root[data-theme="light"] input, :root[data-theme="light"] textarea{ background: rgba(0,0,0,.03); }
+
+.form-honeypot{
+  position:absolute !important;
+  width:1px !important;
+  height:1px !important;
+  overflow:hidden !important;
+  clip:rect(0 0 0 0) !important;
+  clip-path:inset(50%) !important;
+  white-space:nowrap !important;
+}
+.form-status{
+  min-height:1.5em;
+  margin:0;
+  color:var(--muted);
+  font-size:.88rem;
+  line-height:1.5;
+}
+.form-status.is-success{ color:#4ade80; }
+.form-status.is-error{ color:#fb7185; }
+:root[data-theme="light"] .form-status.is-success{ color:#15803d; }
+:root[data-theme="light"] .form-status.is-error{ color:#be123c; }
+.form button[type="submit"][disabled]{
+  cursor:wait;
+  opacity:.72;
+  transform:none !important;
+}
 input:focus, textarea:focus{
   border-color: rgba(96,165,250,.55);
   background: rgba(96,165,250,.06);

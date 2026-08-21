@@ -599,7 +599,16 @@
         </div>
 
         <div class="card" data-reveal data-reveal-delay="100">
-          <form action="https://formsubmit.co/shinevista@163.com" method="POST" class="form">
+          <form
+            id="contact-form"
+            action="https://formsubmit.co/shinevista@163.com"
+            data-endpoint="https://formsubmit.co/ajax/shinevista@163.com"
+            method="POST"
+            class="form"
+          >
+            <input type="text" name="_honey" class="form-honeypot" tabindex="-1" autocomplete="off" aria-hidden="true" />
+            <input type="hidden" name="_subject" value="New message from tianzeqi.com" />
+            <input type="hidden" name="_template" value="table" />
             <div class="field">
               <label for="contact-name" class="contact-form-title">
                 <span class="ico" aria-hidden="true">👤</span>
@@ -649,6 +658,7 @@
             </div>
 
             <button type="submit" class="btn btn-primary full magnetic" data-lang-zh="发送消息" data-lang-en="Send Message">发送消息</button>
+            <p id="contact-form-status" class="form-status" role="status" aria-live="polite"></p>
           </form>
         </div>
       </div>
@@ -697,6 +707,7 @@
 
   <script src="script.js?v=20260820"></script>
   <script src="brand-rotation.js?v=20260820"></script>
+  <script src="contact-form.js?v=20260820"></script>
 
   <!-- Tawk -->
   <!-- Image modal for WeChat (in-page floating window) -->
@@ -885,10 +896,12 @@
       s1.crossOrigin = "anonymous";
       s0.parentNode.insertBefore(s1, s0);
     }
-    window.addEventListener("load", function () {
+    function scheduleSupportChat() {
       if ("requestIdleCallback" in window) requestIdleCallback(loadSupportChat, { timeout: 2500 });
       else setTimeout(loadSupportChat, 1500);
-    }, { once: true });
+    }
+    if (document.readyState === "complete") scheduleSupportChat();
+    else window.addEventListener("load", scheduleSupportChat, { once: true });
   </script>
 </body>
 </html>
