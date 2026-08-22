@@ -705,17 +705,6 @@
     </footer>
   </main>
 
-  <button
-    id="support-chat-launcher"
-    class="support-chat-launcher"
-    type="button"
-    data-fallback-url="https://tawk.to/chat/68cba403ce8a271924f5a472/1j5dnhbei"
-    aria-label="在线咨询 / Live Chat"
-  >
-    <span class="support-chat-launcher-icon" aria-hidden="true">💬</span>
-    <span data-lang-zh="在线咨询" data-lang-en="Live Chat">在线咨询</span>
-  </button>
-
   <script src="script.js?v=20260820"></script>
   <script src="brand-rotation.js?v=20260820"></script>
   <script src="contact-form.js?v=20260820"></script>
@@ -897,41 +886,10 @@
   <script>
     window.Tawk_API = window.Tawk_API || {};
     window.Tawk_LoadStart = new Date();
-    var supportChatLauncher = document.querySelector("#support-chat-launcher");
-    function setSupportChatLauncherVisible(visible) {
-      if (supportChatLauncher) supportChatLauncher.hidden = !visible;
-    }
     window.Tawk_API.onLoad = function () {
-      var isMobile = window.matchMedia("(max-width: 980px)").matches;
-      if (isMobile) {
-        window.Tawk_API.minimize();
-        window.Tawk_API.hideWidget();
-        setSupportChatLauncherVisible(true);
-      } else {
-        window.Tawk_API.showWidget();
-        window.Tawk_API.maximize();
-      }
+      window.Tawk_API.showWidget();
+      window.Tawk_API.maximize();
     };
-    window.Tawk_API.onChatMaximized = function () {
-      setSupportChatLauncherVisible(false);
-    };
-    window.Tawk_API.onChatMinimized = function () {
-      window.Tawk_API.hideWidget();
-      setSupportChatLauncherVisible(true);
-    };
-    window.Tawk_API.onChatHidden = function () {
-      setSupportChatLauncherVisible(true);
-    };
-    if (supportChatLauncher) {
-      supportChatLauncher.addEventListener("click", function () {
-        if (typeof window.Tawk_API.maximize === "function") {
-          window.Tawk_API.showWidget();
-          window.Tawk_API.maximize();
-          return;
-        }
-        window.open(supportChatLauncher.dataset.fallbackUrl, "_blank", "noopener,noreferrer");
-      });
-    }
     function loadSupportChat() {
       if (document.querySelector('script[data-support-chat]')) return;
       var s1 = document.createElement("script"),
