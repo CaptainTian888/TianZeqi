@@ -15,6 +15,16 @@
   --radius: 18px;
   --max: 1120px;
   --sidebar: 280px;
+
+  /* Fluid scale — keeps content proportions consistent from small phones
+     to ultra-wide monitors instead of jumping at a couple of breakpoints. */
+  --main-pad-x: clamp(16px, 2.4vw, 34px);
+  --main-pad-top: clamp(18px, 2vw, 30px);
+  --main-pad-bottom: clamp(44px, 5vw, 72px);
+  --section-pad-y: clamp(32px, 4.2vw, 54px);
+  --card-pad: clamp(15px, 1.5vw, 20px);
+  --grid-gap: clamp(10px, 1.2vw, 16px);
+  --stack-gap: clamp(14px, 1.6vw, 22px);
 }
 
 :root[data-theme="light"]{
@@ -35,10 +45,10 @@
 
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
-html.modal-open{ overflow: hidden; }
 body{
   margin:0;
   font-family: Inter, "Noto Sans SC", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  font-size: clamp(15px, 0.28vw + 14.2px, 17px);
   color:var(--text);
   background:
     radial-gradient(1200px 600px at 20% 10%, rgba(124,58,237,.35), transparent 60%),
@@ -53,13 +63,13 @@ img{max-width:100%; height:auto; display:block}
 
 .main{
   margin-left: var(--sidebar);
-  padding: 26px 22px 60px;
+  padding: var(--main-pad-top) var(--main-pad-x) var(--main-pad-bottom);
 }
 
 .section{
   max-width: var(--max);
   margin: 0 auto;
-  padding: 46px 0;
+  padding: var(--section-pad-y) 0;
 }
 
 .section + .section{
@@ -67,9 +77,9 @@ img{max-width:100%; height:auto; display:block}
 }
 :root[data-theme="light"] .section + .section{ border-top: 1px solid rgba(0,0,0,.06); }
 
-.section-head{ margin-bottom: 22px; }
+.section-head{ margin-bottom: clamp(16px, 2vw, 26px); }
 .h1{
-  font-size: clamp(40px, 5.2vw, 72px);
+  font-size: clamp(36px, 4.9vw, 70px);
   line-height: 1.05;
   margin: 10px 0 14px;
   letter-spacing: -0.02em;
@@ -77,7 +87,7 @@ img{max-width:100%; height:auto; display:block}
 .h1 .sub{
   display:block;
   margin-top: 10px;
-  font-size: clamp(28px, 3.5vw, 46px);
+  font-size: clamp(24px, 3.3vw, 44px);
   font-weight: 700;
   background: linear-gradient(135deg, var(--primary), var(--soft), var(--primary2), var(--primary));
   background-size: 300% 300%;
@@ -91,16 +101,16 @@ img{max-width:100%; height:auto; display:block}
   50% { background-position: 100% 50%; }
 }
 .h2{
-  font-size: clamp(26px, 3vw, 34px);
+  font-size: clamp(23px, 2.7vw, 34px);
   margin: 0 0 8px;
   letter-spacing: -0.02em;
 }
-.h3{ font-size: 18px; margin: 0 0 8px; }
-.h3.sm{ font-size: 16px; }
-.p{ color: var(--muted); line-height: 1.8; margin: 0; }
+.h3{ font-size: clamp(16px, 1.15vw, 19px); margin: 0 0 8px; }
+.h3.sm{ font-size: clamp(15px, 1vw, 17px); }
+.p{ color: var(--muted); line-height: 1.8; margin: 0; font-size: clamp(14px, 0.95vw, 16px); }
 .p.strong{ color: var(--text); font-weight: 600; }
-.lead{ color: var(--muted); margin:0; line-height: 1.8; }
-.tiny{ font-size: 12px; color: var(--muted); }
+.lead{ color: var(--muted); margin:0; line-height: 1.8; font-size: clamp(14px, 1vw, 17px); }
+.tiny{ font-size: clamp(11px, 0.8vw, 13px); color: var(--muted); }
 .italic{ font-style: italic; }
 
 .card{
@@ -108,7 +118,7 @@ img{max-width:100%; height:auto; display:block}
   border: 1px solid var(--border);
   border-radius: var(--radius);
   box-shadow: var(--shadow);
-  padding: 18px;
+  padding: var(--card-pad);
 }
 
 .divider{
@@ -161,9 +171,6 @@ img{max-width:100%; height:auto; display:block}
 
 /* ===== Language Switch (segmented pill) ===== */
 .lang-switch{
-  appearance: none;
-  font: inherit;
-  color: inherit;
   display: inline-flex;
   align-items: center;
   gap: 2px;
@@ -207,9 +214,6 @@ img{max-width:100%; height:auto; display:block}
 
 /* ===== Theme Switch (segmented pill) ===== */
 .theme-switch{
-  appearance: none;
-  font: inherit;
-  color: inherit;
   display: inline-flex;
   align-items: center;
   gap: 2px;
@@ -283,6 +287,18 @@ img{max-width:100%; height:auto; display:block}
   text-overflow: ellipsis;
   max-width: 78%;
 }
+.brand-text{
+  display: inline-block;
+  transition: opacity .4s ease, transform .4s ease;
+}
+.brand-text.is-fading{
+  opacity: 0;
+  transform: translateY(-4px);
+}
+@media (prefers-reduced-motion: reduce){
+  .brand-text{ transition: none; }
+  .brand-text.is-fading{ transform: none; }
+}
 .icon-btn{
   border: 1px solid var(--border);
   background: var(--panel);
@@ -338,10 +354,6 @@ img{max-width:100%; height:auto; display:block}
   border-color: rgba(124,58,237,.35);
   color: var(--text);
 }
-.nav-item.nav-pulse{ animation: nav-pulse .2s ease; }
-@keyframes nav-pulse{
-  50%{ transform: scale(.96); }
-}
 
 .sidebar-foot{
   margin-top:auto;
@@ -386,11 +398,11 @@ img{max-width:100%; height:auto; display:block}
 }
 :root[data-theme="light"] .mobile-menu{ background: rgba(255,255,255,.86); }
 
-.hero{ padding-top: 22px; }
+.hero{ padding-top: clamp(14px, 1.8vw, 24px); }
 .hero-grid{
   display:grid;
   grid-template-columns: 0.92fr 1.08fr;
-  gap: 24px;
+  gap: clamp(18px, 2.4vw, 30px);
   align-items: start;
 }
 .hero-media{
@@ -405,7 +417,7 @@ img{max-width:100%; height:auto; display:block}
 .hero-copy{
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: var(--stack-gap);
   min-width: 0;
 }
 .hero-copy .h1{ margin: 0; }
@@ -469,7 +481,7 @@ img{max-width:100%; height:auto; display:block}
 .role-item:nth-child(4) .role-node{ border-color: var(--soft); }
 .role-item:nth-child(5) .role-node{ border-color: var(--primary); }
 .role-text{
-  font-size: 14.5px;
+  font-size: clamp(13px, 1vw, 15px);
   font-weight: 500;
   color: var(--muted);
   line-height: 1.5;
@@ -491,7 +503,7 @@ img{max-width:100%; height:auto; display:block}
 
 /* Bio callout — left accent border */
 .bio-callout{
-  font-size: 14px;
+  font-size: clamp(13px, 0.95vw, 15px);
   line-height: 1.85;
   padding-left: 16px;
   border-left: 2px solid var(--border);
@@ -500,10 +512,10 @@ img{max-width:100%; height:auto; display:block}
 .stats{
   display: grid;
   grid-template-columns: repeat(3, minmax(0,1fr));
-  gap: 12px;
+  gap: var(--grid-gap);
 }
 .stat{
-  padding: 14px;
+  padding: clamp(12px, 1.2vw, 16px);
   border-radius: 14px;
   border: 1px solid var(--border);
   background: rgba(255,255,255,.04);
@@ -524,13 +536,13 @@ img{max-width:100%; height:auto; display:block}
 .stat:hover::before{ opacity: 1; }
 .stat-num{
   font-weight: 900;
-  font-size: 26px;
+  font-size: clamp(22px, 2vw, 30px);
   letter-spacing: -0.03em;
   line-height: 1;
 }
 .stat-label{
   color: var(--muted);
-  font-size: 12px;
+  font-size: clamp(11px, 0.85vw, 13px);
   line-height: 1.4;
   margin-top: 8px;
 }
@@ -563,7 +575,6 @@ img{max-width:100%; height:auto; display:block}
 .media-frame img{
   width: 100%;
   height: auto;
-  aspect-ratio: auto 4 / 3;
   object-fit: cover;
   transition: transform .2s ease;
 }
@@ -576,7 +587,7 @@ img{max-width:100%; height:auto; display:block}
 .about-grid{
   display:grid;
   grid-template-columns: 1.1fr .9fr;
-  gap: 18px;
+  gap: var(--stack-gap);
   align-items: start;
 }
 .accordion{ display:flex; flex-direction:column; gap: 10px; margin-top: 10px; }
@@ -719,9 +730,9 @@ img{max-width:100%; height:auto; display:block}
 .cards-grid{
   display:grid;
   grid-template-columns: repeat(3, minmax(0,1fr));
-  gap: 12px;
+  gap: var(--grid-gap);
 }
-.svc{ padding: 16px; }
+.svc{ padding: clamp(14px, 1.5vw, 20px); }
 .svc-icon{
   width: 44px; height: 44px;
   border-radius: 14px;
@@ -742,9 +753,9 @@ img{max-width:100%; height:auto; display:block}
 .ph-grid{
   display:grid;
   grid-template-columns: repeat(2, minmax(0,1fr));
-  gap: 12px;
+  gap: var(--grid-gap);
 }
-.ph{ padding: 16px; }
+.ph{ padding: clamp(14px, 1.5vw, 20px); }
 .ph-top{ display:flex; align-items:center; gap: 10px; margin-bottom: 6px; }
 .ph-accent{
   width: 10px; height: 10px; border-radius: 999px;
@@ -755,7 +766,7 @@ img{max-width:100%; height:auto; display:block}
 .contact-grid{
   display:grid;
   grid-template-columns: 1fr 1fr;
-  gap: 12px;
+  gap: var(--grid-gap);
 }
 .info-block{ padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,.08); }
 :root[data-theme="light"] .info-block{ border-bottom: 1px solid rgba(0,0,0,.08); }
@@ -837,33 +848,6 @@ input, textarea{
   transition: border-color .15s ease, background .15s ease;
 }
 :root[data-theme="light"] input, :root[data-theme="light"] textarea{ background: rgba(0,0,0,.03); }
-
-.form-honeypot{
-  display:none !important;
-  position:absolute !important;
-  width:1px !important;
-  height:1px !important;
-  overflow:hidden !important;
-  clip:rect(0 0 0 0) !important;
-  clip-path:inset(50%) !important;
-  white-space:nowrap !important;
-}
-.form-status{
-  min-height:1.5em;
-  margin:0;
-  color:var(--muted);
-  font-size:.88rem;
-  line-height:1.5;
-}
-.form-status.is-success{ color:#4ade80; }
-.form-status.is-error{ color:#fb7185; }
-:root[data-theme="light"] .form-status.is-success{ color:#15803d; }
-:root[data-theme="light"] .form-status.is-error{ color:#be123c; }
-.form button[type="submit"][disabled]{
-  cursor:wait;
-  opacity:.72;
-  transform:none !important;
-}
 input:focus, textarea:focus{
   border-color: rgba(96,165,250,.55);
   background: rgba(96,165,250,.06);
@@ -871,6 +855,41 @@ input:focus, textarea:focus{
 #contact-message{
   min-height: 190px;
   resize: vertical;
+}
+
+/* Honeypot field — hidden from real visitors, catches bots */
+.hp-field{
+  position: absolute !important;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.form-status{
+  margin: 0;
+  font-size: 13px;
+  font-weight: 600;
+  line-height: 1.5;
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: opacity .25s ease;
+}
+.form-status.is-visible{
+  opacity: 1;
+  max-height: 120px;
+}
+.form-status.sending{ color: var(--muted); }
+.form-status.success{ color: #22c55e; }
+.form-status.error{ color: #f87171; }
+:root[data-theme="light"] .form-status.success{ color: #15803d; }
+:root[data-theme="light"] .form-status.error{ color: #b91c1c; }
+
+.form.is-sending #contact-submit{
+  opacity: .65;
+  cursor: progress;
 }
 
 .footer{
@@ -905,7 +924,11 @@ input:focus, textarea:focus{
   .t-item:nth-child(even)::after{ display: none; }
   .t-dot{ width: 11px; height: 11px; }
   .t-card{ max-width: 100%; }
-  .learn-more-grid{ grid-template-columns: 1fr; }
+}
+@media (max-width: 560px){
+  .stats{ grid-template-columns: 1fr; }
+  .cards-grid{ grid-template-columns: 1fr; }
+  .ph-grid{ grid-template-columns: 1fr; }
 }
 
 
@@ -962,13 +985,6 @@ input:focus, textarea:focus{
 .social-link{ width:52px; height:52px; }
 .social-link img{ width:34px; height:34px; }
 
-[hidden]{ display: none !important; }
-
-:where(a, button, input, textarea, summary):focus-visible{
-  outline: 3px solid rgba(96,165,250,.75);
-  outline-offset: 3px;
-}
-
 
 
 /* ===== Contact social icons: dark mode purple ===== */
@@ -986,11 +1002,18 @@ input:focus, textarea:focus{
 .image-modal-close{ position:absolute; right:8px; top:8px; z-index:220; background: rgba(0,0,0,0.35); color: #fff; border: none; width:36px; height:36px; border-radius:8px; font-weight:800; cursor:pointer; }
 :root[data-theme="light"] .image-modal-close{ background: rgba(255,255,255,0.85); color: #111; }
 
+@media (max-width:560px){
+  .image-modal-window{ width: 92%; height: auto; max-height: 86vh; border-radius: 10px; }
+  .image-modal-img{ max-height:72vh; }
+}
+
+
+
 /* ===== Learn More ===== */
 .learn-more-grid{
   display:grid;
   grid-template-columns: repeat(2, minmax(0,1fr));
-  gap: 12px;
+  gap: var(--grid-gap);
 }
 /* Single featured entry layout */
 .learn-more-single{
@@ -1091,6 +1114,19 @@ input:focus, textarea:focus{
 .nav-item.active::after{
   transform: scaleX(1);
 }
+@media (max-width: 980px){
+  .learn-more-grid{ grid-template-columns: 1fr; }
+}
+@media (max-width: 560px){
+  .learn-card{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .learn-card-action{
+    width: 100%;
+  }
+}
+
 /* ===== Contact form: full-card layout ===== */
 .contact-grid{
   align-items:stretch;
@@ -1151,6 +1187,12 @@ input:focus, textarea:focus{
   margin-top:auto;
   flex:0 0 var(--contact-app-height);
 }
+@media (max-width:560px){
+  .contact-grid > .card:last-child .form{ gap:16px; }
+  .contact-grid > .card:last-child #contact-message{ min-height:200px; }
+}
+
+
 /* ============================================================
    ANIMATION & INTERACTION LAYER (added on top of original CSS)
    ============================================================ */
@@ -1350,6 +1392,49 @@ input:focus, textarea:focus{
   }
   [data-reveal]{ opacity: 1; transform: none; }
   .particle-canvas{ display: none; }
+}
+
+@media (max-width: 560px){
+  html, body{
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+  .main{
+    padding: 68px var(--main-pad-x) var(--main-pad-bottom);
+  }
+  .section{
+    padding: var(--section-pad-y) 0;
+  }
+  .hero{
+    padding-top: 14px;
+  }
+  .hero-grid{
+    gap: 20px;
+  }
+  .h1{
+    font-size: clamp(34px, 11vw, 50px);
+  }
+  .floating{
+    top: 66px;
+    right: 12px;
+    bottom: auto;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 8px;
+  }
+  .floating .lang-switch,
+  .floating .theme-switch{
+    background: rgba(7,10,20,.88);
+    backdrop-filter: blur(14px);
+    box-shadow: 0 8px 24px rgba(0,0,0,.18);
+  }
+  :root[data-theme="light"] .floating .lang-switch,
+  :root[data-theme="light"] .floating .theme-switch{
+    background: rgba(255,255,255,.92);
+  }
+  .gradient-orb{
+    display: none;
+  }
 }
 
 /* ---------- Selection ---------- */
@@ -1557,48 +1642,133 @@ input:focus, textarea:focus{
   color: var(--soft);
 }
 
+/* ============================================================
+   PROPORTIONAL SCALING ACROSS DEVICE SIZES
+   Sits last so it can refine the earlier breakpoints.
+   Ranges: ultra-wide / wide / laptop / tablet / phone / short-landscape
+   ============================================================ */
+
+/* --- Ultra-wide & large desktop: let the content column grow with the screen
+       instead of stranding a 1120px column in the middle of a 2K display --- */
+@media (min-width: 1400px){
+  :root{
+    --max: 1240px;
+    --sidebar: 300px;
+  }
+}
+@media (min-width: 1750px){
+  :root{
+    --max: 1380px;
+    --sidebar: 320px;
+  }
+  .hero-media{ max-width: 500px; }
+  .media-card-lg{ max-width: 520px; margin: 0 auto; }
+}
+
+/* --- Laptops 981–1280: the fixed 280px sidebar eats too much of the row,
+       so trim it and keep the reading column comfortable --- */
+@media (min-width: 981px) and (max-width: 1280px){
+  :root{ --sidebar: 236px; }
+  .brand-lg{ font-size: 15px; }
+  .hero-grid{ grid-template-columns: 0.88fr 1.12fr; }
+  .hero-media{ max-width: 360px; }
+}
+
+/* --- Tablets & large foldables 761–980: no sidebar here, so there is plenty
+       of width — keep two-up layouts instead of dropping straight to one --- */
+@media (min-width: 761px) and (max-width: 980px){
+  .contact-grid{ grid-template-columns: 1fr 1fr; }
+  .learn-more-grid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .about-grid{ grid-template-columns: 1fr; }
+}
+
+/* Without the sidebar there is room for a side-by-side hero well below 980px —
+   stacking it there pushed the name and roles off the first screen. */
+@media (min-width: 700px) and (max-width: 980px){
+  .hero-grid{
+    grid-template-columns: 0.82fr 1.18fr;
+    align-items: start;
+  }
+  .hero-media{ max-width: 300px; }
+}
+@media (min-width: 861px) and (max-width: 980px){
+  .cards-grid{ grid-template-columns: repeat(3, minmax(0,1fr)); }
+}
+
+/* --- Small tablets / large phones 561–760 --- */
+@media (min-width: 561px) and (max-width: 760px){
+  .hero-media{ max-width: 340px; }
+  .learn-more-grid{ grid-template-columns: 1fr; }
+}
+
+/* --- Phones: keep the hero image from dominating the first screen --- */
+@media (max-width: 560px){
+  .hero-media{ max-width: min(320px, 76vw); }
+  /* Keep the portrait from filling the whole first screen on short phones —
+     it crops instead of pushing the name and roles below the fold. */
+  .hero-media .media-frame img{
+    max-height: 52vh;
+    object-fit: cover;
+    object-position: 50% 18%;
+  }
+  .media-card-lg{ position: static; }
+  .stats{ gap: 10px; }
+  .stat{ display: flex; align-items: baseline; gap: 12px; }
+  .stat-label{ margin-top: 0; }
+  .social-link{ width: 46px; height: 46px; }
+  .social-link img{ width: 30px; height: 30px; }
+  .acc-body{ padding-left: 20px; }
+}
+
+/* --- Compact phones (≤400px: iPhone SE, folded Galaxy Fold, etc.) --- */
+@media (max-width: 400px){
+  :root{
+    --main-pad-x: 13px;
+    --radius: 15px;
+  }
+  .h1{ font-size: clamp(30px, 10.5vw, 40px); }
+  .h1 .sub{ font-size: clamp(20px, 7vw, 28px); }
+  .brand{ font-size: 15px; max-width: 68%; }
+  .hero-media{ max-width: 84vw; }
+  .kicker{ font-size: 11.5px; padding: 5px 11px; }
+  .phone-row{ grid-template-columns: 64px minmax(0,1fr); gap: 9px; }
+  .phone-number{ white-space: normal; word-break: break-word; }
+  .social{ gap: 9px; }
+  .social-link{ width: 42px; height: 42px; }
+  .social-link img{ width: 27px; height: 27px; }
+  .badge{ font-size: 11px; padding: 5px 8px; }
+  .learn-card{ min-height: 0; }
+}
+
+/* --- Short landscape viewports (phones turned sideways, split-screen):
+       trade vertical padding for content --- */
+@media (max-height: 560px) and (orientation: landscape){
+  :root{
+    --section-pad-y: 26px;
+    --main-pad-top: 14px;
+    --main-pad-bottom: 30px;
+  }
+  .hero{ padding-top: 8px; }
+  .hero-grid{ grid-template-columns: 0.9fr 1.1fr; }
+  .hero-media{ max-width: 260px; }
+  .hero-media .media-frame img{
+    max-height: 62vh;
+    object-fit: cover;
+    object-position: 50% 18%;
+  }
+  .media-card-lg{ position: static; }
+  .mobile-menu{ max-height: 70vh; overflow-y: auto; }
+  #contact-message,
+  .contact-grid > .card:last-child #contact-message{ min-height: 120px; }
+}
+
+/* --- Long text safety on every size --- */
+.h1, .h2, .h3, .p, .lead, .t-desc, .acc-body, .learn-url{
+  overflow-wrap: break-word;
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 560px){
-  html, body{
-    max-width: 100%;
-    overflow-x: hidden;
-  }
-  .main{ padding: 68px 16px 44px; }
-  .section{ padding: 34px 0; }
-  .hero{ padding-top: 14px; }
-  .hero-grid{ gap: 20px; }
-  .h1{ font-size: clamp(36px, 12vw, 52px); }
-  .stats,
-  .cards-grid,
-  .ph-grid{ grid-template-columns: 1fr; }
-  .floating{
-    top: 66px;
-    right: 12px;
-    bottom: auto;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 8px;
-  }
-  .floating .lang-switch,
-  .floating .theme-switch{
-    background: rgba(7,10,20,.88);
-    backdrop-filter: blur(14px);
-    box-shadow: 0 8px 24px rgba(0,0,0,.18);
-  }
-  :root[data-theme="light"] .floating .lang-switch,
-  :root[data-theme="light"] .floating .theme-switch{
-    background: rgba(255,255,255,.92);
-  }
-  .gradient-orb{ display: none; }
-  .image-modal-window{ width: 92%; height: auto; max-height: 86vh; border-radius: 10px; }
-  .image-modal-img{ max-height:72vh; }
-  .learn-card{
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .learn-card-action{ width: 100%; }
-  .contact-grid > .card:last-child .form{ gap:16px; }
-  .contact-grid > .card:last-child #contact-message{ min-height:200px; }
   .legal-modal{ padding: 0; }
   .legal-modal-window{
     max-height: 100vh;

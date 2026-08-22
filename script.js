@@ -9,41 +9,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const allNavItems = document.querySelectorAll('.nav-item');
   const sections = document.querySelectorAll('section');
 
-  // ---------- Safe browser preferences ----------
-  const preferences = {
-    get(key, fallback) {
-      try {
-        return window.localStorage.getItem(key) || fallback;
-      } catch (_) {
-        return fallback;
-      }
-    },
-    set(key, value) {
-      try {
-        window.localStorage.setItem(key, value);
-      } catch (_) {
-        // Storage can be unavailable in private mode and embedded WebViews.
-      }
-    }
-  };
-  const focusableSelector = 'a[href], button:not([disabled]), input:not([disabled]), textarea:not([disabled]), select:not([disabled]), [tabindex]:not([tabindex="-1"])';
-  function keepFocusInside(event, container) {
-    if (event.key !== 'Tab') return;
-    const focusable = [...container.querySelectorAll(focusableSelector)].filter((el) => !el.hidden);
-    if (!focusable.length) return;
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    if (event.shiftKey && document.activeElement === first) {
-      event.preventDefault();
-      last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
-      event.preventDefault();
-      first.focus();
-    }
-  }
-
   // ---------- Language ----------
-  let currentLang = preferences.get('lang', 'zh-CN');
+  let currentLang = localStorage.getItem('lang') || 'zh-CN';
 
   function applyLanguage(lang) {
     document.documentElement.lang = lang;
@@ -51,17 +18,12 @@ document.addEventListener('DOMContentLoaded', () => {
     var siteDomain = window.location.hostname || 'www.tianzeqi.com';
 
     document.querySelectorAll('[data-lang-zh], [data-lang-en]').forEach((el) => {
-      let value = lang === 'zh-CN' ? el.dataset.langZh : el.dataset.langEn;
-      if (!value) return;
-      value = value.replace(/{SITE_DOMAIN}/g, siteDomain);
-      if (el.tagName === 'META') {
-        el.setAttribute('content', value);
-        return;
+      if (lang === 'zh-CN' && el.dataset.langZh) el.innerHTML = el.dataset.langZh;
+      if (lang === 'en' && el.dataset.langEn) el.innerHTML = el.dataset.langEn;
+      // Auto-replace {SITE_DOMAIN} placeholder with current hostname
+      if (el.innerHTML.indexOf('{SITE_DOMAIN}') !== -1) {
+        el.innerHTML = el.innerHTML.replace(/{SITE_DOMAIN}/g, siteDomain);
       }
-      // Only the two explicitly marked strings contain the controlled inline
-      // span used by the automatic years feature.
-      if (el.hasAttribute('data-lang-html')) el.innerHTML = value;
-      else el.textContent = value;
     });
 
     document.querySelectorAll('[data-lang-zh-placeholder], [data-lang-en-placeholder]').forEach((el) => {
@@ -70,7 +32,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // highlight active language option
-    langToggleBtn?.querySelectorAll('.lang-option').forEach(opt => {
+    langToggleBtn.querySelectorAll('.lang-option').forEach(opt => {
       opt.classList.toggle('active', opt.dataset.lang === lang);
     });
 
@@ -94,16 +56,16 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  langToggleBtn?.addEventListener('click', (e) => {
+  langToggleBtn.addEventListener('click', (e) => {
     const opt = e.target.closest('.lang-option');
     const targetLang = opt ? opt.dataset.lang : (currentLang === 'zh-CN' ? 'en' : 'zh-CN');
     if (targetLang !== currentLang) {
       currentLang = targetLang;
-      preferences.set('lang', currentLang);
+      localStorage.setItem('lang', currentLang);
       applyLanguage(currentLang);
     }
   });
-  langToggleBtn?.addEventListener('keydown', (e) => {
+  langToggleBtn.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       langToggleBtn.click();
@@ -111,78 +73,62 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
   // ---------- Theme ----------
-  const systemThemeQuery = window.matchMedia('(prefers-color-scheme: light)');
-  const storedTheme = preferences.get('theme', null);
-  let savedTheme = storedTheme === 'light' || storedTheme === 'dark' ? storedTheme : null;
-  const getSystemTheme = () => systemThemeQuery.matches ? 'light' : 'dark';
+  // Follows the system colour scheme until the visitor explicitly picks one.
+  const darkSchemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+  function systemTheme() {
+    return darkSchemeQuery.matches ? 'dark' : 'light';
+  }
 
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
-    document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'light' ? '#f7f8fb' : '#0b1020');
-    themeToggleBtn?.setAttribute('aria-label', theme === 'light'
-      ? '当前为浅色主题，点击切换主题'
-      : '当前为深色主题，点击切换主题');
-    themeToggleBtn?.querySelectorAll('.theme-option').forEach(opt => {
-      const isActive = opt.dataset.themeVal === theme;
-      opt.classList.toggle('active', isActive);
+    // keep the toggle in sync with whatever theme is actually showing
+    themeToggleBtn.querySelectorAll('.theme-option').forEach(opt => {
+      opt.classList.toggle('active', opt.dataset.themeVal === theme);
     });
   }
 
-  function syncThemeWithPreference() {
-    applyTheme(savedTheme || getSystemTheme());
+  const savedTheme = localStorage.getItem('theme');
+  applyTheme(savedTheme === 'dark' || savedTheme === 'light' ? savedTheme : systemTheme());
+
+  function onSystemThemeChange() {
+    // an explicit choice always wins over the system setting
+    if (localStorage.getItem('theme')) return;
+    applyTheme(systemTheme());
   }
 
-  syncThemeWithPreference();
-
-  // Follow live operating-system changes only while no manual preference has
-  // been saved. The button highlight is updated by the same applyTheme path.
-  const handleSystemThemeChange = () => {
-    if (!savedTheme) syncThemeWithPreference();
-  };
-  if (systemThemeQuery.addEventListener) {
-    systemThemeQuery.addEventListener('change', handleSystemThemeChange);
-  } else {
-    systemThemeQuery.addListener(handleSystemThemeChange);
+  if (typeof darkSchemeQuery.addEventListener === 'function') {
+    darkSchemeQuery.addEventListener('change', onSystemThemeChange);
+  } else if (typeof darkSchemeQuery.addListener === 'function') {
+    darkSchemeQuery.addListener(onSystemThemeChange);
   }
 
-  themeToggleBtn?.querySelectorAll('.theme-option').forEach(opt => {
+  themeToggleBtn.querySelectorAll('.theme-option').forEach(opt => {
     opt.addEventListener('click', () => {
       const val = opt.dataset.themeVal;
-      savedTheme = val;
-      preferences.set('theme', val);
+      localStorage.setItem('theme', val);
       applyTheme(val);
     });
   });
 
-  themeToggleBtn?.addEventListener('keydown', (e) => {
+  themeToggleBtn.addEventListener('keydown', (e) => {
     if (e.key === 'Enter' || e.key === ' ') {
       e.preventDefault();
       const current = document.documentElement.getAttribute('data-theme');
       const next = current === 'light' ? 'dark' : 'light';
-      savedTheme = next;
-      preferences.set('theme', next);
+      localStorage.setItem('theme', next);
       applyTheme(next);
     }
-  });
-
-  // Keep multiple open tabs in sync when the preference changes elsewhere.
-  window.addEventListener('storage', (event) => {
-    if (event.key !== 'theme') return;
-    savedTheme = event.newValue === 'light' || event.newValue === 'dark'
-      ? event.newValue
-      : null;
-    syncThemeWithPreference();
   });
 
   // ---------- Mobile menu ----------
   let isMobileMenuOpen = false;
 
-    function setMobileMenu(open) {
-    if (!mobileMenu || !mobileMenuButton) return;
+  function setMobileMenu(open) {
     isMobileMenuOpen = open;
     mobileMenu.setAttribute('aria-hidden', String(!open));
     mobileMenuButton.setAttribute('aria-expanded', String(open));
-    mobileMenuButton.setAttribute('aria-label', open ? '关闭导航菜单' : '打开导航菜单');
+    mobileMenu.style.display = open ? 'flex' : 'none';
     mobileMenuButton.textContent = open ? '✕' : '☰';
   }
 
@@ -231,36 +177,101 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  window.addEventListener('scroll', setActiveNavLink, { passive: true });
+  window.addEventListener('resize', setActiveNavLink);
+
   // ---------- Back to top ----------
   function toggleToTop() {
-    if (toTopBtn) toTopBtn.hidden = window.scrollY <= 600;
+    toTopBtn.style.display = window.scrollY > 600 ? 'inline-flex' : 'none';
   }
-  toTopBtn?.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-  let viewportUpdatePending = false;
-  function updateViewportUi() {
-    viewportUpdatePending = false;
-    setActiveNavLink();
-    toggleToTop();
-    const scrollProgress = document.getElementById('scroll-progress');
-    if (scrollProgress) {
-      const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
-      const progress = scrollTotal > 0 ? (window.scrollY / scrollTotal) * 100 : 0;
-      scrollProgress.style.width = progress + '%';
-    }
-  }
-  function scheduleViewportUpdate() {
-    if (viewportUpdatePending) return;
-    viewportUpdatePending = true;
-    requestAnimationFrame(updateViewportUi);
-  }
-  window.addEventListener('scroll', scheduleViewportUpdate, { passive: true });
-  window.addEventListener('resize', scheduleViewportUpdate, { passive: true });
+  toTopBtn.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
+  window.addEventListener('scroll', toggleToTop, { passive: true });
   toggleToTop();
 
   // Init
   applyLanguage(currentLang);
   setActiveNavLink();
+
+  // ---------- Brand slogan rotation (Chinese only) ----------
+  const brandRotators = document.querySelectorAll('.brand-rotate');
+  if (brandRotators.length) {
+    let brandIndex = 0;
+
+    setInterval(() => {
+      // English keeps its single wording untouched
+      if (currentLang !== 'zh-CN') return;
+
+      brandIndex += 1;
+
+      brandRotators.forEach((el) => {
+        const phrases = (el.dataset.rotateZh || '').split('|').filter(Boolean);
+        const textEl = el.querySelector('.brand-text');
+        if (phrases.length < 2 || !textEl) return;
+
+        textEl.classList.add('is-fading');
+        setTimeout(() => {
+          textEl.textContent = phrases[brandIndex % phrases.length];
+          textEl.classList.remove('is-fading');
+        }, 400);
+      });
+    }, 5000);
+  }
+
+  // ---------- Contact form (async submit) ----------
+  const contactForm = document.getElementById('contact-form');
+  const formStatus = document.getElementById('form-status');
+  const contactSubmit = document.getElementById('contact-submit');
+
+  if (contactForm && formStatus && contactSubmit) {
+    const messages = {
+      sending: { zh: '正在发送…', en: 'Sending…' },
+      success: { zh: '发送成功，感谢您的留言，我会尽快回复。', en: 'Sent successfully. Thank you — I will reply soon.' },
+      error: { zh: '发送失败，请稍后重试，或通过上方的联系方式直接联系我。', en: 'Sending failed. Please try again later, or reach me via the contact options above.' }
+    };
+
+    function setStatus(key, state) {
+      formStatus.textContent = messages[key][currentLang === 'zh-CN' ? 'zh' : 'en'];
+      formStatus.className = 'form-status is-visible ' + state;
+    }
+
+    contactForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (contactSubmit.disabled) return;
+
+      contactSubmit.disabled = true;
+      contactForm.classList.add('is-sending');
+      setStatus('sending', 'sending');
+
+      // FormSubmit's AJAX endpoint returns JSON instead of navigating away,
+      // so the page stays responsive and the visitor gets immediate feedback.
+      const endpoint = contactForm.action.replace('formsubmit.co/', 'formsubmit.co/ajax/');
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 15000);
+
+      fetch(endpoint, {
+        method: 'POST',
+        headers: { Accept: 'application/json' },
+        body: new FormData(contactForm),
+        signal: controller.signal
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error('Request failed: ' + res.status);
+          return res.json().catch(() => ({}));
+        })
+        .then(() => {
+          setStatus('success', 'success');
+          contactForm.reset();
+        })
+        .catch(() => {
+          setStatus('error', 'error');
+        })
+        .finally(() => {
+          clearTimeout(timeoutId);
+          contactSubmit.disabled = false;
+          contactForm.classList.remove('is-sending');
+        });
+    });
+  }
 
 
   // ---------- Auto years sync ----------
@@ -285,30 +296,25 @@ document.addEventListener('DOMContentLoaded', () => {
     const win = imageModal.querySelector('.image-modal-window');
     const imgEl = imageModal.querySelector('.image-modal-img');
     const closeBtn = imageModal.querySelector('.image-modal-close');
-    let imageModalTrigger = null;
 
-    function openImageModal(url, trigger) {
+    function openImageModal(url) {
       if (!url) return;
-      imageModalTrigger = trigger || document.activeElement;
       imgEl.src = url;
-      imgEl.alt = trigger?.getAttribute('aria-label') || trigger?.title || 'Social contact QR code';
       imageModal.setAttribute('aria-hidden', 'false');
-      document.documentElement.classList.add('modal-open');
-      closeBtn?.focus();
+      document.documentElement.style.overflow = 'hidden';
     }
 
     function closeImageModal() {
       imageModal.setAttribute('aria-hidden', 'true');
       imgEl.src = '';
-      document.documentElement.classList.remove('modal-open');
-      imageModalTrigger?.focus();
+      document.documentElement.style.overflow = '';
     }
 
     wechatBtns.forEach((btn) => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
         const url = btn.dataset.imageUrl || btn.getAttribute('href');
-        openImageModal(url, btn);
+        openImageModal(url);
       });
     });
 
@@ -316,7 +322,7 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.addEventListener('click', (e) => {
         e.preventDefault();
         const url = btn.dataset.imageUrl || btn.getAttribute('href');
-        openImageModal(url, btn);
+        openImageModal(url);
       });
     });
 
@@ -325,7 +331,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && imageModal.getAttribute('aria-hidden') === 'false') closeImageModal();
-      if (imageModal.getAttribute('aria-hidden') === 'false') keepFocusInside(e, imageModal);
     });
   }
 
@@ -337,13 +342,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const legalCloseBtn = legalModal.querySelector('.legal-modal-close');
     const legalBody = legalModal.querySelector('.legal-modal-body');
     const legalLinks = document.querySelectorAll('[data-legal-target]');
-    let legalModalTrigger = null;
 
-    function openLegalModal(targetId, trigger) {
-      legalModalTrigger = trigger || document.activeElement;
+    function openLegalModal(targetId) {
       legalModal.setAttribute('aria-hidden', 'false');
-      document.documentElement.classList.add('modal-open');
-      legalCloseBtn?.focus();
+      document.documentElement.style.overflow = 'hidden';
 
       // Open and scroll to the target section
       if (targetId) {
@@ -362,15 +364,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function closeLegalModal() {
       legalModal.setAttribute('aria-hidden', 'true');
-      document.documentElement.classList.remove('modal-open');
-      legalModalTrigger?.focus();
+      document.documentElement.style.overflow = '';
     }
 
     legalLinks.forEach((link) => {
       link.addEventListener('click', (e) => {
         e.preventDefault();
         const target = link.dataset.legalTarget;
-        openLegalModal(target, link);
+        openLegalModal(target);
       });
     });
 
@@ -379,7 +380,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && legalModal.getAttribute('aria-hidden') === 'false') closeLegalModal();
-      if (legalModal.getAttribute('aria-hidden') === 'false') keepFocusInside(e, legalModal);
     });
   }
 
@@ -390,40 +390,25 @@ document.addEventListener('DOMContentLoaded', () => {
   // ============================================================
 
   const isTouchDevice = window.matchMedia('(hover: none)').matches;
-  const pointer = { x: window.innerWidth / 2, y: window.innerHeight / 2 };
-  const pointerSubscribers = [];
-  let pointerFramePending = false;
-  function onPointerMove(callback) {
-    pointerSubscribers.push(callback);
-  }
-  if (!isTouchDevice) {
-    document.addEventListener('mousemove', (event) => {
-      pointer.x = event.clientX;
-      pointer.y = event.clientY;
-      if (pointerFramePending) return;
-      pointerFramePending = true;
-      requestAnimationFrame(() => {
-        pointerFramePending = false;
-        pointerSubscribers.forEach((callback) => callback(pointer));
-      });
-    }, { passive: true });
-  }
 
   // ---------- Custom Cursor ----------
   const cursorDot = document.getElementById('cursor-dot');
   const cursorRing = document.getElementById('cursor-ring');
 
   if (cursorDot && cursorRing && !isTouchDevice) {
+    let mouseX = 0, mouseY = 0;
     let ringX = 0, ringY = 0;
 
-    onPointerMove((position) => {
-      cursorDot.style.left = position.x + 'px';
-      cursorDot.style.top = position.y + 'px';
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      cursorDot.style.left = mouseX + 'px';
+      cursorDot.style.top = mouseY + 'px';
     });
 
     function animateRing() {
-      ringX += (pointer.x - ringX) * 0.15;
-      ringY += (pointer.y - ringY) * 0.15;
+      ringX += (mouseX - ringX) * 0.15;
+      ringY += (mouseY - ringY) * 0.15;
       cursorRing.style.left = ringX + 'px';
       cursorRing.style.top = ringY + 'px';
       requestAnimationFrame(animateRing);
@@ -450,10 +435,17 @@ document.addEventListener('DOMContentLoaded', () => {
   if (gradientOrb && !isTouchDevice) {
     let orbX = window.innerWidth / 2;
     let orbY = window.innerHeight / 2;
+    let targetX = orbX, targetY = orbY;
+
+    document.addEventListener('mousemove', (e) => {
+      targetX = e.clientX;
+      targetY = e.clientY;
+      gradientOrb.style.opacity = '0.4';
+    });
 
     function animateOrb() {
-      orbX += (pointer.x - orbX) * 0.05;
-      orbY += (pointer.y - orbY) * 0.05;
+      orbX += (targetX - orbX) * 0.05;
+      orbY += (targetY - orbY) * 0.05;
       gradientOrb.style.left = orbX + 'px';
       gradientOrb.style.top = orbY + 'px';
       requestAnimationFrame(animateOrb);
@@ -461,7 +453,7 @@ document.addEventListener('DOMContentLoaded', () => {
     animateOrb();
 
     let idleTimer;
-    onPointerMove(() => {
+    document.addEventListener('mousemove', () => {
       clearTimeout(idleTimer);
       gradientOrb.style.opacity = '0.4';
       idleTimer = setTimeout(() => { gradientOrb.style.opacity = '0'; }, 3000);
@@ -470,7 +462,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---------- Scroll Progress Bar ----------
   const scrollProgress = document.getElementById('scroll-progress');
-  if (scrollProgress) scheduleViewportUpdate();
+  if (scrollProgress) {
+    window.addEventListener('scroll', () => {
+      const scrollTotal = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = (window.scrollY / scrollTotal) * 100;
+      scrollProgress.style.width = progress + '%';
+    }, { passive: true });
+  }
 
   // ---------- Scroll Reveal ----------
   const revealElements = document.querySelectorAll('[data-reveal]');
@@ -502,26 +500,24 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---------- Counter Animation ----------
   const counters = document.querySelectorAll('[data-count-target]');
-  const showCounter = (el, animate = false) => {
-    const target = parseInt(el.dataset.countTarget, 10);
-    const suffix = target === 0 ? '+' : (el.dataset.countSuffix || '');
-    const value = target === 0 ? Math.max(new Date().getFullYear() - 2020, 0) : target;
-    if (animate) animateCounter(el, value, suffix);
-    else el.textContent = value + suffix;
-  };
-  if ('IntersectionObserver' in window && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const counterObserver = new IntersectionObserver((entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          showCounter(entry.target, true);
-          counterObserver.unobserve(entry.target);
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.dataset.countTarget);
+        const suffix = el.dataset.countSuffix || '';
+        if (target === 0) {
+          const years = Math.max(new Date().getFullYear() - 2020, 0);
+          animateCounter(el, years, '+');
+        } else {
+          animateCounter(el, target, suffix);
         }
-      });
-    }, { threshold: 0.35 });
-    counters.forEach((el) => counterObserver.observe(el));
-  } else {
-    counters.forEach((el) => showCounter(el));
-  }
+        counterObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  counters.forEach((el) => counterObserver.observe(el));
 
   function animateCounter(el, target, suffix) {
     const duration = 1600;
@@ -585,11 +581,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // ---------- Particle Network ----------
   const canvas = document.getElementById('particle-canvas');
-  const shouldAnimateParticles = !isTouchDevice
-    && !window.matchMedia('(max-width: 980px)').matches
-    && !window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    && !navigator.connection?.saveData;
-  if (canvas && shouldAnimateParticles) {
+  if (canvas && !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const ctx = canvas.getContext('2d');
     let particles = [];
     let animationId;
@@ -600,11 +592,11 @@ document.addEventListener('DOMContentLoaded', () => {
       canvas.height = window.innerHeight;
     }
     resizeCanvas();
-    window.addEventListener('resize', resizeCanvas, { passive: true });
+    window.addEventListener('resize', resizeCanvas);
 
-    onPointerMove((position) => {
-      mouseX = position.x;
-      mouseY = position.y;
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
     });
 
     function Particle() {
@@ -655,11 +647,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
     initParticles();
-    let particleResizeTimer;
-    window.addEventListener('resize', () => {
-      clearTimeout(particleResizeTimer);
-      particleResizeTimer = setTimeout(initParticles, 150);
-    }, { passive: true });
+    window.addEventListener('resize', initParticles);
 
     function drawConnections() {
       var isLight = document.documentElement.getAttribute('data-theme') === 'light';
@@ -719,17 +707,14 @@ document.addEventListener('DOMContentLoaded', () => {
         animate();
       }
     });
-  } else if (canvas) {
-    canvas.hidden = true;
   }
 
   // ---------- Nav Click Pulse ----------
   allNavItems.forEach((item) => {
     item.addEventListener('click', () => {
-      item.classList.remove('nav-pulse');
-      requestAnimationFrame(() => item.classList.add('nav-pulse'));
+      item.style.transform = 'scale(0.96)';
+      setTimeout(() => { item.style.transform = ''; }, 200);
     });
-    item.addEventListener('animationend', () => item.classList.remove('nav-pulse'));
   });
 
   // ---------- Hero Image Parallax ----------
@@ -737,9 +722,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (heroMedia && !isTouchDevice) {
     const heroImg = heroMedia.querySelector('img');
     if (heroImg) {
-      onPointerMove((position) => {
-        var x = (position.x / window.innerWidth - 0.5) * 10;
-        var y = (position.y / window.innerHeight - 0.5) * 10;
+      document.addEventListener('mousemove', (e) => {
+        var x = (e.clientX / window.innerWidth - 0.5) * 10;
+        var y = (e.clientY / window.innerHeight - 0.5) * 10;
         heroImg.style.transform = 'scale(1.02) translate(' + x + 'px, ' + y + 'px)';
       });
     }
