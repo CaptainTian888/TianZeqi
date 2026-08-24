@@ -592,8 +592,99 @@ img{max-width:100%; height:auto; display:block}
   flex-direction: column;
   gap: var(--stack-gap);
 }
-.about-strategy .acc-body{
+/* Prose is capped for readability, but the service grid below is free to use
+   the full card width — capping the whole body left ~400px empty on wide
+   screens while the card itself still stretched edge to edge. */
+.about-strategy .acc-lead,
+.about-strategy > .p{
   max-width: 88ch;
+}
+
+/* Expanded service breakdown: lead paragraph, then the service lines as a
+   two-up card grid so five items stay scannable instead of one long block. */
+.acc-lead{
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.85;
+  font-size: clamp(14px, 0.95vw, 16px);
+}
+.acc-num{
+  color: var(--soft);
+  font-weight: 900;
+  font-size: 1.14em;
+  letter-spacing: .01em;
+}
+/* Inline emphasis for the capability summary inside a lead paragraph */
+.acc-em{
+  color: var(--text);
+  font-weight: 700;
+}
+.acc-list{
+  display: grid;
+  /* Explicit column counts rather than auto-fit: with five items, an
+     intrinsic minmax() flips to a ragged 3 + 1 + 1 at some widths. Fixed
+     breakpoints keep it to 1 col, 2 cols, or a deliberate 3 + 2. */
+  grid-template-columns: 1fr;
+  gap: 10px;
+  margin: 14px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.acc-list li{
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-left: 2px solid rgba(124,58,237,.45);
+  border-radius: 12px;
+  background: rgba(255,255,255,.025);
+}
+:root[data-theme="light"] .acc-list li{
+  background: rgba(0,0,0,.02);
+  border-left-color: rgba(109,40,217,.4);
+}
+/* Odd item count: let the last card span the row instead of leaving a gap. */
+.acc-list li:last-child:nth-child(odd){
+  grid-column: 1 / -1;
+}
+.acc-list-label{
+  display: block;
+  margin-bottom: 5px;
+  color: var(--text);
+  font-weight: 800;
+  font-size: clamp(13.5px, 0.95vw, 15px);
+  letter-spacing: .01em;
+}
+.acc-list-text{
+  display: block;
+  color: var(--muted);
+  line-height: 1.75;
+  font-size: clamp(13px, 0.88vw, 14.5px);
+}
+/* Two-up once each column can hold a comfortable line length (~300px) */
+@media (min-width: 760px){
+  .acc-list{ grid-template-columns: 1fr 1fr; }
+}
+
+/* Wide cards: tile the five services as a deliberate 3 + 2 on a six-column
+   base so both rows finish flush instead of leaving a ragged gap. */
+@media (min-width: 1360px){
+  .acc-list{ grid-template-columns: repeat(6, 1fr); }
+  .acc-list li:nth-child(-n+3){ grid-column: span 2; }
+  .acc-list li:nth-child(n+4){ grid-column: span 3; }
+  .acc-list li:last-child:nth-child(odd){ grid-column: span 3; }
+}
+
+/* Inline disclaimer under a regulated-topic section */
+.acc-note{
+  margin: 12px 0 0;
+  padding-top: 10px;
+  border-top: 1px dashed var(--border);
+  color: var(--muted);
+  opacity: .85;
+  line-height: 1.7;
+  font-size: clamp(11.5px, 0.78vw, 12.5px);
+}
+@media (max-width: 560px){
+  .acc-list{ grid-template-columns: 1fr; }
 }
 
 .about-gallery{
@@ -765,7 +856,45 @@ img{max-width:100%; height:auto; display:block}
 }
 .t-card:hover::before{ opacity: 1; }
 
-.t-title{ font-weight: 900; letter-spacing: -.01em; }
+/* Card header: company name left, country flag pill pinned right.
+   The pill never shrinks, so the name wraps instead of squashing it. */
+.t-head{
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+.t-title{ font-weight: 900; letter-spacing: -.01em; min-width: 0; }
+.t-flag{
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 0;
+  padding: 7px 11px;
+  border: 1px solid rgba(120,167,255,.18);
+  border-radius: 999px;
+  background: rgba(120,167,255,.075);
+  color: var(--soft);
+  font-family: Inter, system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: .02em;
+  line-height: 1;
+  white-space: nowrap;
+}
+:root[data-theme="light"] .t-flag{
+  border-color: rgba(53,107,216,.16);
+  background: rgba(53,107,216,.055);
+}
+.t-flag img{
+  width: 34px;
+  height: 24px;
+  flex: 0 0 34px;
+  object-fit: cover;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.26);
+}
 .t-role{ color: var(--soft); font-weight: 800; margin-top: 6px; }
 .t-desc{ color: var(--muted); margin-top: 8px; line-height: 1.8; }
 
