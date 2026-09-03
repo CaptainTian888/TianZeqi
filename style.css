@@ -1714,7 +1714,10 @@ input:focus, textarea:focus{
   z-index: 310;
   width: 100%;
   max-width: 760px;
-  max-height: 85vh;
+  /* 100% is the real fixed-position viewport; on mobile browsers a vh unit can
+     exceed it (URL bar), which would centre-overflow the dialog and push the
+     close button off the top of the screen. */
+  max-height: min(85vh, 100%);
   display: flex;
   flex-direction: column;
   border-radius: var(--radius);
@@ -1938,14 +1941,25 @@ input:focus, textarea:focus{
 
 /* ---------- Responsive ---------- */
 @media (max-width: 560px){
-  .legal-modal{ padding: 0; }
+  /* Phones get the same floating reading dialog as desktop: inset from the
+     edges so the backdrop stays tappable, height bounded by the real viewport
+     so the close button is always reachable at the top right. */
+  .legal-modal{ padding: 14px 12px; }
   .legal-modal-window{
-    max-height: 100vh;
-    height: 100vh;
+    height: auto;
+    max-height: 100%;
     max-width: 100%;
-    border-radius: 0;
+    border-radius: 16px;
   }
-  .legal-modal-header{ padding: 20px 18px 12px; }
+  .legal-modal-close{
+    right: 10px;
+    top: 10px;
+    width: 42px;
+    height: 42px;
+    font-size: 16px;
+  }
+  /* keep the heading clear of the close button */
+  .legal-modal-header{ padding: 20px 62px 12px 18px; }
   .legal-modal-body{ padding: 16px 18px 24px; }
   .footer-links{ gap: 4px; }
   .footer-link{ font-size: 11px; }
