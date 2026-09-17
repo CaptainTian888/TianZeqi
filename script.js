@@ -31,6 +31,13 @@ document.addEventListener('DOMContentLoaded', () => {
       if (lang === 'en' && el.dataset.langEnPlaceholder) el.placeholder = el.dataset.langEnPlaceholder;
     });
 
+    // Void elements such as <meta> carry their text in an attribute, so innerHTML
+    // above is a no-op for them — swap the content attribute instead.
+    document.querySelectorAll('[data-lang-zh-content], [data-lang-en-content]').forEach((el) => {
+      const next = lang === 'zh-CN' ? el.dataset.langZhContent : el.dataset.langEnContent;
+      if (next) el.setAttribute('content', next);
+    });
+
     // highlight active language option
     langToggleBtn.querySelectorAll('.lang-option').forEach(opt => {
       opt.classList.toggle('active', opt.dataset.lang === lang);

@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+  <title>404 · 页面不存在 | Page Not Found — 田泽琦 Tian ZeQi</title>
+  <meta name="robots" content="noindex,follow" />
+  <meta name="theme-color" content="#0b1020" />
+  <meta name="color-scheme" content="dark light" />
+  <link rel="icon" type="image/png" href="https://imagehub.tianzeqi.dev/file/1758348585439_%E9%BB%91%E7%99%BD%E8%B7%AF%E9%A3%9E%E9%80%8F%E6%98%8E%E8%83%8C%E6%99%AF.png" />
+  <style>
+    :root {
+      --bg: #0b1020;
+      --fg: #e8ecf8;
+      --muted: #96a0c2;
+      --accent: #7c3aed;
+      --line: rgba(255, 255, 255, .12);
+      --card: rgba(255, 255, 255, .04);
+    }
+    @media (prefers-color-scheme: light) {
+      :root {
+        --bg: #f6f7fb;
+        --fg: #141a2e;
+        --muted: #5a6382;
+        --accent: #6d28d9;
+        --line: rgba(0, 0, 0, .10);
+        --card: rgba(255, 255, 255, .72);
+      }
+    }
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+      background: var(--bg);
+      color: var(--fg);
+      font-family: "Inter", "Noto Sans SC", -apple-system, BlinkMacSystemFont,
+                   "Segoe UI", "PingFang SC", "Microsoft YaHei", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(60vmax 60vmax at 18% 12%, rgba(124, 58, 237, .16), transparent 60%),
+        radial-gradient(48vmax 48vmax at 84% 88%, rgba(96, 165, 250, .12), transparent 60%);
+    }
+    .wrap {
+      position: relative;
+      width: min(560px, 100%);
+      padding: 40px 32px;
+      text-align: center;
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      background: var(--card);
+      backdrop-filter: blur(10px);
+    }
+    .code {
+      margin: 0;
+      font-size: clamp(64px, 16vw, 104px);
+      font-weight: 800;
+      line-height: 1;
+      letter-spacing: -.04em;
+      background: linear-gradient(135deg, var(--accent), #60a5fa);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    h1 {
+      margin: 16px 0 6px;
+      font-size: 20px;
+      font-weight: 700;
+    }
+    .en {
+      margin: 0 0 20px;
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--muted);
+    }
+    p.hint {
+      margin: 0 0 28px;
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+    }
+    a.btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 22px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      font-size: 14px;
+      font-weight: 600;
+      text-decoration: none;
+      color: var(--fg);
+      transition: transform .18s ease, border-color .18s ease, background .18s ease;
+    }
+    a.btn.primary {
+      border-color: transparent;
+      color: #fff;
+      background: linear-gradient(135deg, var(--accent), #4f46e5);
+    }
+    a.btn:hover { transform: translateY(-2px); }
+    a.btn:not(.primary):hover { border-color: var(--accent); }
+    @media (prefers-reduced-motion: reduce) {
+      a.btn { transition: none; }
+      a.btn:hover { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <p class="code">404</p>
+    <h1>页面不存在</h1>
+    <p class="en">Page Not Found</p>
+    <p class="hint">
+      您访问的页面可能已被移动或删除。<br />
+      The page you are looking for may have been moved or removed.
+    </p>
+    <div class="actions">
+      <a class="btn primary" href="/">返回首页 · Home</a>
+      <a class="btn" href="/#contact">与我联系 · Contact</a>
+    </div>
+  </main>
+</body>
+</html>

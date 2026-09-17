@@ -1,0 +1,7 @@
+# https://www.tianzeqi.com/
+# 田泽琦 Tian ZeQi (Zack Miller) — personal site
+
+User-agent: *
+Allow: /
+
+Sitemap: https://www.tianzeqi.com/sitemap.xml

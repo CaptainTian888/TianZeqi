@@ -7,7 +7,8 @@
          data-lang-en="Tian ZeQi (Zack Miller) | Shinevista Global Group · ZEROTH INC. | Cross-border Growth and Enterprise AI">田泽琦 Zack Miller｜顺为国际集团 · ZEROTH INC.｜跨境出海与企业级 AI</title>
   <meta name="description"
         content="田泽琦（Tian ZeQi，英文名 Zack Miller，Captain Ninja）：順為國際集團有限公司（香港）法团董事会董事，ZEROTH INC.（美国特拉华州）联合创始人，稳链投资控股（海南）、稳金科技（深圳）、马邦商务服务（内蒙古）董事。专注跨境电商全球出海、企业级人工智能（AI）私有化交付与自动化工作流、区块链金融与数字资产管理。"
-        data-lang-zh="田泽琦" data-lang-en="Zack Miller" />
+        data-lang-zh-content="田泽琦（Tian ZeQi，英文名 Zack Miller，Captain Ninja）：順為國際集團有限公司（香港）法团董事会董事，ZEROTH INC.（美国特拉华州）联合创始人，稳链投资控股（海南）、稳金科技（深圳）、马邦商务服务（内蒙古）董事。专注跨境电商全球出海、企业级人工智能（AI）私有化交付与自动化工作流、区块链金融与数字资产管理。"
+        data-lang-en-content="Tian ZeQi (Zack Miller, Captain Ninja): Director of the corporate board at SHINEVISTA GLOBAL GROUP LIMITED (Hong Kong), Co-Founder of ZEROTH INC. (Delaware, USA), and director at Stable Chain Investment Holding (Hainan), Stable Gold Technology (Shenzhen) and Mabang Business Services (Inner Mongolia). Focused on cross-border e-commerce and global market entry, enterprise AI private deployment and workflow automation, blockchain finance and digital asset management." />
   <meta name="keywords"
         content="田泽琦,TianZeqi,Tian ZeQi,Zack,Zack Miller,Captain,Captain Ninja,船长,ZEROTH,ZEROTH INC,顺为国际集团,順為國際集團,顺为国际集团有限公司,顺为国际,Shinevista,Shinevista Global Group,稳链投资控股,稳链投资控股海南,稳金科技,稳金科技深圳,马邦商务,马邦商务服务,内蒙古前川工程,佰仕达国际商务,AI,人工智能,企业级AI,AI私有化,大模型私有化部署,AI Agent,智能体编排,工作流自动化,向量数据库,AI解决方案,人工智能全球业务拓展,AI数字化转型,跨境电商,全球出海,跨境贸易,企业出海,海外架构搭建,区块链金融,数字资产管理,Web3" />
   <link rel="icon" type="image/jpeg" href="https://imagehub.tianzeqi.dev/file/1758348585439_黑白路飞透明背景.png" />
@@ -19,6 +20,12 @@
   <meta name="robots" content="index,follow,max-image-preview:large" />
   <meta name="author" content="田泽琦 Tian ZeQi (Zack Miller)" />
   <link rel="canonical" href="https://www.tianzeqi.com/" />
+
+  <!-- Bilingual signals. A single URL serves both languages (switched client-side),
+       so every hreflang points at that same canonical URL. -->
+  <link rel="alternate" hreflang="zh-Hans" href="https://www.tianzeqi.com/" />
+  <link rel="alternate" hreflang="en" href="https://www.tianzeqi.com/" />
+  <link rel="alternate" hreflang="x-default" href="https://www.tianzeqi.com/" />
 
   <!-- Share preview (Open Graph / Twitter) -->
   <meta property="og:site_name" content="田泽琦 · Tian ZeQi" />
@@ -43,12 +50,29 @@
   <script type="application/ld+json">
     {
       "@context": "https://schema.org",
+      "@graph": [
+    {
+      "@type": "WebSite",
+      "@id": "https://www.tianzeqi.com/#website",
+      "url": "https://www.tianzeqi.com/",
+      "name": "田泽琦 · Tian ZeQi",
+      "alternateName": "Tian ZeQi (Zack Miller) — Cross-border Growth and Enterprise AI",
+      "inLanguage": ["zh-CN", "en"],
+      "description": "田泽琦（Zack Miller）个人主页：跨境出海、企业级 AI 私有化与区块链金融。Personal site of Tian ZeQi (Zack Miller): cross-border growth, enterprise AI and blockchain finance.",
+      "publisher": { "@id": "https://www.tianzeqi.com/#person" },
+      "about": { "@id": "https://www.tianzeqi.com/#person" }
+    },
+    {
       "@type": "Person",
+      "@id": "https://www.tianzeqi.com/#person",
       "name": "田泽琦",
       "alternateName": ["Tian ZeQi", "TianZeqi", "Zack", "Zack Miller", "Captain", "Captain Ninja", "船长"],
       "url": "https://www.tianzeqi.com/",
+      "mainEntityOfPage": { "@id": "https://www.tianzeqi.com/#website" },
       "image": "https://imagehub.tianzeqi.dev/file/%E5%B8%B8%E7%94%A8/1757062317294_business.jpeg",
-      "jobTitle": ["法团董事会董事", "联合创始人"],
+      "description": "順為國際集團有限公司（香港）法团董事会董事、ZEROTH INC.（美国特拉华州）联合创始人，专注跨境电商全球出海、企业级 AI 私有化交付与区块链金融。",
+      "disambiguatingDescription": "Director of the corporate board at SHINEVISTA GLOBAL GROUP LIMITED (Hong Kong) and Co-Founder of ZEROTH INC. (Delaware, USA), focused on cross-border e-commerce, enterprise AI private deployment and blockchain finance.",
+      "jobTitle": ["法团董事会董事", "联合创始人", "Director", "Co-Founder"],
       "email": "mailto:captain@tianzeqi.com",
       "knowsLanguage": ["zh-CN", "en"],
       "knowsAbout": [
@@ -108,10 +132,13 @@
         }
       ],
       "sameAs": [
+        "https://www.tianzeqi.link/",
         "https://t.me/shinevista",
         "https://line.me/ti/p/HkqTEuP4tF",
         "https://wa.me/85261600784",
         "https://discord.gg/dVdHnRmp"
+      ]
+    }
       ]
     }
   </script>
@@ -121,7 +148,7 @@
   <link rel="preconnect" href="https://imagehub.tianzeqi.dev" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=20260902" />
+  <link rel="stylesheet" href="style.css?v=20260916" />
   <script>
     // Apply the stored / system theme before first paint to avoid a flash.
     (function () {
@@ -984,15 +1011,7 @@
     </footer>
   </main>
 
-  <script src="script.js?v=20260902"></script>
-
-  <!-- Cloudflare Web Analytics — privacy-friendly, cookieless.
-       Replace REPLACE_WITH_YOUR_CF_BEACON_TOKEN with the token from
-       Cloudflare dashboard → Web Analytics → Add a site → JS snippet.
-       Alternative: skip this tag entirely and enable Web Analytics on the
-       Pages project instead; Cloudflare then injects the beacon itself. -->
-  <script defer src="https://static.cloudflareinsights.com/beacon.min.js"
-          data-cf-beacon='{"token": "REPLACE_WITH_YOUR_CF_BEACON_TOKEN"}'></script>
+  <script src="script.js?v=20260916"></script>
 
   <!-- Tawk -->
   <!-- Image modal for WeChat (in-page floating window) -->
