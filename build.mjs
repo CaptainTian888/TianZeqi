@@ -30,8 +30,28 @@ const shortHash = (text) =>
 const cspHash = (text) =>
   "'sha256-" + createHash('sha256').update(text, 'utf8').digest('base64') + "'";
 
-// ---------- 1. Cache-busting tokens ----------
 let html = read('index.html');
+
+// ---------- 0. Bake the derived year counts into the markup ----------
+// These spans used to ship empty and were filled by applyAutoYears() at
+// runtime. Crawlers that do not execute JS therefore read "年跨境电商经验"
+// with no number in front of it, and search engines reassembled the leftover
+// fragments into nonsense snippets. Writing the current value into the HTML
+// gives every crawler a complete sentence; the script still overwrites it on
+// load, so the page stays correct between builds and across new year.
+const experienceYears = Math.max(new Date().getFullYear() - 2020, 0);
+
+html = html
+  .replace(
+    /(<span class="auto-years-inline">)[^<]*(<\/span>)/g,
+    '$1' + experienceYears + '$2'
+  )
+  .replace(
+    /(<div class="stat-num auto-years-plus" data-count-target="0">)[^<]*(<\/div>)/g,
+    '$1' + experienceYears + '+$2'
+  );
+
+// ---------- 1. Cache-busting tokens ----------
 const assetVersions = {};
 
 for (const asset of ['style.css', 'script.js']) {
@@ -86,6 +106,7 @@ headers = headers.replace(/script-src [^;]*;/, 'script-src ' + keptSources.join(
 write('index.html', html);
 write('_headers', headers);
 
+console.log('baked experience years: ' + experienceYears);
 console.log('asset versions:');
 for (const [name, version] of Object.entries(assetVersions)) {
   console.log('  ' + name + '?v=' + version);
