@@ -168,6 +168,9 @@ img{max-width:100%; height:auto; display:block}
   gap:10px;
 }
 .floating .btn{ padding: 10px 12px; border-radius: 12px; }
+/* Visibility is toggled by a class so scrolling never writes inline styles. */
+#to-top{ display: none; }
+#to-top.is-visible{ display: inline-flex; }
 
 /* ===== Language Switch (segmented pill) ===== */
 .lang-switch{
@@ -1000,6 +1003,14 @@ img{max-width:100%; height:auto; display:block}
   align-items:center;
   justify-content:center;
   overflow:hidden;
+  /* The QR triggers are <button>, so neutralise the UA button defaults. */
+  padding: 0;
+  margin: 0;
+  font: inherit;
+  color: inherit;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
   transition: transform .15s ease, opacity .15s ease;
 }
 .social-link:hover{ transform: translateY(-1px); opacity:.92; }
@@ -1381,6 +1392,14 @@ input:focus, textarea:focus{
   z-index: -1;
   pointer-events: none;
 }
+/*
+  Below this width the field sits almost entirely behind content while still
+  burning a full-screen canvas redraw every frame, so it is dropped. The script
+  checks the same breakpoint and stops generating particles at all.
+*/
+@media (max-width: 899px){
+  .particle-canvas{ display: none; }
+}
 
 /* ---------- Mouse Gradient Orb ---------- */
 .gradient-orb{
@@ -1435,15 +1454,21 @@ input:focus, textarea:focus{
 }
 
 /* ---------- Scroll Progress Bar ---------- */
+/*
+  Driven by transform rather than width: scaling stays on the compositor, while
+  animating width relayouts the bar on every scroll event.
+*/
 .scroll-progress{
   position: fixed;
   top: 0;
   left: 0;
   height: 3px;
-  width: 0%;
+  width: 100%;
+  transform: scaleX(0);
+  transform-origin: 0 50%;
   background: linear-gradient(90deg, var(--primary), var(--soft));
   z-index: 999;
-  transition: width .1s linear;
+  will-change: transform;
   box-shadow: 0 0 10px rgba(124,58,237,.25);
 }
 
@@ -1561,8 +1586,23 @@ input:focus, textarea:focus{
     animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
   }
+  html{ scroll-behavior: auto !important; }
   [data-reveal]{ opacity: 1; transform: none; }
+  .reveal-ready [data-reveal]:not(.revealed){ opacity: 1; transform: none; }
   .particle-canvas{ display: none; }
+  /*
+    The pointer-following layer is motion for its own sake: a replacement cursor
+    that lags behind the real one, and a blurred orb that trails it. Both are
+    exactly what this preference asks us to drop.
+  */
+  .cursor-dot, .cursor-ring{ display: none; }
+  .gradient-orb{ display: none; }
+  /* Hover transforms on cards, social links and nav items. */
+  .tilt-card:hover, .magnetic:hover, .social-link:hover,
+  .learn-card:hover, .svc:hover .svc-icon{
+    transform: none !important;
+  }
+  .dot{ animation: none; }
 }
 
 @media (max-width: 560px){

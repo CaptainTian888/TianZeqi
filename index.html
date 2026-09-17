@@ -11,7 +11,9 @@
         data-lang-en-content="Tian ZeQi (Zack Miller, Captain Ninja): Director of the corporate board at SHINEVISTA GLOBAL GROUP LIMITED (Hong Kong), Co-Founder of ZEROTH INC. (Delaware, USA), and director at Stable Chain Investment Holding (Hainan), Stable Gold Technology (Shenzhen) and Mabang Business Services (Inner Mongolia). Focused on cross-border e-commerce and global market entry, enterprise AI private deployment and workflow automation, blockchain finance and digital asset management." />
   <meta name="keywords"
         content="田泽琦,TianZeqi,Tian ZeQi,Zack,Zack Miller,Captain,Captain Ninja,船长,ZEROTH,ZEROTH INC,顺为国际集团,順為國際集團,顺为国际集团有限公司,顺为国际,Shinevista,Shinevista Global Group,稳链投资控股,稳链投资控股海南,稳金科技,稳金科技深圳,马邦商务,马邦商务服务,内蒙古前川工程,佰仕达国际商务,AI,人工智能,企业级AI,AI私有化,大模型私有化部署,AI Agent,智能体编排,工作流自动化,向量数据库,AI解决方案,人工智能全球业务拓展,AI数字化转型,跨境电商,全球出海,跨境贸易,企业出海,海外架构搭建,区块链金融,数字资产管理,Web3" />
-  <link rel="icon" type="image/jpeg" href="https://imagehub.tianzeqi.dev/file/1758348585439_黑白路飞透明背景.png" />
+  <link rel="icon" type="image/png" href="https://imagehub.tianzeqi.dev/file/1758348585439_黑白路飞透明背景.png" />
+  <link rel="apple-touch-icon" href="https://imagehub.tianzeqi.dev/file/1758348585439_黑白路飞透明背景.png" />
+  <link rel="manifest" href="/site.webmanifest" />
 
   <!-- Crawling & appearance -->
   <meta name="theme-color" content="#0b1020" />
@@ -146,9 +148,15 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://imagehub.tianzeqi.dev" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+SC:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!--
+    One variable axis per family instead of five pinned weights. Google returns
+    108 @font-face rules covering 400-800 here, against 540 for the old discrete
+    list, so the browser fetches a single file per unicode subset and every
+    weight the design uses still resolves exactly.
+  -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&family=Noto+Sans+SC:wght@400..800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=20260916" />
+  <link rel="stylesheet" href="style.css?v=2a7667c695" />
   <script>
     // Apply the stored / system theme before first paint to avoid a flash.
     (function () {
@@ -292,8 +300,6 @@
              data-lang-en="<span class=&quot;auto-years-inline&quot;></span> years of experience in cross-border e-commerce. His university startup won third prize in the China International Internet Plus Entrepreneurship Competition and first prize in the Blue Bridge Cup National Entrepreneurship Competition. Platforms he worked on include Amazon, ETSY, TikTok, Ozon, Wildberries, and overseas independent websites.">
             <span class="auto-years-inline"></span>年跨境电商从业经验，大学在校创业曾获得中国国际互联网+创业大赛国际三等奖、蓝桥杯创业大赛国家级一等奖。从事平台：亚马逊、ETSY、TikTok、Ozon、Wildberries、海外独立站。
           </p>
-
-          
 
           <div class="stats">
             <div class="stat" data-reveal data-reveal-delay="300">
@@ -887,9 +893,9 @@
             </div>
 
             <div class="social">
-              <a href="#" class="social-link wechat-btn" data-image-url="https://imagehub.tianzeqi.dev/file/others/1787369030368_81fbc5512952b4c5f603a7b657ba8c16.png" title="WeChat" aria-label="WeChat">
+              <button type="button" class="social-link wechat-btn" data-image-url="https://imagehub.tianzeqi.dev/file/others/1787369030368_81fbc5512952b4c5f603a7b657ba8c16.png" title="WeChat" aria-label="WeChat" aria-haspopup="dialog">
                 <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/wechat.svg" alt="WeChat" width="34" height="34" loading="lazy" decoding="async" />
-              </a>
+              </button>
               <a href="https://t.me/shinevista" target="_blank" rel="noopener" class="social-link" title="Telegram" aria-label="Telegram">
                 <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/telegram.svg" alt="Telegram" width="34" height="34" loading="lazy" decoding="async" />
               </a>
@@ -902,9 +908,9 @@
               <a href="https://discord.gg/dVdHnRmp" target="_blank" rel="noopener" class="social-link" title="Discord" aria-label="Discord">
                 <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/discord.svg" alt="Discord" width="34" height="34" loading="lazy" decoding="async" />
               </a>
-              <a href="#" class="social-link kakao-btn" data-image-url="https://imagehub.tianzeqi.dev/file/1775973860333_5b7696df59e1c6ac9a3c4a1f89e130b7.jpg" title="KakaoTalk" aria-label="KakaoTalk">
+              <button type="button" class="social-link kakao-btn" data-image-url="https://imagehub.tianzeqi.dev/file/1775973860333_5b7696df59e1c6ac9a3c4a1f89e130b7.jpg" title="KakaoTalk" aria-label="KakaoTalk" aria-haspopup="dialog">
                 <img src="https://cdn.jsdelivr.net/gh/simple-icons/simple-icons/icons/kakaotalk.svg" alt="KakaoTalk" width="34" height="34" loading="lazy" decoding="async" />
-              </a>
+              </button>
             </div>
           </div>
         </div>
@@ -1011,22 +1017,24 @@
     </footer>
   </main>
 
-  <script src="script.js?v=20260916"></script>
+  <script src="script.js?v=ba24bb5a02"></script>
 
   <!-- Tawk -->
   <!-- Image modal for WeChat (in-page floating window) -->
   <div id="image-modal" class="image-modal" aria-hidden="true">
     <div class="image-modal-backdrop"></div>
-    <div class="image-modal-window" role="dialog" aria-modal="true">
+    <div class="image-modal-window" role="dialog" aria-modal="true" aria-label="联系二维码 / Contact QR code" tabindex="-1">
       <button class="image-modal-close" aria-label="Close">✕</button>
-      <img class="image-modal-img" src="" alt="WeChat" />
+      <!-- No src until a QR is chosen: an empty src resolves to the page URL
+           and makes the browser re-request the document. -->
+      <img class="image-modal-img" alt="" />
     </div>
   </div>
 
   <!-- Legal / Privacy modal -->
   <div id="legal-modal" class="legal-modal" aria-hidden="true">
     <div class="legal-modal-backdrop"></div>
-    <div class="legal-modal-window" role="dialog" aria-modal="true" aria-labelledby="legal-modal-title">
+    <div class="legal-modal-window" role="dialog" aria-modal="true" aria-labelledby="legal-modal-title" tabindex="-1">
       <button class="legal-modal-close" aria-label="Close">✕</button>
       <div class="legal-modal-header">
         <h2 class="h2" id="legal-modal-title" data-lang-zh="法律与隐私声明" data-lang-en="Legal & Privacy Notice">法律与隐私声明</h2>

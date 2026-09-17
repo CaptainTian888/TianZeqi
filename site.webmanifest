@@ -1,0 +1,19 @@
+{
+  "name": "田泽琦 Tian ZeQi (Zack Miller)",
+  "short_name": "田泽琦",
+  "description": "跨境增长 · 企业架构 · AI 私有化 · 区块链金融与数字资产管理",
+  "lang": "zh-CN",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "background_color": "#0b1020",
+  "theme_color": "#0b1020",
+  "icons": [
+    {
+      "src": "https://imagehub.tianzeqi.dev/file/1758348585439_%E9%BB%91%E7%99%BD%E8%B7%AF%E9%A3%9E%E9%80%8F%E6%98%8E%E8%83%8C%E6%99%AF.png",
+      "sizes": "1000x1000",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
