@@ -171,7 +171,7 @@
   -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&family=Noto+Sans+SC:wght@400..800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=59b1e5ba60" />
+  <link rel="stylesheet" href="style.css?v=9c245f9505" />
   <script>
     // Apply the stored / system theme before first paint to avoid a flash.
     (function () {
@@ -213,7 +213,7 @@
       one switch flipping rather than two different buttons, and nothing has to
       be created or destroyed on click.
     -->
-    <button id="theme-toggle" class="theme-toggle" type="button"
+    <button id="theme-toggle" class="icon-round theme-toggle" type="button"
             aria-label="切换深色或浅色主题"
             data-lang-zh-label="切换深色或浅色主题"
             data-lang-en-label="Switch between dark and light theme">
@@ -227,7 +227,16 @@
         </svg>
       </span>
     </button>
-    <button id="to-top" class="btn btn-ghost" aria-label="Back to Top" title="Top">↑</button>
+    <button id="to-top" class="icon-round" type="button"
+            aria-label="回到顶部"
+            data-lang-zh-label="回到顶部"
+            data-lang-en-label="Back to top"
+            title="回到顶部 / Back to top">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M12 19.5V5.5"></path>
+        <path d="M5.5 12L12 5.5L18.5 12"></path>
+      </svg>
+    </button>
   </div>
 
   <!-- Top bar (mobile) -->

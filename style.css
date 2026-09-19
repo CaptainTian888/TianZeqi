@@ -170,10 +170,25 @@ img{max-width:100%; height:auto; display:block}
   align-items: center;
   gap:10px;
 }
-.floating .btn{ padding: 10px 12px; border-radius: 12px; }
-/* Visibility is toggled by a class so scrolling never writes inline styles. */
+/*
+  Visibility is toggled by a class so scrolling never writes inline styles.
+  display cannot be transitioned, so the entrance is a keyframe animation that
+  runs the moment the element is shown — this keeps the button out of the flex
+  row entirely when hidden, rather than leaving a 38px gap.
+*/
 #to-top{ display: none; }
-#to-top.is-visible{ display: inline-flex; }
+#to-top.is-visible{
+  display: inline-flex;
+  animation: to-top-in .28s var(--ease-spring);
+}
+/*
+  Only a from keyframe, and no fill mode: the implicit to is the element's own
+  computed value, so once the entrance finishes the hover and press transforms
+  take over instead of being pinned by the animation.
+*/
+@keyframes to-top-in{
+  from { opacity: 0; transform: translateY(6px) scale(.8); }
+}
 
 /* ===== Language Switch (segmented pill) ===== */
 .lang-switch{
@@ -218,12 +233,12 @@ img{max-width:100%; height:auto; display:block}
   background: linear-gradient(135deg, rgba(109,40,217,.88), rgba(37,99,235,.72));
 }
 
-/* ===== Theme Toggle (single icon button) ===== */
+/* ===== Round icon buttons (theme toggle, back to top) ===== */
 /*
-  Sized to match the height of the language pill beside it so the two controls
-  line up, but round rather than segmented: one target, one action.
+  Shared so the floating controls read as one set: same 38px circle, same
+  border and hover treatment as the language pill they sit beside.
 */
-.theme-toggle{
+.icon-round{
   position: relative;
   display: inline-flex;
   align-items: center;
@@ -239,19 +254,51 @@ img{max-width:100%; height:auto; display:block}
   outline: none;
   -webkit-appearance: none;
   appearance: none;
-  transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
+  transition: border-color .2s ease, background .2s ease,
+              box-shadow .2s ease, transform .2s var(--ease-spring);
 }
-.theme-toggle:hover{
+.icon-round:hover{
   border-color: rgba(124,58,237,.4);
   box-shadow: 0 0 0 3px rgba(124,58,237,.08);
 }
-.theme-toggle:focus-visible{
+.icon-round:focus-visible{
   border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(124,58,237,.18);
 }
-.theme-toggle:active{
+.icon-round:active{
   transform: scale(.94);
 }
+.icon-round > svg{
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* Back to top: nudge the arrow on hover to hint the direction. */
+#to-top:hover{
+  transform: translateY(-2px);
+}
+#to-top:hover > svg{
+  animation: to-top-nudge .6s var(--ease-out);
+}
+@keyframes to-top-nudge{
+  0%   { transform: translateY(0); }
+  45%  { transform: translateY(-3px); }
+  100% { transform: translateY(0); }
+}
+#to-top > svg{
+  transition: transform .2s var(--ease-out);
+}
+/* The id selector outranks .icon-round:active, so restate the press here. */
+#to-top:active{
+  transform: translateY(-2px) scale(.94);
+}
+
+/* ===== Theme Toggle ===== */
 
 .theme-toggle-icons{
   position: relative;
@@ -282,7 +329,11 @@ img{max-width:100%; height:auto; display:block}
 
 @media (prefers-reduced-motion: reduce){
   .theme-toggle-icons svg{ transition: opacity .01ms; transform: none !important; }
-  .theme-toggle:active{ transform: none; }
+  .icon-round:active,
+  #to-top:hover,
+  #to-top:active{ transform: none; }
+  #to-top:hover > svg{ animation: none; }
+  #to-top.is-visible{ animation: none; }
 }
 
 .topbar{
