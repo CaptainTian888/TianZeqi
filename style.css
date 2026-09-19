@@ -165,6 +165,9 @@ img{max-width:100%; height:auto; display:block}
   top: 14px;
   z-index: 80;
   display:flex;
+  /* Centre rather than stretch: the round theme button is a fixed 38px and
+     would otherwise be pulled 1px taller than wide by the language pill. */
+  align-items: center;
   gap:10px;
 }
 .floating .btn{ padding: 10px 12px; border-radius: 12px; }
@@ -215,54 +218,71 @@ img{max-width:100%; height:auto; display:block}
   background: linear-gradient(135deg, rgba(109,40,217,.88), rgba(37,99,235,.72));
 }
 
-/* ===== Theme Switch (segmented pill) ===== */
-.theme-switch{
+/* ===== Theme Toggle (single icon button) ===== */
+/*
+  Sized to match the height of the language pill beside it so the two controls
+  line up, but round rather than segmented: one target, one action.
+*/
+.theme-toggle{
+  position: relative;
   display: inline-flex;
   align-items: center;
-  gap: 2px;
-  padding: 3px;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  padding: 0;
   border-radius: 999px;
   border: 1px solid var(--border);
   background: var(--panel);
+  color: var(--text);
   cursor: pointer;
-  user-select: none;
   outline: none;
+  -webkit-appearance: none;
+  appearance: none;
   transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
 }
-.theme-switch:hover{
+.theme-toggle:hover{
   border-color: rgba(124,58,237,.4);
   box-shadow: 0 0 0 3px rgba(124,58,237,.08);
 }
-.theme-switch:focus-visible{
+.theme-toggle:focus-visible{
   border-color: var(--primary);
   box-shadow: 0 0 0 3px rgba(124,58,237,.18);
 }
-.theme-option{
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  padding: 7px 11px;
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 700;
-  color: var(--muted);
-  white-space: nowrap;
-  transition: color .25s ease, background .25s ease, transform .2s var(--ease-spring);
+.theme-toggle:active{
+  transform: scale(.94);
 }
-.theme-option:not(.active):hover{
-  color: var(--text);
+
+.theme-toggle-icons{
+  position: relative;
+  display: block;
+  width: 18px;
+  height: 18px;
 }
-.theme-option.active{
-  color: #fff;
-  background: linear-gradient(135deg, rgba(124,58,237,.88), rgba(37,99,235,.72));
-  box-shadow: 0 2px 8px rgba(124,58,237,.25);
+.theme-toggle-icons svg{
+  position: absolute;
+  inset: 0;
+  width: 18px;
+  height: 18px;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  transition: opacity .3s ease, transform .4s var(--ease-spring);
 }
-:root[data-theme="light"] .theme-option.active{
-  background: linear-gradient(135deg, rgba(109,40,217,.88), rgba(37,99,235,.72));
-}
-.theme-ico{
-  font-size: 13px;
-  line-height: 1;
+/*
+  Each icon shows the theme you are about to get, so the sun is what you see
+  while the page is dark. They swap by rotating past each other.
+*/
+.theme-ico-sun{ opacity: 1; transform: rotate(0deg) scale(1); }
+.theme-ico-moon{ opacity: 0; transform: rotate(-90deg) scale(.6); }
+:root[data-theme="light"] .theme-ico-sun{ opacity: 0; transform: rotate(90deg) scale(.6); }
+:root[data-theme="light"] .theme-ico-moon{ opacity: 1; transform: rotate(0deg) scale(1); }
+
+@media (prefers-reduced-motion: reduce){
+  .theme-toggle-icons svg{ transition: opacity .01ms; transform: none !important; }
+  .theme-toggle:active{ transform: none; }
 }
 
 .topbar{
@@ -1634,13 +1654,13 @@ input:focus, textarea:focus{
     gap: 8px;
   }
   .floating .lang-switch,
-  .floating .theme-switch{
+  .floating .theme-toggle{
     background: rgba(7,10,20,.88);
     backdrop-filter: blur(14px);
     box-shadow: 0 8px 24px rgba(0,0,0,.18);
   }
   :root[data-theme="light"] .floating .lang-switch,
-  :root[data-theme="light"] .floating .theme-switch{
+  :root[data-theme="light"] .floating .theme-toggle{
     background: rgba(255,255,255,.92);
   }
   .gradient-orb{

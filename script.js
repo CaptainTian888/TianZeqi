@@ -103,10 +103,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function applyTheme(theme) {
     document.documentElement.setAttribute('data-theme', theme);
-    // keep the toggle in sync with whatever theme is actually showing
-    themeToggleBtn.querySelectorAll('.theme-option').forEach(opt => {
-      opt.classList.toggle('active', opt.dataset.themeVal === theme);
-    });
+    // Which icon shows is driven by the data-theme attribute in CSS; the button
+    // only has to say what pressing it will do.
+    themeToggleBtn.setAttribute('aria-pressed', String(theme === 'light'));
   }
 
   const savedTheme = localStorage.getItem('theme');
@@ -124,22 +123,11 @@ document.addEventListener('DOMContentLoaded', () => {
     darkSchemeQuery.addListener(onSystemThemeChange);
   }
 
-  themeToggleBtn.querySelectorAll('.theme-option').forEach(opt => {
-    opt.addEventListener('click', () => {
-      const val = opt.dataset.themeVal;
-      localStorage.setItem('theme', val);
-      applyTheme(val);
-    });
-  });
-
-  themeToggleBtn.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      const current = document.documentElement.getAttribute('data-theme');
-      const next = current === 'light' ? 'dark' : 'light';
-      localStorage.setItem('theme', next);
-      applyTheme(next);
-    }
+  // A real <button> already activates on Enter and Space, so no key handler.
+  themeToggleBtn.addEventListener('click', () => {
+    const next = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
+    localStorage.setItem('theme', next);
+    applyTheme(next);
   });
 
   // ---------- Mobile menu ----------

@@ -171,7 +171,7 @@
   -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&family=Noto+Sans+SC:wght@400..800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=2a7667c695" />
+  <link rel="stylesheet" href="style.css?v=59b1e5ba60" />
   <script>
     // Apply the stored / system theme before first paint to avoid a flash.
     (function () {
@@ -208,10 +208,25 @@
       <span class="lang-option" data-lang="zh-CN">中文</span>
       <span class="lang-option" data-lang="en">English</span>
     </div>
-    <div id="theme-toggle" class="theme-switch" role="button" tabindex="0" aria-label="切换主题 / Toggle Theme">
-      <span class="theme-option" data-theme-val="dark"><span class="theme-ico">☾</span><span data-lang-zh="深色" data-lang-en="Dark">深色</span></span>
-      <span class="theme-option" data-theme-val="light"><span class="theme-ico">☀</span><span data-lang-zh="浅色" data-lang-en="Light">浅色</span></span>
-    </div>
+    <!--
+      Both icons are always in the DOM and cross-fade, so the control reads as
+      one switch flipping rather than two different buttons, and nothing has to
+      be created or destroyed on click.
+    -->
+    <button id="theme-toggle" class="theme-toggle" type="button"
+            aria-label="切换深色或浅色主题"
+            data-lang-zh-label="切换深色或浅色主题"
+            data-lang-en-label="Switch between dark and light theme">
+      <span class="theme-toggle-icons" aria-hidden="true">
+        <svg class="theme-ico-sun" viewBox="0 0 24 24">
+          <circle cx="12" cy="12" r="4.2"></circle>
+          <path d="M12 2v2.6M12 19.4V22M2 12h2.6M19.4 12H22M4.9 4.9l1.9 1.9M17.2 17.2l1.9 1.9M19.1 4.9l-1.9 1.9M6.8 17.2l-1.9 1.9"></path>
+        </svg>
+        <svg class="theme-ico-moon" viewBox="0 0 24 24">
+          <path d="M20 14.5A8.5 8.5 0 1 1 9.5 4a6.8 6.8 0 0 0 10.5 10.5z"></path>
+        </svg>
+      </span>
+    </button>
     <button id="to-top" class="btn btn-ghost" aria-label="Back to Top" title="Top">↑</button>
   </div>
 
@@ -1036,7 +1051,7 @@
     </footer>
   </main>
 
-  <script src="script.js?v=ba24bb5a02"></script>
+  <script src="script.js?v=bd06ac389b"></script>
 
   <!-- Tawk -->
   <!-- Image modal for WeChat (in-page floating window) -->
