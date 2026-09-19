@@ -171,7 +171,7 @@
   -->
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400..800&family=Noto+Sans+SC:wght@400..800&display=swap" rel="stylesheet">
 
-  <link rel="stylesheet" href="style.css?v=9c245f9505" />
+  <link rel="stylesheet" href="style.css?v=adc02f1a12" />
   <script>
     // Apply the stored / system theme before first paint to avoid a flash.
     (function () {
@@ -204,16 +204,31 @@
 
   <!-- Floating controls -->
   <div class="floating">
-    <div id="lang-toggle" class="lang-switch" role="button" tabindex="0" aria-label="切换语言 / Toggle Language">
-      <span class="lang-option" data-lang="zh-CN">中文</span>
-      <span class="lang-option" data-lang="en">English</span>
-    </div>
+    <!--
+      A bare globe would not say which language you are about to get, so the
+      badge carries the target: 中文 showing now means pressing gives EN.
+    -->
+    <button id="lang-toggle" class="icon-round lang-toggle" type="button"
+            aria-label="Switch to English 切换到英文"
+            data-lang-zh-label="Switch to English 切换到英文"
+            data-lang-en-label="切换到中文 Switch to Chinese"
+            title="中文 / English">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <circle cx="12" cy="12" r="8.5"></circle>
+        <path d="M3.5 12h17"></path>
+        <path d="M12 3.5c2.2 2.4 3.4 5.4 3.4 8.5s-1.2 6.1-3.4 8.5c-2.2-2.4-3.4-5.4-3.4-8.5S9.8 5.9 12 3.5z"></path>
+      </svg>
+      <span class="lang-badge" aria-hidden="true">
+        <span class="lang-badge-en">EN</span>
+        <span class="lang-badge-zh">中</span>
+      </span>
+    </button>
     <!--
       Both icons are always in the DOM and cross-fade, so the control reads as
       one switch flipping rather than two different buttons, and nothing has to
       be created or destroyed on click.
     -->
-    <button id="theme-toggle" class="icon-round theme-toggle" type="button"
+    <button id="theme-toggle" class="icon-round" type="button"
             aria-label="切换深色或浅色主题"
             data-lang-zh-label="切换深色或浅色主题"
             data-lang-en-label="Switch between dark and light theme">
@@ -1060,7 +1075,7 @@
     </footer>
   </main>
 
-  <script src="script.js?v=bd06ac389b"></script>
+  <script src="script.js?v=68806977ec"></script>
 
   <!-- Tawk -->
   <!-- Image modal for WeChat (in-page floating window) -->

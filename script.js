@@ -19,7 +19,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const pointerEffectsAllowed = () => !isTouchDevice && canAnimate();
 
   // ---------- Language ----------
-  let currentLang = localStorage.getItem('lang') || 'zh-CN';
+  // Mirrors how the theme works: follow the browser's own preference until the
+  // visitor picks a language, then remember that choice forever. Anything that
+  // is not a Chinese locale gets English.
+  function systemLang() {
+    const preferred = (navigator.languages && navigator.languages[0]) || navigator.language || '';
+    return /^zh\b/i.test(preferred) ? 'zh-CN' : 'en';
+  }
+
+  const savedLang = localStorage.getItem('lang');
+  let currentLang = (savedLang === 'zh-CN' || savedLang === 'en') ? savedLang : systemLang();
 
   function applyLanguage(lang) {
     document.documentElement.lang = lang;
@@ -52,10 +61,7 @@ document.addEventListener('DOMContentLoaded', () => {
       if (next) el.setAttribute('aria-label', next);
     });
 
-    // highlight active language option
-    langToggleBtn.querySelectorAll('.lang-option').forEach(opt => {
-      opt.classList.toggle('active', opt.dataset.lang === lang);
-    });
+    // Which badge shows is driven by the lang attribute in CSS.
 
     // philosophy: show English subtitle only in CN mode
     document.querySelectorAll('.philosophy-subtitle-en').forEach((el) => {
@@ -77,20 +83,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
-  langToggleBtn.addEventListener('click', (e) => {
-    const opt = e.target.closest('.lang-option');
-    const targetLang = opt ? opt.dataset.lang : (currentLang === 'zh-CN' ? 'en' : 'zh-CN');
-    if (targetLang !== currentLang) {
-      currentLang = targetLang;
-      localStorage.setItem('lang', currentLang);
-      applyLanguage(currentLang);
-    }
+  // A real <button> already activates on Enter and Space, so no key handler.
+  langToggleBtn.addEventListener('click', () => {
+    currentLang = currentLang === 'zh-CN' ? 'en' : 'zh-CN';
+    localStorage.setItem('lang', currentLang);
+    applyLanguage(currentLang);
   });
-  langToggleBtn.addEventListener('keydown', (e) => {
-    if (e.key === 'Enter' || e.key === ' ') {
-      e.preventDefault();
-      langToggleBtn.click();
-    }
+
+  // Keep following the browser until an explicit choice has been made.
+  window.addEventListener('languagechange', () => {
+    if (localStorage.getItem('lang')) return;
+    currentLang = systemLang();
+    applyLanguage(currentLang);
   });
 
   // ---------- Theme ----------
