@@ -54,6 +54,10 @@ html = html
   .replace(
     /(<div class="stat-num auto-years-plus" data-count-target="0">)[^<]*(<\/div>)/g,
     '$1' + experienceYears + '+$2'
+  )
+  .replace(
+    /(<div class="stat-num auto-years-plus" data-years-since="2024" data-count-target="0">)[^<]*(<\/div>)/g,
+    '$1' + aiExperienceYears + '+$2'
   );
 
 // ---------- 1. Cache-busting tokens ----------

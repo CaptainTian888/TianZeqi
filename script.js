@@ -351,7 +351,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     document.querySelectorAll('.auto-years-plus').forEach((el) => {
-      el.textContent = `${years}+`;
+      const since = Number(el.dataset.yearsSince) || 2020;
+      el.textContent = `${Math.max(new Date().getFullYear() - since, 0)}+`;
     });
 
     const aiYears = Math.max(new Date().getFullYear() - 2024, 0);
@@ -673,7 +674,8 @@ document.addEventListener('DOMContentLoaded', () => {
   if (counters.length) {
     const resolveTarget = (el) => {
       const raw = parseInt(el.dataset.countTarget, 10);
-      return raw === 0 ? Math.max(new Date().getFullYear() - 2020, 0) : raw;
+      const since = Number(el.dataset.yearsSince) || 2020;
+      return raw === 0 ? Math.max(new Date().getFullYear() - since, 0) : raw;
     };
     const resolveSuffix = (el) => (
       parseInt(el.dataset.countTarget, 10) === 0 ? '+' : (el.dataset.countSuffix || '')
